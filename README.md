@@ -42,5 +42,5 @@ I love Sketchware Pro and what the modding team has done to it, mind you there a
 
 # SketchGDX Pro Apk
 <p align="left">
-<a href="assets/SketchGDX2.0-Release.apk?raw=true">Latest Apk Release V2.0</a>
+<a href="assets/SketchGDX2.0-Release.apk?raw=true">Click to download the latest APK release V2.0</a>
 </p>
