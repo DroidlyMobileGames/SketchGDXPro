@@ -633,7 +633,8 @@ public class Jx {
 
     private void handleAppCompat() {
         //ALL IMPORTS DNA MOBILE
-        addImport("android.os.Bundle");
+        addImport("android.os.*");
+        addImport("android.view.*");
         addImport("com.badlogic.gdx.*");
         addImport("com.badlogic.gdx.math.*");
         addImport("com.badlogic.gdx.audio.*");
@@ -938,39 +939,4 @@ public class Jx {
             addImport(value);
         }
     }
-
-    /*if (!isFragment && !isDialogFragment) {
-                sb.append("@Override").append(EOL);
-                sb.append("public void show() {").append(EOL);
-                //Somehow handle methods here
-                sb.append("}").append(EOL);
-
-                sb.append("@Override").append(EOL);
-                sb.append("public void render(float delta) {").append(EOL);
-
-                sb.append("}").append(EOL);
-
-                sb.append("@Override").append(EOL);
-                sb.append("public void resize(int width, int height) {").append(EOL);
-
-                sb.append("}").append(EOL);
-
-                sb.append("@Override").append(EOL);
-                sb.append("public void pause() {").append(EOL);
-
-                sb.append("}").append(EOL);
-
-                sb.append("@Override").append(EOL);
-                sb.append("public void resume() {").append(EOL);
-
-                sb.append("}").append(EOL);
-
-                sb.append("@Override").append(EOL);
-                sb.append("public void hide() {").append(EOL);
-
-                sb.append("}").append(EOL);
-
-                sb.append("@Override").append(EOL);
-                sb.append("public void dispose() {").append(EOL);
-            }*/
 }

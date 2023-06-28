@@ -498,6 +498,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                         eventTabAdapter.setCurrentActivity(projectFileBean);
                         eventTabAdapter.refreshEvents();
 
+
                     } else {
                         return;
                     }
@@ -544,6 +545,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                         projectFileSelector.syncState();
                         if (eventTabAdapter != null) {
                             eventTabAdapter.refreshEvents();
+
                         }
                     }
                 } else if (position == 1) {

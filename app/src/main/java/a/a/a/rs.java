@@ -123,6 +123,7 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
         if (requestCode == REQUEST_CODE_ADD_EVENT) {
             refreshEvents();
         }
+        refreshEvents();
     }
 
 
@@ -391,14 +392,14 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
         activityEvents = new ArrayList<>();
         drawerViewEvents = new ArrayList<>();
 
-        events.put(0, activityEvents);
+        /*events.put(0, activityEvents);
         events.put(1, viewEvents);
         events.put(2, componentEvents);
         events.put(3, drawerViewEvents);
-        events.put(4, moreBlocks);
-        /*events.put(0, activityEvents);
+        events.put(4, moreBlocks);*/
+        events.put(0, activityEvents);
         events.put(1, componentEvents);
-        events.put(2, moreBlocks);*/
+        events.put(2, moreBlocks);
         /*events.put(3, drawerViewEvents);
         events.put(4, moreBlocks);*/
 
@@ -872,14 +873,15 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
             @Override
             public void onClick(View v) {
                 notifyItemChanged(index);
-                if (getLayoutPosition() == 2){
+                /*if (getLayoutPosition() == 2){
                     index = 4;
                 }else
                 if (getLayoutPosition() == 1){
                     index = 3;
                 }else {
                     index = 0;
-                }
+                }*/
+                index = getLayoutPosition();
                 notifyItemChanged(index);
                 initializeEvents(events.get(index));
 

@@ -1176,8 +1176,8 @@ public class ExtraPaletteBlock {
                 return;
 
             case 8:
-                //logicEditor.b("Create", "blockAdd");
-              //  logicEditor.b("Import From Collection", "blockImport");
+                logicEditor.b("Create", "blockAdd");
+                logicEditor.b("Import From Collection", "blockImport");
                 if (ConfigActivity.isSettingEnabled(ConfigActivity.SETTING_SHOW_BUILT_IN_BLOCKS)) {
                     logicEditor.a(" ", "customToast");
                     logicEditor.a(" ", "customToastWithIcon");
