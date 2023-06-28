@@ -2,7 +2,7 @@
   <img src="assets/SketchGDXIcon.png" />
 </p>
 <p align="left">
-<a href="assets/SketchGDX2.0-Release.apk"/>
+<a href="assets/SketchGDX2.0-Release.apk"> Latest Release Apk</a>
 </p>
 
 # SketchGDX Pro
