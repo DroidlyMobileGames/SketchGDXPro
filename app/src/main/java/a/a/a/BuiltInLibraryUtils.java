@@ -1,7 +1,7 @@
 package a.a.a;
 
-import mod.jbk.build.BuiltInLibraries;
-import mod.jbk.build.BuiltInLibraries.BuiltInLibrary;
+import mod.buildcompiler.BuiltInLibraries;
+import mod.buildcompiler.BuiltInLibraries.BuiltInLibrary;
 
 public class BuiltInLibraryUtils {
 

@@ -14,7 +14,7 @@ import mod.agus.jcoderz.handle.component.ConstVarComponent;
 import mod.hey.studios.build.BuildSettings;
 import mod.hey.studios.moreblock.ReturnMoreblockManager;
 import mod.hilal.saif.components.ComponentsHandler;
-import mod.jbk.build.BuiltInLibraries;
+import mod.buildcompiler.BuiltInLibraries;
 import mod.jbk.editor.manage.library.ExcludeBuiltInLibrariesActivity;
 
 public class Lx {
