@@ -2,7 +2,7 @@ package mod.agus.jcoderz.editor.library;
 
 import a.a.a.BuiltInLibraryManager;
 import mod.agus.jcoderz.handle.component.ConstVarComponent;
-import mod.jbk.BuiltInLibraries;
+import mod.jbk.build.BuiltInLibraries;
 
 public class ExtLibSelected {
 

@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import mod.jbk.BuiltInLibraries;
+import mod.jbk.build.BuiltInLibraries;
 
 public class ApkSigner {
 

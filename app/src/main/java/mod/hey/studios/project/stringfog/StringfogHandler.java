@@ -7,7 +7,7 @@ import java.util.HashMap;
 import a.a.a.Dp;
 import mod.agus.jcoderz.lib.FileUtil;
 import mod.hey.studios.util.Helper;
-import mod.jbk.BuildProgressReceiver;
+import mod.jbk.build.BuildProgressReceiver;
 
 public class StringfogHandler {
 

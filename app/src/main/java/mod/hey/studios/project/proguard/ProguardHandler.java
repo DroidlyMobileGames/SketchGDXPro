@@ -3,13 +3,14 @@ package mod.hey.studios.project.proguard;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import a.a.a.Dp;
 import mod.agus.jcoderz.lib.FileUtil;
 import mod.hey.studios.util.Helper;
-import mod.jbk.BuildProgressReceiver;
+import mod.jbk.build.BuildProgressReceiver;
 
 public class ProguardHandler {
     public static String ANDROID_PROGUARD_RULES_PATH = createAndroidRules();
