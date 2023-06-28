@@ -1,8 +1,8 @@
 <p align="center">
   <img src="assets/SketchGDXIcon.png" />
-<a>Download the latest version at the bottom!</a>
-</p>
 
+</p>
+<a>Download the latest version at the bottom!</a>
 
 # SketchGDX Pro
 
