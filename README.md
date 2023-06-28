@@ -1,5 +1,6 @@
 <p align="center">
   <img src="assets/SketchGDXIcon.png" />
+<a>Download the latest version at the bottom!</a>
 </p>
 
 
