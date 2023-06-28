@@ -10,7 +10,7 @@ import com.sketchware.remodgdx.R;
 import java.util.HashMap;
 
 import mod.hey.studios.util.Helper;
-import mod.jbk.dna.BuiltInLibraries;
+import mod.jbk.BuiltInLibraries;
 
 public class sB {
     public static void a(Context context, boolean resetOnlySettings) {

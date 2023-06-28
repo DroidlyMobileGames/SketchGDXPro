@@ -3,7 +3,7 @@ package mod.hey.studios.compiler.kotlin;
 import a.a.a.BuiltInLibraryManager;
 import a.a.a.Dp;
 import a.a.a.yq;
-import mod.jbk.dna.BuildProgressReceiver;
+import mod.jbk.BuildProgressReceiver;
 
 public class KotlinCompilerBridge {
 

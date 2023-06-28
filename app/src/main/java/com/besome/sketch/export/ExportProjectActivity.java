@@ -66,8 +66,8 @@ import mod.hey.studios.compiler.kotlin.KotlinCompilerBridge;
 import mod.hey.studios.project.proguard.ProguardHandler;
 import mod.hey.studios.project.stringfog.StringfogHandler;
 import mod.hey.studios.util.Helper;
-import mod.jbk.dna.BuildProgressReceiver;
-import mod.jbk.dna.compiler.bundle.AppBundleCompiler;
+import mod.jbk.BuildProgressReceiver;
+import mod.jbk.compiler.bundle.AppBundleCompiler;
 import mod.jbk.export.GetKeyStoreCredentialsDialog;
 import mod.jbk.util.TestkeySignBridge;
 

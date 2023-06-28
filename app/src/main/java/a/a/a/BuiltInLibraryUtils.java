@@ -1,7 +1,7 @@
 package a.a.a;
 
-import mod.jbk.dna.BuiltInLibraries;
-import mod.jbk.dna.BuiltInLibraries.BuiltInLibrary;
+import mod.jbk.BuiltInLibraries;
+import mod.jbk.BuiltInLibraries.BuiltInLibrary;
 
 public class BuiltInLibraryUtils {
 

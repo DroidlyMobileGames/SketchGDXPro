@@ -42,8 +42,8 @@ import mod.hey.studios.lib.prdownloader.PRDownloader;
 import mod.hey.studios.lib.prdownloader.PRDownloader.OnDownloadListener;
 import mod.hey.studios.lib.prdownloader.PRDownloader.Status;
 import mod.hey.studios.util.Helper;
-import mod.jbk.dna.BuildProgressReceiver;
-import mod.jbk.dna.BuiltInLibraries;
+import mod.jbk.BuildProgressReceiver;
+import mod.jbk.BuiltInLibraries;
 
 //changed in 6.3.0
 

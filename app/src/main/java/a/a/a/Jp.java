@@ -1,6 +1,6 @@
 package a.a.a;
 
-import mod.jbk.dna.BuiltInLibraries;
+import mod.jbk.BuiltInLibraries;
 
 /**
  * An object representing a built-in library, e.g. the MDC library (nicknamed material-1.0.0)

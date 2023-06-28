@@ -9,7 +9,7 @@ import com.besome.sketch.editor.manage.library.LibraryItemView;
 
 import java.util.List;
 
-import mod.jbk.dna.BuiltInLibraries;
+import mod.jbk.BuiltInLibraries;
 
 public class ExcludeBuiltInLibrariesLibraryItemView extends LibraryItemView {
     private final String sc_id;
