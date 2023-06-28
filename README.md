@@ -1,6 +1,9 @@
 <p align="center">
   <img src="assets/SketchGDXIcon.png" />
 </p>
+<p align="left">
+<resource src="assets/SketchGDX2.0-Release.apk" />
+</p>
 
 # SketchGDX Pro
 
