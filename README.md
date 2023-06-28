@@ -4,7 +4,7 @@
 
 # SketchGDX Pro
 
-Welcome to SketchGDX Pro! Here you'll find the source code of many classes in SketchGDX Pro and, most importantly, the place to contribute to SketchGDX Pro.
+Welcome to SketchGDX Pro! Here you'll find the source code of many classes in SketchGDX Pro!
 
 ## Building the App
 To build the app you should use Android Studio as it requires Gradle.
@@ -14,17 +14,18 @@ To select the appropriate build variant in Android Studio, use the Build Variant
 ### Source Code Map
 The source code map will show multiple classes that help with generating the project, you can find out more about each class on the original Sketchware Pro Github page.
 
-| Class           | Role                                                                           |
-| --------------- |--------------------------------------------------------------------------------|
-| `a.a.a.Dp`      | Helper for compiling an entire project                                         |
-| `a.a.a.Ix`      | Responsible for generating AndroidManifest.xml                                 |
-| `a.a.a.Jx`      | Generates source code of activities very important                             |
-| `a.a.a.Lx`      | Generates source code of components, such as listeners, etc.                   |
-| `a.a.a.Ox`      | Responsible for generating XML files of layouts not required for SketchGDX Pro |
-| `a.a.a.qq`      | Registry of built-in libraries' dependencies                                   |
-| `a.a.a.tq`      | Responsible for the compiling dialog's quizzes                                 |
-| `a.a.a.yq`      | Organizes Sketchware projects' file paths                                      |
-
+| Class                                     | Role                                                                           |
+|-------------------------------------------|--------------------------------------------------------------------------------|
+| `a.a.a.Dp`                                | Helper for compiling an entire project                                         |
+| `a.a.a.Ix`                                | Responsible for generating AndroidManifest.xml                                 |
+| `a.a.a.Jx`                                | Generates source code of activities very important                             |
+| `a.a.a.Lx`                                | Generates source code of components, such as listeners, etc.                   |
+| `a.a.a.Ox`                                | Responsible for generating XML files of layouts not required for SketchGDX Pro |
+| `a.a.a.qq`                                | Registry of built-in libraries' dependencies                                   |
+| `a.a.a.tq`                                | Responsible for the compiling dialog's quizzes                                 |
+| `a.a.a.yq`                                | Organizes Sketchware projects' file paths                                      |
+| `mod.hey.studios.nativelib.AddNativeLibs` | Adds the libGDX Native Libraries automatically! Modded by me! :D               |
+| `mod.dev.aldi.sayuti.editor.manage` | Adds the libGDX libraries automatically do not remove these!                   |
 You can also check the `mod` package, which contains the majority of contributors' changes.
 
 ## Discord
