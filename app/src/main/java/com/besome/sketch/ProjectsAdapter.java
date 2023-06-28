@@ -263,7 +263,6 @@ public class ProjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             holder.projectView.setOnClickListener(v -> {
                 if (!mB.a()) {
                     projectsFragment.toDesignActivity(yB.c(projectMap, "sc_id"));
-                    System.out.println("GET FUCKED NIGGA " + projectMap);
                 }
             });
             holder.projectView.setOnLongClickListener(v -> {
