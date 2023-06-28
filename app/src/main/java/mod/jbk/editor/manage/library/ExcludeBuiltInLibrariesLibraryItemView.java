@@ -6,11 +6,10 @@ import androidx.annotation.Nullable;
 
 import com.besome.sketch.beans.ProjectLibraryBean;
 import com.besome.sketch.editor.manage.library.LibraryItemView;
-import com.sketchware.remodgdx.R;
 
 import java.util.List;
 
-import mod.jbk.build.BuiltInLibraries;
+import mod.jbk.dna.BuiltInLibraries;
 
 public class ExcludeBuiltInLibrariesLibraryItemView extends LibraryItemView {
     private final String sc_id;
