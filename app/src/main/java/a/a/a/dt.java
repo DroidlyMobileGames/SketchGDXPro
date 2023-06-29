@@ -73,6 +73,7 @@ public class dt extends LinearLayout {
         TextInputLayout tilVariableName = findViewById(R.id.ti_variable_name);
         ((TextView) findViewById(R.id.tv_title_blockname)).setText(Helper.getResString(R.string.logic_editor_more_block_title_name_of_block));
         ((TextView) findViewById(R.id.tv_title_add_variable)).setText(Helper.getResString(R.string.logic_editor_more_block_title_add_variable));
+
         blockNameValidator = new MoreblockValidator(activity, tilBlockName, uq.b, uq.a(), new ArrayList<>());
         labelTextValidator = new ZB(activity, tilLabelText, uq.b, uq.a(), new ArrayList<>());
         variableNameValidator = new ZB(activity, tilVariableName, uq.b, uq.a(), new ArrayList<>());
@@ -110,7 +111,9 @@ public class dt extends LinearLayout {
                     }
 
                     variablesSpecAndNamePair.add(new Pair<>(fullSpec, variableName.getText().toString()));
-                    updateBlockPreview(blockContainer, removeArea, block, blockName.getText().toString(), variablesSpecAndNamePair);
+                    updateBlockPreview(blockContainer,
+                            removeArea, block,
+                            blockName.getText().toString(), variablesSpecAndNamePair);
 
                     ArrayList<String> reservedVariableNames = new ArrayList<>(Arrays.asList(uq.a()));
 

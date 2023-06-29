@@ -2189,7 +2189,6 @@ public class LogicEditorActivity
             return;
         }
         L();
-        System.out.println("LOGIC EDITOR COCKASS");
     }
 
     @Override

@@ -41,6 +41,7 @@ import com.besome.sketch.editor.LogicEditorActivity;
 import com.besome.sketch.editor.event.AddEventActivity;
 import com.besome.sketch.editor.event.CollapsibleButton;
 import com.besome.sketch.editor.event.CollapsibleEventLayout;
+import com.besome.sketch.editor.makeblock.MakeBlockActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sketchware.remodgdx.R;
 
@@ -129,16 +130,29 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
     @Override
     public void onClick(View v) {
         if (!mB.a() && v.getId() == R.id.fab) {
+            int category = 0;
             AddEventActivity poop = new AddEventActivity();
             Intent intent = new Intent(getActivity().getApplicationContext(), poop.getClass());
             isFragment = currentActivity.fileName.contains("_fragment");
             isDialogFragment = currentActivity.fileName.contains("_dialog_fragment");
             activityName = currentActivity.fileName;
-            intent.putExtra("sc_id", sc_id);
-            intent.putExtra("project_file", currentActivity);
-            intent.putExtra("category_index", categoryAdapter.index);
-            startActivityForResult(intent, REQUEST_CODE_ADD_EVENT);
-            System.out.println("COCKASS FAB CLICKED");
+            if (categoryAdapter.index == 2){
+                category = 4;
+                intent = new Intent(getContext(),
+                        MakeBlockActivity.class);
+                intent.putExtra("sc_id", sc_id);
+                intent.putExtra("project_file", currentActivity);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivityForResult(intent, 0);
+            }else {
+                category = categoryAdapter.index;
+                intent.putExtra("sc_id", sc_id);
+                intent.putExtra("project_file", currentActivity);
+                intent.putExtra("category_index", category);
+                startActivityForResult(intent, REQUEST_CODE_ADD_EVENT);
+            }
+
+
 
         }
     }
@@ -196,8 +210,7 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
         }
     }
 
-    public void refreshEvents() {
-        System.out.println("COCKASS REFRESH");
+    public void refreshEvents() {//This handles refreshing all the blocks and other event data
         if (currentActivity != null) {
             moreBlocks.clear();
             viewEvents.clear();

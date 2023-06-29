@@ -55,11 +55,13 @@ public class MakeBlockActivity extends BaseAppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(0,0);
         if (!super.j()) {
             finish();
         }
 
         setContentView(R.layout.make_block);
+
         if (savedInstanceState == null) {
             sc_id = getIntent().getStringExtra("sc_id");
             project = getIntent().getParcelableExtra("project_file");
@@ -74,7 +76,8 @@ public class MakeBlockActivity extends BaseAppCompatActivity {
         getSupportActionBar().setTitle(Helper.getResString(R.string.logic_editor_more_block_actionbar_title_create_more_block));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-        toolbar.setNavigationOnClickListener(Helper.getBackPressedClickListener(this));
+        toolbar.setNavigationOnClickListener(
+                Helper.getBackPressedClickListener(this));
         makeBlock = new dt(this);
         makeBlock.setFuncNameValidator(jC.a(sc_id).a(project));
 
@@ -85,7 +88,8 @@ public class MakeBlockActivity extends BaseAppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.moreblock_menu, menu);
-        menu.findItem(R.id.moreblock_create).setTitle(Helper.getResString(R.string.common_word_create));
+        menu.findItem(R.id.moreblock_create).setTitle(
+                Helper.getResString(R.string.common_word_create));
         return true;
     }
 
@@ -96,7 +100,8 @@ public class MakeBlockActivity extends BaseAppCompatActivity {
 
             if (makeBlock.b()) {
                 Intent intent = new Intent();
-                Pair<String, String> blockInformation = makeBlock.getBlockInformation();
+                Pair<String, String> blockInformation =
+                        makeBlock.getBlockInformation();
                 intent.putExtra("block_name", blockInformation.first);
                 intent.putExtra("block_spec", blockInformation.second);
                 setResult(RESULT_OK, intent);
