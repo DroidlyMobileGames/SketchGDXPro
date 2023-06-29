@@ -40,7 +40,7 @@ This mod was not intended to replace Sketchware Pro or Sketchware as it was inte
 
 I love Sketchware Pro and what the modding team has done to it, mind you there are many aspects like what I've done here that were not available or easily available so I re modded Sketchware Pro to be a standalone libGDX enabled application!  This means that you can install the application without interfering with Sketchware Pro projects or files :D!
 
-# SketchGDX Pro Apk
+# SketchGDX Pro Original
 <p align="left">
-<a href="assets/SketchGDX2.0-Release.apk?raw=true">Click to download the latest APK release V2.0</a>
+<a href="https://github.com/Sketchware-Pro/Sketchware-Pro">This will take you to the original Sketchware Pro!</a>
 </p>

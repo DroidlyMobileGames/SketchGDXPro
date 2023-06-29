@@ -123,7 +123,6 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
         if (requestCode == REQUEST_CODE_ADD_EVENT) {
             refreshEvents();
         }
-        refreshEvents();
     }
 
 
@@ -139,6 +138,8 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
             intent.putExtra("project_file", currentActivity);
             intent.putExtra("category_index", categoryAdapter.index);
             startActivityForResult(intent, REQUEST_CODE_ADD_EVENT);
+            System.out.println("COCKASS FAB CLICKED");
+
         }
     }
 
@@ -196,6 +197,7 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
     }
 
     public void refreshEvents() {
+        System.out.println("COCKASS REFRESH");
         if (currentActivity != null) {
             moreBlocks.clear();
             viewEvents.clear();
@@ -210,8 +212,6 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
                 eventBean.initValue();
                 moreBlocks.add(eventBean);
             }
-            /*EventBean eventBean2 = new EventBean(EventBean.EVENT_TYPE_ACTIVITY, -1,
-                    "DILDO", "initializeLogic");*/
 
             //DNA MOBILE Might change this based on the class type later
             EventBean eventBean2 = new EventBean(

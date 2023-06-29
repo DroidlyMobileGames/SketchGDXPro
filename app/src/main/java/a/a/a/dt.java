@@ -60,6 +60,7 @@ public class dt extends LinearLayout {
         LayoutInflater.from(activity).inflate(R.layout.make_block_layout, this);
 
         radio_mb_type = findViewById(R.id.radio_mb_type);
+
         initRefresh();
 
         LinearLayout addVariableContainer = findViewById(R.id.var_type_spinner);
@@ -84,17 +85,20 @@ public class dt extends LinearLayout {
         blockName.setPrivateImeOptions("defaultInputmode=english;");
         labelText.setPrivateImeOptions("defaultInputmode=english;");
         variableName.setPrivateImeOptions("defaultInputmode=english;");
+
         blockName.addTextChangedListener(new BaseTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().equals("") || blockNameValidator.b()) {
-                    updateBlockPreview(blockContainer, removeArea, block, s.toString(), variablesSpecAndNamePair);
+                    updateBlockPreview(blockContainer,
+                            removeArea, block, s.toString(), variablesSpecAndNamePair);
                 }
             }
         });
 
         Button addVariable = findViewById(R.id.add_variable);
         addVariable.setText(Helper.getResString(R.string.logic_editor_more_block_button_add));
+
         addVariable.setOnClickListener(view -> {
             if (!mB.a()) {
                 if (variableNameValidator.b() && blockNameValidator.b()) {
@@ -122,6 +126,7 @@ public class dt extends LinearLayout {
 
             }
         });
+
         Button addLabel = findViewById(R.id.add_label);
         addLabel.setText(Helper.getResString(R.string.logic_editor_more_block_button_add));
 
@@ -133,6 +138,7 @@ public class dt extends LinearLayout {
         p_input.setHint("Parameter: m.name");
         final TextInputLayout n_input = (TextInputLayout) customVariableName.getParent().getParent();
         n_input.setHint("Variable name");
+
         customVariableSpec.addTextChangedListener(new BaseTextWatcher() {
             @Override
             public void onTextChanged(CharSequence sequence, int start, int before, int count) {
@@ -164,6 +170,7 @@ public class dt extends LinearLayout {
                 variableNameValidator.a(prohibitedVariableNames.toArray(new String[0]));
             }
         });
+
         addLabel.setOnClickListener(v -> {
             if (!mB.a()) {
                 if (labelTextValidator.b() && blockNameValidator.b()) {
@@ -173,6 +180,7 @@ public class dt extends LinearLayout {
                 }
             }
         });
+
         block = new Rs(activity, 0, "", " ", "definedFunc");
         blockContainer.addView(block);
     }
@@ -216,13 +224,13 @@ public class dt extends LinearLayout {
             String parameterType = parameter.first;
 
             Rs block;
-            if (parameterType.equals("b")) {
+            if (parameterType.equals("b")) {//boolean
                 block = new Rs(activity, variables.indexOf(parameter) + 1, parameter.second, "b", "getArg");
-            } else if (parameterType.equals("d")) {
+            } else if (parameterType.equals("d")) {//number (double)
                 block = new Rs(activity, variables.indexOf(parameter) + 1, parameter.second, "d", "getArg");
-            } else if (parameterType.equals("s")) {
+            } else if (parameterType.equals("s")) {//String
                 block = new Rs(activity, variables.indexOf(parameter) + 1, parameter.second, "s", "getArg");
-            } else if (parameterType.length() > 2) {
+            } else if (parameterType.length() > 2) {//Otherwise set block to lists
                 String customType = parameterType.substring(parameterType.indexOf(".") + 1);
                 String letter = kq.a(customType);
                 block = new Rs(activity, variables.indexOf(parameter) + 1, parameter.second, letter, kq.b(customType), "getArg");

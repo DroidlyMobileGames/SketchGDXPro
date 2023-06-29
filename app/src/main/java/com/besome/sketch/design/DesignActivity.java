@@ -41,6 +41,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.besome.sketch.beans.EventBean;
 import com.besome.sketch.beans.ProjectFileBean;
 import com.besome.sketch.common.SrcViewerActivity;
+import com.besome.sketch.editor.event.AddEventActivity;
 import com.besome.sketch.editor.manage.ManageCollectionActivity;
 import com.besome.sketch.editor.manage.font.ManageFontActivity;
 import com.besome.sketch.editor.manage.image.ManageImageActivity;
@@ -354,11 +355,13 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                     viewTabAdapter.j();
                 }
                 break;
+
         }
     }
 
     @Override
     public void onBackPressed() {
+
         if (drawer.isDrawerOpen(GravityCompat.END)) {
             drawer.closeDrawer(GravityCompat.END);
         } /*else if (viewTabAdapter.g()) {
@@ -370,6 +373,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
             } else if (t.c("P12I2")) {
                 k();
                 new SaveChangesProjectCloser(getApplicationContext()).execute();
+
             } else {
                 showSaveBeforeQuittingDialog();
             }
@@ -441,6 +445,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         setContentView(R.layout.design);
         overridePendingTransition(0,0);
 
+
         if (!j()) {
             finish();
         }
@@ -486,7 +491,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         projectFileSelector.setOnSelectedFileChangeListener((i, projectFileBean) -> {
             if (i == 1) {
                 if (viewTabAdapter != null && projectFileBean != null) {
-                    int orientation = projectFileBean.orientation;
+                   /* int orientation = projectFileBean.orientation;
                     if (orientation == ProjectFileBean.ORIENTATION_PORTRAIT) {
                         xmlLayoutOrientation.setImageResource(R.drawable.ic_screen_portrait_grey600_24dp);
                     } else if (orientation == ProjectFileBean.ORIENTATION_LANDSCAPE) {
@@ -494,7 +499,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                     } else {
                         xmlLayoutOrientation.setImageResource(R.drawable.ic_screen_rotation_grey600_24dp);
                     }
-                    viewTabAdapter.a(projectFileBean);
+                    viewTabAdapter.a(projectFileBean);*/
                 }
             } else if (i == 0) {
                 if (eventTabAdapter != null) {
@@ -635,7 +640,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         if (!j()) {
             finish();
         }
-
+        eventTabAdapter.refreshEvents();//DNA MOBILE EDIT FIXED moreBlock not loading when you create a MoreBlock from within the logic editor!
         long freeMegabytes = GB.c();
         if (freeMegabytes < 100L && freeMegabytes > 0L) {
             warnAboutInsufficientStorageSpace();
@@ -645,6 +650,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putString("sc_id", sc_id);
+
         projectFileSelector.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
         if (!j()) {
@@ -1348,6 +1354,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         @Override
         protected String doInBackground(Void... voids) {
             return a(voids);
+
         }
     }
 
@@ -1393,6 +1400,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         public UnsavedChangesSaver(Context context) {
             super(context);
             addTask(this);
+
         }
 
         @Override
@@ -1429,6 +1437,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                     /*Helper.getResString(R.string.design_tab_title_view),*/
                     Helper.getResString(R.string.design_tab_title_event),
                     Helper.getResString(R.string.design_tab_title_component)};
+
         }
 
         @Override

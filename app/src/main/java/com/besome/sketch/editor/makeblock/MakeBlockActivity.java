@@ -77,7 +77,8 @@ public class MakeBlockActivity extends BaseAppCompatActivity {
         toolbar.setNavigationOnClickListener(Helper.getBackPressedClickListener(this));
         makeBlock = new dt(this);
         makeBlock.setFuncNameValidator(jC.a(sc_id).a(project));
-        LinearLayout makeBlock = findViewById(R.id.makeblock_view);
+
+        LinearLayout makeBlock = findViewById(R.id.makeblock_view);//This adds the make_block_layout to a view in this case the makeBLock linear layout
         makeBlock.addView(this.makeBlock);
     }
 
@@ -100,6 +101,7 @@ public class MakeBlockActivity extends BaseAppCompatActivity {
                 intent.putExtra("block_spec", blockInformation.second);
                 setResult(RESULT_OK, intent);
                 finish();
+
                 return true;
             }
         }
@@ -113,12 +115,13 @@ public class MakeBlockActivity extends BaseAppCompatActivity {
         if (!super.j()) {
             finish();
         }
+
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putString("sc_id", sc_id);
+
+        super.onSaveInstanceState(outState);outState.putString("sc_id", sc_id);
         outState.putParcelable("project_file", project);
-        super.onSaveInstanceState(outState);
     }
 }
