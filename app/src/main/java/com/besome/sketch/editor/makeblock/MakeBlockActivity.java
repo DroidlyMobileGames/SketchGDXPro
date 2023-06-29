@@ -124,9 +124,8 @@ public class MakeBlockActivity extends BaseAppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-
+    public void onSaveInstanceState(Bundle outState) {outState.putParcelable("project_file", project);
         super.onSaveInstanceState(outState);outState.putString("sc_id", sc_id);
-        outState.putParcelable("project_file", project);
+
     }
 }

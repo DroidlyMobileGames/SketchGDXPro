@@ -313,7 +313,8 @@ public class dt extends LinearLayout {
         if (!blockName.getText().toString().isEmpty() && blockNameValidator.b()) {
             return true;
         } else {
-            bB.b(getContext(), Helper.getResString(R.string.logic_editor_message_name_requied), Toast.LENGTH_SHORT).show();
+            bB.b(getContext(), Helper.getResString(R.string.logic_editor_message_name_requied),
+                    Toast.LENGTH_SHORT).show();
             return false;
         }
     }
