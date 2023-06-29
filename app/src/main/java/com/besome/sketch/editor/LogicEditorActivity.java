@@ -834,7 +834,7 @@ public class LogicEditorActivity
                             if (D.equals("onBindCustomView")) {
                                 String customView = jC.a(B).c(M.getXmlName(), C).customView;
                                 if (customView != null) {
-                                    xmlName = ProjectFileBean.getXmlName(customView);
+                                    //xmlName = ProjectFileBean.getXmlName(customView);
                                 }
                             }
 

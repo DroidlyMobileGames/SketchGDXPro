@@ -193,7 +193,8 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         snackbar.setAction(Helper.getResString(R.string.common_word_show), v -> {
             if (!mB.a()) {
                 snackbar.dismiss();
-                Intent intent = new Intent(getApplicationContext(), CompileLogActivity.class);
+                Intent intent = new Intent(getApplicationContext(),
+                        CompileLogActivity.class);
                 intent.putExtra("error", error);
                 intent.putExtra("sc_id", sc_id);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -283,6 +284,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
+
             case REQUEST_CODE_VIEW_MANAGER:
                 if (resultCode == RESULT_OK) {
                     if (projectFileSelector != null) {
@@ -448,6 +450,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         } else {
             sc_id = savedInstanceState.getString("sc_id");
         }
+        //Only adds them if they aren't present already
         addLocalLibraries = new AddLocalLibraries(getApplicationContext(),sc_id);
 
         if (!FileUtil.isExistFile(new FilePathUtil().getPathNativelibs(sc_id) + "/x86_64/libgdx.so")) {
@@ -477,6 +480,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         runProject.setOnClickListener(this);
         findViewById(R.id.btn_compiler_opt).setOnClickListener(this);
         xmlLayoutOrientation = findViewById(R.id.img_orientation);
+
         projectFileSelector = findViewById(R.id.file_selector);
         projectFileSelector.setScId(sc_id);
         projectFileSelector.setOnSelectedFileChangeListener((i, projectFileBean) -> {
@@ -497,8 +501,6 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                     if (projectFileBean != null) {
                         eventTabAdapter.setCurrentActivity(projectFileBean);
                         eventTabAdapter.refreshEvents();
-
-
                     } else {
                         return;
                     }
@@ -510,9 +512,11 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
             }
         });
         viewPager = findViewById(R.id.viewpager);
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), this));
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),
+                this));
         viewPager.setOffscreenPageLimit(3);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager.addOnPageChangeListener(
+                new ViewPager.OnPageChangeListener() {
 
             @Override
             public void onPageScrollStateChanged(int state) {
@@ -581,6 +585,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                 currentTabNumber = position;
             }
         });
+
         viewPager.getAdapter().notifyDataSetChanged();
         ((TabLayout) findViewById(R.id.tab_layout)).setupWithViewPager(viewPager);
     }
@@ -621,6 +626,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
@@ -1253,6 +1259,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
 
             projectFileSelector.syncState();
             h();
+
             if (savedInstanceState == null) {
                 checkForUnsavedProjectData();
             }
@@ -1437,7 +1444,8 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         @Override
         @NonNull
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            Fragment fragment = (Fragment) super.instantiateItem(container, position);
+            Fragment fragment = (Fragment)
+                    super.instantiateItem(container, position);
             /*if (position == 0) {
                 viewTabAdapter = (ViewEditorFragment) fragment;
             } else if (position == 1) {
@@ -1451,12 +1459,13 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
             if (position == 0) {
                 //viewTabAdapter = (ViewEditorFragment) fragment;
                 if (eventTabAdapter!=null){
-                    eventTabAdapter = (rs) fragment;
+                    eventTabAdapter = (rs) fragment;viewTabAdapter.i();
                 }
             } else if (position == 1) {
                 if (componentTabAdapter!=null)
-                    componentTabAdapter = (br) fragment;
+                    componentTabAdapter = (br) fragment;viewTabAdapter.i();
             }
+
             }catch (Exception e){
 
             }

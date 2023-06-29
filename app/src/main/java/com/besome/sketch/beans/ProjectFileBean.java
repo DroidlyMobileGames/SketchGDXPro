@@ -99,6 +99,7 @@ public class ProjectFileBean extends SelectableBean implements Parcelable {
         this.keyboardSetting = keyboardSetting;
         presetName = "Basic Activity";
         theme = THEME_NONE;
+
         if (noActionBar) {
             options |= OPTION_ACTIVITY_TOOLBAR;
         }
@@ -170,7 +171,8 @@ public class ProjectFileBean extends SelectableBean implements Parcelable {
                 name = firstPart + camelCase + lastPart;
             }
         }
-        name += "";//Adds extension Activity to class name removed for game engine
+        name += "";
+        //Adds extension Activity to class name removed for game engine
         return Character.toUpperCase(name.charAt(0)) + name.substring(1);
     }
 

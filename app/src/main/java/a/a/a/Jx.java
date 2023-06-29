@@ -183,7 +183,7 @@ public class Jx {
         addDrawerComponentInitializer();
         initializeEventsCodeGenerator();
         addMoreBlockCodes();
-        addAdapterCode();
+        //addAdapterCode();
         addRequestCodeConstants();
         addImportsForBlocks();
         addLocalLibraryImports();
@@ -716,7 +716,7 @@ public class Jx {
 
     private void addAdapterCode() {
         for (ViewBean viewBean : projectDataManager.f(projectFileBean.getXmlName())) {
-            String xmlName = ProjectFileBean.getXmlName(viewBean.customView);
+            /*String xmlName = ProjectFileBean.getXmlName(viewBean.customView);
             projectFileBean.getJavaName();
             String eventName = viewBean.id + "_onBindCustomView";
             String adapterLogic = new Fx(projectFileBean.getActivityName(), buildConfig, eventName, projectDataManager
@@ -729,7 +729,7 @@ public class Jx {
             } else {
                 adapterCode = Lx.getListAdapterCode(viewBean.id, viewBean.customView, projectDataManager.d(xmlName), adapterLogic);
             }
-            adapterClasses.add(adapterCode);
+            adapterClasses.add(adapterCode);*/
         }
     }
 
@@ -823,7 +823,8 @@ public class Jx {
      * Handles the Activity's Drawer Views and Components
      */
     private void addDrawerComponentInitializer() {
-        ArrayList<ViewBean> viewBeans = projectDataManager.d(projectFileBean.getXmlName());
+        ArrayList<ViewBean> viewBeans = projectDataManager.d(
+                projectFileBean.getXmlName());
         for (ViewBean viewBean : viewBeans) {
             initializeMethodCode.add(getViewInitializer(viewBean));
         }

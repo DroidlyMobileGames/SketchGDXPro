@@ -64,7 +64,8 @@ public class ViewEditorFragment extends qA {
             invalidateOptionsMenu();
         });
         viewProperty.setOnEventClickListener(eventBean ->
-                toLogicEditorActivity(eventBean.targetId, eventBean.eventName, eventBean.eventName));
+                toLogicEditorActivity(eventBean.targetId,
+                        eventBean.eventName, eventBean.eventName));
         viewProperty.setOnPropertyTargetChangeListener(viewEditor::a);
         viewEditor.setOnWidgetSelectedListener(new cy() {
             @Override
@@ -530,7 +531,8 @@ public class ViewEditorFragment extends qA {
 
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup parent, Bundle bundle) {
-        ViewGroup viewGroup = (ViewGroup) layoutInflater.inflate(R.layout.fr_graphic_editor, parent, false);
+        ViewGroup viewGroup = (ViewGroup) layoutInflater.inflate(
+                R.layout.fr_graphic_editor, parent, false);
         initialize(viewGroup);
         if (bundle != null) {
             sc_id = bundle.getString("sc_id");
