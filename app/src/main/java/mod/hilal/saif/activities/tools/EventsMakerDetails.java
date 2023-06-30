@@ -57,7 +57,8 @@ public class EventsMakerDetails extends Activity {
         FloatingActionButton fab = findViewById(R.id.add_attr_fab);
         fab.setOnClickListener(v -> {
             Intent intent = new Intent();
-            intent.setClass(getApplicationContext(), EventsMakerCreator.class);
+            intent.setClass(getApplicationContext(),
+                    EventsMakerCreator.class);
             intent.putExtra("lis_name", lisName);
             startActivity(intent);
         });

@@ -53,7 +53,7 @@ public class EventsMaker extends Activity {
     public static final File LISTENERS_FILE = new File(Environment.getExternalStorageDirectory(),
             ".sketchwaregames/data/system/listeners.json");
     private ArrayList<HashMap<String, Object>> listMap = new ArrayList<>();
-    private ArrayList<String> checkeventnames = new ArrayList<>();
+    final private ArrayList<String> checkeventnames = new ArrayList<>();
     private ListView listView;
 
     @Override
@@ -140,6 +140,7 @@ public class EventsMaker extends Activity {
         save.setOnClickListener(v -> {
             if (!name.getText().toString().equals("")
                     && !checkeventnames.contains(name.getText().toString())) {
+
                 HashMap<String, Object> hashMap = new HashMap<>();
                 hashMap.put("name", name.getText().toString());
                 if (separate.isChecked()) {
@@ -179,8 +180,10 @@ public class EventsMaker extends Activity {
             events = new Gson()
                     .fromJson(FileUtil.readFile(EVENTS_FILE.getAbsolutePath()), Helper.TYPE_MAP_LIST);
             for (int i = 0; i < events.size(); i++) {
-                if (events.get(i).get("listener").toString().equals(before)) {
-                    events.get(i).put("listener", after);
+                if (events!=null) {
+                    if (events.get(i).get("listener").toString().equals(before)) {
+                        events.get(i).put("listener", after);
+                    }
                 }
             }
         }
