@@ -28,7 +28,7 @@ The source code map will show multiple classes that help with generating the pro
 | `a.a.a.yq`                                        | Organizes Sketchware projects' file paths                                      |
 | `mod.hey.studios.nativelib.AddNativeLibs`         | Adds the libGDX Native Libraries automatically! Modded by me! :D               |
 | `dev.aldi.sayuti.editor.manage.AddLocalLibraries` | Adds the libGDX libraries automatically do not remove these!                   |
-You can also check the `mod` package, which contains the majority of contributors' changes.
+You can also check the `mod` package, which contains the majority of contributors' changes. 
 
 ## Discord
 
