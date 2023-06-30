@@ -283,7 +283,6 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         switch (requestCode) {
 
             case REQUEST_CODE_VIEW_MANAGER:
@@ -356,6 +355,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                 }
                 break;
 
+
         }
     }
 
@@ -364,9 +364,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
 
         if (drawer.isDrawerOpen(GravityCompat.END)) {
             drawer.closeDrawer(GravityCompat.END);
-        } /*else if (viewTabAdapter.g()) {
-            //viewTabAdapter.a(false);
-        */ else {
+        } else {
             if (currentTabNumber > 0) {
                 currentTabNumber--;
                 viewPager.setCurrentItem(currentTabNumber);
@@ -419,7 +417,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                             if (FileUtil.isExistFile(q.finalToInstallApkPath)) {
                                 installBuiltApk();
                             } else {
-                                SketchwareUtil.toast("APK doesn't exist anymore");
+                                //SketchwareUtil.toast("APK doesn't exist anymore");
                             }
                             break;
 
@@ -592,7 +590,8 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         });
 
         viewPager.getAdapter().notifyDataSetChanged();
-        ((TabLayout) findViewById(R.id.tab_layout)).setupWithViewPager(viewPager);
+        ((TabLayout) findViewById(R.id.tab_layout))
+                .setupWithViewPager(viewPager);
     }
 
     @Override
@@ -1455,25 +1454,20 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             Fragment fragment = (Fragment)
                     super.instantiateItem(container, position);
-            /*if (position == 0) {
-                viewTabAdapter = (ViewEditorFragment) fragment;
-            } else if (position == 1) {
-                eventTabAdapter = (rs) fragment;
-            } else {
-                componentTabAdapter = (br) fragment;
-            }*/
             try {
 
 
             if (position == 0) {
                 //viewTabAdapter = (ViewEditorFragment) fragment;
                 if (eventTabAdapter!=null){
-                    eventTabAdapter = (rs) fragment;viewTabAdapter.i();
+                    eventTabAdapter = (rs) fragment;
                 }
             } else if (position == 1) {
-                if (componentTabAdapter!=null)
-                    componentTabAdapter = (br) fragment;viewTabAdapter.i();
+                if (componentTabAdapter!=null) {
+                    componentTabAdapter = (br) fragment;
+                }
             }
+                eventTabAdapter.refreshEvents();
 
             }catch (Exception e){
 

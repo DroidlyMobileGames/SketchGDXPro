@@ -83,6 +83,7 @@ public class dt extends LinearLayout {
         tilBlockName.setHint(Helper.getResString(R.string.logic_editor_more_block_hint_enter_new_block_name));
         tilVariableName.setHint(Helper.getResString(R.string.logic_editor_more_block_hint_enter_variable_name));
         tilLabelText.setHint(Helper.getResString(R.string.logic_editor_more_block_hint_enter_block_label));
+
         blockName.setPrivateImeOptions("defaultInputmode=english;");
         labelText.setPrivateImeOptions("defaultInputmode=english;");
         variableName.setPrivateImeOptions("defaultInputmode=english;");

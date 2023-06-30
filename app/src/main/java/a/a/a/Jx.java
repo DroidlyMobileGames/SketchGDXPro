@@ -207,20 +207,6 @@ public class Jx {
         }
         sb.append(EOL);
 
-        /*if (isFragment){
-            sb.append("public class ")
-                    .append(projectFileBean.getActivityName()
-                            .replace("Fragment","View"));
-        }
-        else if (isDialogFragment){
-            sb.append("public class ")
-                    .append(projectFileBean.getActivityName()
-                            .replace("Dialog",""));
-        }else {
-            sb.append("public class ")
-                    .append(projectFileBean
-                            .getActivityName()).append(" extends ");
-        }*/
         if (isFragment && !isDialogFragment){
             sb.append("public class ")
                     .append(projectFileBean.getActivityName()
@@ -231,16 +217,14 @@ public class Jx {
                     .append(projectFileBean.getActivityName()
                             .replace("DialogFragment", "View"));
         }
-        //}else {
             if (!isDialogFragment && !isFragment) {
                 sb.append("public class ")
                         .append(projectFileBean
                                 .getActivityName()).append(" extends ");
             }
-       /// }
 
         if (isDialogFragment) {
-            //sb.append("DialogFragment");
+
         } else if (isFragment) {//Fragment is a class instead so it doesn't extend any classes by default
             sb.append(" implements Screen");
         } else {
@@ -325,6 +309,9 @@ public class Jx {
         if (activityHasFields) sb.append(EOL);
 
         sb.append(EOL);
+
+        /**Going to change this to automatically load the Gameview class then turn the
+         * activity into Screens, Fragments into Classes perhaps*/
         if (isFragment) {
             sb.append("private Gameview game;").append(EOL);
             sb.append("public ".concat(projectFileBean.getActivityName().replace("Fragment","View").concat("(Gameview game) {"))).append(EOL);
@@ -348,7 +335,7 @@ public class Jx {
                 sb.append("public void create() {").append(EOL);
             }
         }
-        //place logic for Class
+        //Writes the main logic for the class when loading src code
 
         if (!isFragment && !isDialogFragment) {//Check if Main Class as Main class should not be altered to handle loading game
             if (projectFileBean.getJavaName().equals("Main.java")) {
@@ -358,8 +345,7 @@ public class Jx {
             }
         }
 
-
-        //Handles other methods
+        //Handles other methods if exists
         if (!TextUtils.isEmpty(initializeLogic())) {
             sb.append(EOL);
             sb.append(initializeLogic());
@@ -438,87 +424,69 @@ public class Jx {
         if (isFragment && !isDialogFragment) {
             sb.append("@Override").append(EOL);
             sb.append("public void show() {").append(EOL);
-            //}
 
             if (onCreateEventCode.length() > 0) {
                 sb.append(onCreateEventCode).append(EOL);
 
             }sb.append("}").append(EOL);
 
-            //if (isFragment && !isDialogFragment){
-
             sb.append("@Override").append(EOL);
             sb.append("public void render(float delta) {").append(EOL);
-            // }
+
             if (onCreateEventCode2.length() > 0) {
                 sb.append(onCreateEventCode2).append(EOL);
 
             }sb.append("}").append(EOL);
-            // if (isFragment && !isDialogFragment){
 
             sb.append("@Override").append(EOL);
             sb.append("public void resize(int width, int height) {").append(EOL);
-            //}
+
             if (onCreateEventCode3.length() > 0) {
                 sb.append(onCreateEventCode3).append(EOL);
 
             } sb.append("}").append(EOL);
-            //if (isFragment && !isDialogFragment){
+
             sb.append("@Override").append(EOL);
             sb.append("public void pause() {").append(EOL);
-            //}
+
             if (onCreateEventCode4.length() > 0) {
                 sb.append(onCreateEventCode4).append(EOL);
 
             }sb.append("}").append(EOL);
-            //if (isFragment && !isDialogFragment){
+
             sb.append("@Override").append(EOL);
             sb.append("public void resume() {").append(EOL);
-            //}
+
             if (onCreateEventCode5.length() > 0) {
                 sb.append(onCreateEventCode5).append(EOL);
 
             }sb.append("}").append(EOL);
-            // if (isFragment && !isDialogFragment){
+
             sb.append("@Override").append(EOL);
             sb.append("public void hide() {").append(EOL);
-            //}
+
             if (onCreateEventCode6.length() > 0) {
                 sb.append(onCreateEventCode6).append(EOL);
 
             }sb.append("}").append(EOL);
-            //if (isFragment && !isDialogFragment){
+
             sb.append("@Override").append(EOL);
             sb.append("public void dispose() {").append(EOL);
 
             if (onCreateEventCode7.length() > 0) {
                 sb.append(onCreateEventCode7).append(EOL);
-                //sb.append("}").append(EOL);
             }
 
         }
         sb.append("}").append(EOL);
 
-        if (projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_DRAWER)) {
+        /*if (projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_DRAWER)) {
             eventManager.a("onBackPressed",
                     "DrawerLayout", "_drawer");
-        }
+        }*/
 
         ArrayList<ViewBean> beans = projectDataManager.d(projectFileBean.getXmlName());
-        /*for (ViewBean next : beans) {
-            if (next.type == ViewBean.VIEW_TYPE_WIDGET_MAPVIEW) {
-                eventManager.a("onStart", "MapView", next.id);
-                eventManager.a("onResume", "MapView", next.id);
-                eventManager.a("onPause", "MapView", next.id);
-                eventManager.a("onStop", "MapView", next.id);
-                eventManager.a("onDestroy", "MapView", next.id);
-            }
-            if (next.type == ViewBean.VIEW_TYPE_WIDGET_ADVIEW) {
-                eventManager.a("onResume", "AdView", next.id);
-                eventManager.a("onPause", "AdView", next.id);
-                eventManager.a("onDestroy", "AdView", next.id);
-            }
-        }*/
+
         if (eventManager.k.length() > 0) {
             sb.append(EOL);
             sb.append(eventManager.k).append(EOL);
@@ -542,32 +510,11 @@ public class Jx {
         }
 
         sb.append(EOL);
-        /*for (int j = 0, qSize = adapterClasses.size(); j < qSize; j++) {
-            String adapterCode = adapterClasses.get(j);
-
-            if (base.contains("public CharSequence onTabLayoutNewTabAdded(int _position) {")
-                    || !adapterCode.contains("return onTabLayoutNewTabAdded(pos);")) {
-                sb.append(adapterCode);
-            } else {
-                sb.append(adapterCode.replace("return onTabLayoutNewTabAdded(pos);",
-                        "// Use the Activity Event (onTabLayoutNewTabAdded) in order to use this method" + EOL +
-                                "return \"page \" + String.valueOf(pos);"));
-            }
-            if (j != qSize - 1) {
-                sb.append(EOL);
-            }
-        }*/
-        /*if (!isFragment && !settings.getValue(ProjectSettings.SETTING_DISABLE_OLD_METHODS, BuildSettings.SETTING_GENERIC_VALUE_FALSE)
-                .equals(BuildSettings.SETTING_GENERIC_VALUE_TRUE)) {
-            //sb.append(getDeprecatedMethodsCode());
-        }*/
         sb.append("}").append(EOL);
         String code = sb.toString();
 
         return CommandBlock.CB(Lx.j(code, false));
     }
-
-
 
     private String getListDeclarationAndAddImports(int listType, String listName) {
         String typeName = mq.b(listType);
@@ -631,6 +578,7 @@ public class Jx {
         return Lx.getComponentInitializerCode(mq.a(componentBean.type), componentBean.componentId, componentBean.param1, componentBean.param2, componentBean.param3);
     }
 
+    //Creates the Gameview class only Show method (create) is required
     private void handleAppCompat() {
         //ALL IMPORTS DNA MOBILE
         addImport("android.os.*");
@@ -647,6 +595,7 @@ public class Jx {
         addImport("com.badlogic.gdx.graphics.g2d.freetype.FreeType.*");
         addImport("com.badlogic.gdx.backends.android.*");
 
+        //Main initializer to help with rendering the main logic in the within the class//
         onCreateEventCode = new Fx(projectFileBean.getActivityName(), buildConfig,
                 "Show_show",
                 projectDataManager.a(
@@ -654,7 +603,8 @@ public class Jx {
                         "Show_show")).a();
     }
 
-    private void handleScreen() {//This is going to be the Screen classes perhaps
+    //Creates everything the game screen classes require including most imports//
+    private void handleScreen() {
         addImport("android.os.Bundle");
         addImport("com.badlogic.gdx.*");
         addImport("com.badlogic.gdx.math.*");

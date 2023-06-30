@@ -78,6 +78,7 @@ public class MakeBlockActivity extends BaseAppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         toolbar.setNavigationOnClickListener(
                 Helper.getBackPressedClickListener(this));
+
         makeBlock = new dt(this);
         makeBlock.setFuncNameValidator(jC.a(sc_id).a(project));
 
@@ -120,11 +121,12 @@ public class MakeBlockActivity extends BaseAppCompatActivity {
         if (!super.j()) {
             finish();
         }
-
+        System.out.println("LOGIC SAVE SNIFFBUTT");
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {outState.putParcelable("project_file", project);
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable("project_file", project);
         super.onSaveInstanceState(outState);outState.putString("sc_id", sc_id);
 
     }

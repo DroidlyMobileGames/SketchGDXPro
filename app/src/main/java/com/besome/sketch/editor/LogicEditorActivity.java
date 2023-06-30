@@ -1423,7 +1423,7 @@ public class LogicEditorActivity
 
     public void c(String str, String str2) {
         jC.a(B).a(M.getJavaName(), str, str2);
-        a(8, 0xff8a55d7);
+        a(8, 0xff8a55d7);//a(8, 0xff8a55d7); this method just loads the blocks in the editor
     }
 
     public final void c(boolean z) {
@@ -2165,7 +2165,8 @@ public class LogicEditorActivity
 
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == 222) {
-                c(data.getStringExtra("block_name"), data.getStringExtra("block_spec"));
+                c(data.getStringExtra("block_name"),
+                        data.getStringExtra("block_spec"));
             } else if (requestCode == 224) {
                 a(7, 0xff2ca5e2);
             } else if (requestCode == 463 && data.getBooleanExtra("req_update_design_activity", false)) {
@@ -2207,11 +2208,13 @@ public class LogicEditorActivity
                     J();
                 } else if (tag.equals("blockAdd")) {
 
-                    Intent intent = new Intent(getContext(), MakeBlockActivity.class);
+                    Intent intent = new Intent(getContext(),
+                            MakeBlockActivity.class);
                     intent.putExtra("sc_id", B);
                     intent.putExtra("project_file", M);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivityForResult(intent, 222);
+
                 } else if (tag.equals("componentAdd")) {
 
                     Intent intent = new Intent(getContext(), ComponentAddActivity.class);
@@ -2225,6 +2228,7 @@ public class LogicEditorActivity
                 }
             }
             int id = v.getId();
+
             if (id == R.id.btn_accept) {
                 setResult(Activity.RESULT_OK, new Intent());
                 finish();
@@ -2260,6 +2264,7 @@ public class LogicEditorActivity
             D = savedInstanceState.getString("event");
             parcelable = savedInstanceState.getParcelable("project_file");
         }
+
         M = (ProjectFileBean) parcelable;
         H = new DB(this, "P1");
         T = (int) wB.a(getBaseContext(), (float) T);
@@ -2411,6 +2416,7 @@ public class LogicEditorActivity
         if (!super.j()) {
             finish();
         }
+        System.out.println("LOGIC RESUME SNIFFBUTT");
     }
 
     @Override
@@ -2425,6 +2431,7 @@ public class LogicEditorActivity
         String javaName = M.getJavaName();
         a2.a(javaName, C + "_" + D, blocks);
         jC.a(B).k();
+        System.out.println("LOGIC SAVE SNIFFBUTT");
     }
 
     @Override

@@ -53,6 +53,7 @@ public class EventsMaker extends Activity {
     public static final File LISTENERS_FILE = new File(Environment.getExternalStorageDirectory(),
             ".sketchwaregames/data/system/listeners.json");
     private ArrayList<HashMap<String, Object>> listMap = new ArrayList<>();
+    private ArrayList<String> checkeventnames = new ArrayList<>();
     private ListView listView;
 
     @Override
@@ -61,6 +62,7 @@ public class EventsMaker extends Activity {
         setContentView(R.layout.add_custom_attribute);
         setToolbar();
         setupViews();
+        seteventnames();
     }
 
     @Override
@@ -107,9 +109,11 @@ public class EventsMaker extends Activity {
         newCard.addView(newLayout2);
         makeup(newLayout2, 0x7f07043e, "Activity events", getNumOfEvents(""));
         base.addView(newCard, 1);
+
         newLayout2.setOnClickListener(v -> {
             Intent intent = new Intent();
-            intent.setClass(getApplicationContext(), EventsMakerDetails.class);
+            intent.setClass(getApplicationContext(),
+                    EventsMakerDetails.class);
             intent.putExtra("lis_name", "");
             startActivity(intent);
         });
@@ -134,7 +138,8 @@ public class EventsMaker extends Activity {
         final EditText name = inflate.findViewById(R.id.name);
         final CheckBox separate = inflate.findViewById(R.id.separate);
         save.setOnClickListener(v -> {
-            if (!name.getText().toString().equals("")) {
+            if (!name.getText().toString().equals("")
+                    && !checkeventnames.contains(name.getText().toString())) {
                 HashMap<String, Object> hashMap = new HashMap<>();
                 hashMap.put("name", name.getText().toString());
                 if (separate.isChecked()) {
@@ -219,21 +224,23 @@ public class EventsMaker extends Activity {
         }
         save.setOnClickListener(v -> {
             if (!name.getText().toString().equals("")) {
-                HashMap<String, Object> hashMap = listMap.get(position);
-                overrideEvents((String) hashMap.get("name"), name.getText().toString());
-                hashMap.put("name", name.getText().toString());
-                if (separate.isChecked()) {
-                    hashMap.put("code", "//" + name.getText().toString() + "\n" + code.getText().toString());
-                    hashMap.put("s", "true");
-                } else {
-                    hashMap.put("code", code.getText().toString());
-                    hashMap.put("s", "false");
+                if ( !checkeventnames.contains(name.getText().toString())) {
+                    HashMap<String, Object> hashMap = listMap.get(position);
+                    overrideEvents((String) hashMap.get("name"), name.getText().toString());
+                    hashMap.put("name", name.getText().toString());
+                    if (separate.isChecked()) {
+                        hashMap.put("code", "//" + name.getText().toString() + "\n" + code.getText().toString());
+                        hashMap.put("s", "true");
+                    } else {
+                        hashMap.put("code", code.getText().toString());
+                        hashMap.put("s", "false");
+                    }
+                    hashMap.put("imports", customImport.getText().toString());
+                    FileUtil.writeFile(LISTENERS_FILE.getAbsolutePath(), new Gson().toJson(listMap));
+                    refreshList();
+                    create.dismiss();
+                    return;
                 }
-                hashMap.put("imports", customImport.getText().toString());
-                FileUtil.writeFile(LISTENERS_FILE.getAbsolutePath(), new Gson().toJson(listMap));
-                refreshList();
-                create.dismiss();
-                return;
             }
             SketchwareUtil.toastError("Invalid name!");
         });
@@ -467,6 +474,15 @@ public class EventsMaker extends Activity {
         Helper.applyRippleToToolbarView(more_icon);
     }
 
+    private void seteventnames(){
+        checkeventnames.add("render");
+        checkeventnames.add("resize");
+        checkeventnames.add("pause");
+        checkeventnames.add("hide");
+        checkeventnames.add("resume");
+        checkeventnames.add("dispose");
+    }
+
     private class ListAdapter extends BaseAdapter {
 
         private final ArrayList<HashMap<String, Object>> _data;
@@ -503,12 +519,15 @@ public class EventsMaker extends Activity {
             ((LinearLayout) imageView.getParent()).setGravity(Gravity.CENTER);
             textView.setText((String) _data.get(position).get("name"));
             ((TextView) convertView.findViewById(R.id.custom_view_pro_subtitle)).setText(getNumOfEvents(textView.getText().toString()));
+
             linearLayout.setOnClickListener(v -> {
                 Intent intent = new Intent();
-                intent.setClass(getApplicationContext(), EventsMakerDetails.class);
+                intent.setClass(getApplicationContext(),
+                        EventsMakerDetails.class);
                 intent.putExtra("lis_name", (String) _data.get(position).get("name"));
                 startActivity(intent);
             });
+
             linearLayout.setOnLongClickListener(v -> {
                 new AlertDialog.Builder(EventsMaker.this)
                         .setTitle(_data.get(position).get("name").toString())

@@ -42,6 +42,7 @@ public class EventsHandler {
 
 
         ArrayList<String> array = new ArrayList<>();
+        array.add("Import");
         //DNA MOBILE removed these June 27th because the game view only needs to handle sending the
         // player to the game screens or holding game objects that can be used across the game
         /*array.add("Render");
@@ -589,7 +590,7 @@ public class EventsHandler {
                     }
                 }
 
-                return "no spec";
+                return name;//DNA MOBILE EDIT
         }
     }
 

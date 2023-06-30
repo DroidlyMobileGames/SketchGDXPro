@@ -2,11 +2,13 @@ package a.a.a;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.InputType;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -87,12 +89,7 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
         if (i == 2) {
             return R.drawable.more_block_96dp;
         }
-        /*if (i == 1) {
-            return R.drawable.multiple_devices_48;
-        }*/
-         /*if (i == 3) {
-            return R.drawable.ic_drawer_color_48dp;
-        }*/
+
         if (i == 0) {
             return R.drawable.ic_cycle_color_48dp;
         }
@@ -108,13 +105,6 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
         if (i == 2) {
             return xB.b().a(context, R.string.common_word_moreblock);
         }
-        /*if (i == 1) {
-            return xB.b().a(context, R.string.common_word_view);
-        }*/
-
-        /*if (i == 3) {
-            return xB.b().a(context, R.string.common_word_drawer);
-        }*/
         return i == 1 ? xB.b().a(context, R.string.common_word_component) : "";
     }
 
@@ -124,18 +114,31 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
         if (requestCode == REQUEST_CODE_ADD_EVENT) {
             refreshEvents();
         }
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 222) {
+                updateBlocks(data.getStringExtra("block_name"),
+                        data.getStringExtra("block_spec"));
+            }
+        }
+    }
+    public void updateBlocks(String str, String str2) {
+        //Update project
+        jC.a(sc_id).a(
+               currentActivity
+                       .getJavaName(), str, str2);
     }
 
 
+    //IF FAB CLICKED DNA MOBILE EDIT
     @Override
     public void onClick(View v) {
         if (!mB.a() && v.getId() == R.id.fab) {
             int category = 0;
-            AddEventActivity poop = new AddEventActivity();
-            Intent intent = new Intent(getActivity().getApplicationContext(), poop.getClass());
+            Intent intent;
             isFragment = currentActivity.fileName.contains("_fragment");
             isDialogFragment = currentActivity.fileName.contains("_dialog_fragment");
             activityName = currentActivity.fileName;
+
             if (categoryAdapter.index == 2){
                 category = 4;
                 intent = new Intent(getContext(),
@@ -145,6 +148,9 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivityForResult(intent, 222);
             }else {
+                intent = new Intent(getActivity()
+                        .getApplicationContext(),
+                        AddEventActivity.class);
                 category = categoryAdapter.index;
                 intent.putExtra("sc_id", sc_id);
                 intent.putExtra("project_file", currentActivity);
@@ -210,13 +216,17 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
         }
     }
 
-    public void refreshEvents() {//This handles refreshing all the blocks and other event data
+    /**Refreshes the events based on the class custom events
+     * were added for the Screens they can't be deleted otherwise
+     * errors would occur*/
+    public void refreshEvents() {
         if (currentActivity != null) {
             moreBlocks.clear();
             viewEvents.clear();
             componentEvents.clear();
             activityEvents.clear();
             drawerViewEvents.clear();
+
             for (Pair<String, String> moreBlock : jC.a(sc_id).i(
                     currentActivity.getJavaName())) {
 
@@ -226,12 +236,7 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
                 moreBlocks.add(eventBean);
             }
 
-            //DNA MOBILE Might change this based on the class type later
-            EventBean eventBean2 = new EventBean(
-                    EventBean.EVENT_TYPE_ACTIVITY, -1,
-                    "Show", "show");
-            eventBean2.initValue();
-            activityEvents.add(eventBean2);
+
 
             String screencheck = currentActivity.getXmlName();
 
@@ -275,7 +280,13 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
                 eventBean8.initValue();
                 activityEvents.add(eventBean8);
             }else {
-
+                /**OOPS fixed this June29th forgot to allow for custom events to be shown
+                DNA MOBILE Might change this based on the class type later**/
+                EventBean eventBean2 = new EventBean(
+                        EventBean.EVENT_TYPE_ACTIVITY, -1,
+                        "Show", "show");
+                eventBean2.initValue();
+                activityEvents.add(eventBean2);
             }
 
             for (EventBean eventBean : jC.a(sc_id).g(
@@ -287,7 +298,7 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
                 } else if (i == EventBean.EVENT_TYPE_COMPONENT) {
                     componentEvents.add(eventBean);
                 } else if (i == EventBean.EVENT_TYPE_ACTIVITY) {
-                    activityEvents.add(eventBean);
+                  activityEvents.add(eventBean);
                 } else if (i == EventBean.EVENT_TYPE_DRAWER_VIEW) {
                     drawerViewEvents.add(eventBean);
                 }
@@ -351,7 +362,8 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
 
     public void c() {
         if (currentActivity != null) {
-            for (Map.Entry<Integer, ArrayList<EventBean>> entry : events.entrySet()) {
+            for (Map.Entry<Integer,
+                    ArrayList<EventBean>> entry : events.entrySet()) {
                 for (EventBean bean : entry.getValue()) {
                     bean.initValue();
                 }
@@ -413,8 +425,6 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
         events.put(0, activityEvents);
         events.put(1, componentEvents);
         events.put(2, moreBlocks);
-        /*events.put(3, drawerViewEvents);
-        events.put(4, moreBlocks);*/
 
         importMoreBlockFromCollection = parent.findViewById(R.id.tv_import);
         importMoreBlockFromCollection.setText(xB.b().a(getContext(), R.string.logic_button_import_more_block));
@@ -936,7 +946,7 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
                 // Hide Add to Collection
                 holder.optionsLayout.c();
             }
-            //DNA MOBILE EDIT
+            //DNA MOBILE EDIT CHECK EVENT TYPE
             if (eventBean.eventType == EventBean.EVENT_TYPE_ACTIVITY) {
                 if (eventBean.eventName.equals("show")
                         || eventBean.eventName.equals("render")
