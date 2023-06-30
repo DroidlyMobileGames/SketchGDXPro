@@ -150,12 +150,15 @@ public class Fw extends qA {
                 if (projectFileBean.fileName.equals("main")) {
                     activitiesFiles.add(0, projectFileBean);
                     isMainActivityFile = true;
+
                 } else {
                     activitiesFiles.add(projectFileBean);
+
                 }
             }
             if (!isMainActivityFile) {
-                activitiesFiles.add(0, new ProjectFileBean(0, "main"));
+                activitiesFiles.add(0,
+                        new ProjectFileBean(0, "main"));
             }
         }
     }
@@ -250,7 +253,8 @@ public class Fw extends qA {
         super.onSaveInstanceState(newState);
     }
 
-    public class ProjectFilesAdapter extends RecyclerView.Adapter<ProjectFilesAdapter.ViewHolder> {
+    public class ProjectFilesAdapter extends
+            RecyclerView.Adapter<ProjectFilesAdapter.ViewHolder> {
         public int layoutPosition;
 
         public ProjectFilesAdapter(RecyclerView recyclerView) {
@@ -290,8 +294,27 @@ public class Fw extends qA {
 
             ProjectFileBean projectFileBean = activitiesFiles.get(position);
             viewHolder.imgActivity.setImageResource(getImageResByOptions(projectFileBean.options));
-            viewHolder.tvScreenName.setText(projectFileBean.getXmlName());
-            viewHolder.tvActivityName.setText(projectFileBean.getJavaName());
+            viewHolder.tvScreenName.setText(projectFileBean.getJavaName());
+
+            if (projectFileBean.getActivityName().equals("Main")){
+                viewHolder.tvActivityName.setText("Android Loader");
+            }
+            if (projectFileBean.getActivityName().equals("Gameview")){
+                viewHolder.tvActivityName.setText("Game Loader");
+            }
+            if (!projectFileBean.getActivityName().equals("Main") ||
+            !projectFileBean.getActivityName().equals("Gameview")) {
+                if (projectFileBean.getXmlName().contains("_fragment") && !projectFileBean.getXmlName().contains("_dialog_fragment")) {
+                    viewHolder.tvActivityName.setText("Game Screen");
+                }
+                if (projectFileBean.getXmlName().contains("_dialog_fragment")){
+                    viewHolder.tvActivityName.setText("Empty Class");
+                }
+            }
+
+
+            //viewHolder.tvScreenName.setVisibility(View.GONE);
+
             viewHolder.imgDelete.setImageResource(projectFileBean.isSelected ? R.drawable.ic_checkmark_green_48dp : R.drawable.ic_trashcan_white_48dp);
         }
 
@@ -322,12 +345,13 @@ public class Fw extends qA {
                 checkBox = itemView.findViewById(R.id.chk_select);
                 viewItem = itemView.findViewById(R.id.view_item);
                 imgActivity = itemView.findViewById(R.id.img_activity);
-                tvScreenName = itemView.findViewById(R.id.tv_screen_name);
                 tvActivityName = itemView.findViewById(R.id.tv_activity_name);
+                tvScreenName = itemView.findViewById(R.id.tv_screen_name);
                 deleteImgContainer = itemView.findViewById(R.id.delete_img_container);
                 imgDelete = itemView.findViewById(R.id.img_delete);
                 imgPresetSettings = itemView.findViewById(R.id.img_preset_setting);
                 checkBox.setVisibility(View.GONE);
+
                 viewItem.setOnClickListener(view -> {
                     if (!mB.a()) {
                         layoutPosition = getLayoutPosition();
@@ -338,7 +362,8 @@ public class Fw extends qA {
                                 notifyItemChanged(layoutPosition);
                             }
                         } else {
-                            Intent intent = new Intent(getContext(), AddViewActivity.class);
+                            Intent intent = new Intent(getContext(),
+                                    AddViewActivity.class);
                             intent.putExtra("project_file", activitiesFiles.get(layoutPosition));
                             intent.putExtra("request_code", REQUEST_CODE_ADD_VIEW_ACTIVITY);
                             startActivityForResult(intent, REQUEST_CODE_ADD_VIEW_ACTIVITY);

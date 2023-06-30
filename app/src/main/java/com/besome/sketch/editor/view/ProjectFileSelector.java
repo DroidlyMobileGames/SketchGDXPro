@@ -33,7 +33,7 @@ public class ProjectFileSelector extends LinearLayout implements View.OnClickLis
     private String sc_id;
     private TextView fileName;
     private by selectedFileChangeListener;
-    private int currentFileType = -1;
+    private int currentFileType = 1;
     public String currentXmlFileName;
     public String currentJavaFileName;
     private boolean currentFileIsCustomView;
@@ -65,7 +65,8 @@ public class ProjectFileSelector extends LinearLayout implements View.OnClickLis
     public void onClick(View v) {
         if (!mB.a()) {
             if (currentFileType == 0) {
-                showAvailableViews();
+               // showAvailableViews();
+                showAvailableJavaFiles();
             } else {
                 showAvailableJavaFiles();
             }
@@ -104,7 +105,7 @@ public class ProjectFileSelector extends LinearLayout implements View.OnClickLis
         }
     }
 
-    public void setXmlFileName(ProjectFileBean projectFileBean) {
+    public void setXmlFileName(final ProjectFileBean projectFileBean) {
         if (projectFileBean == null) {
             currentXmlFileName = "main.xml";
         } else {
@@ -145,9 +146,9 @@ public class ProjectFileSelector extends LinearLayout implements View.OnClickLis
         context.getTheme().resolveAttribute(R.attr.selectableItemBackground, background, true);
         setBackgroundResource(background.resourceId);
         setOnClickListener(this);
-        currentFileType = 0;
+        currentFileType = 1;
         currentXmlFileName = "main.xml";
-        currentJavaFileName = "MainActivity.java";
+        currentJavaFileName = "Main.java";
         setShownText(currentXmlFileName);
     }
 
@@ -179,7 +180,8 @@ public class ProjectFileSelector extends LinearLayout implements View.OnClickLis
 
     private void showAvailableJavaFiles() {
         availableFilesDialog = new aB((Activity) getContext());
-        availableFilesDialog.b(xB.b().a(getContext(), R.string.design_file_selector_title_java));
+        availableFilesDialog.b(xB.b().a(getContext(),
+                R.string.design_file_selector_title_java));
         availableFilesDialog.a(R.drawable.java_96);
         View customView = wB.a(getContext(), R.layout.file_selector_popup_select_java);
         RecyclerView recyclerView = customView.findViewById(R.id.file_list);
@@ -192,14 +194,15 @@ public class ProjectFileSelector extends LinearLayout implements View.OnClickLis
     public void syncState() {
         if (selectedFileChangeListener != null) {
             ProjectFileBean bean;
+            currentFileType = 1;
             if (currentFileType == 0) {
                 if (!currentXmlFileName.equals("main.xml") && jC.b(sc_id).b(currentXmlFileName) == null) {
                     setXmlFileName(null);
                 }
                 bean = jC.b(sc_id).b(currentXmlFileName);
             } else {
-                if (!currentJavaFileName.equals("MainActivity.java") && jC.b(sc_id).a(currentJavaFileName) == null) {
-                    setJavaFileName("MainActivity.java");
+                if (!currentJavaFileName.equals("Main.java") && jC.b(sc_id).a(currentJavaFileName) == null) {
+                    setJavaFileName("Main.java");
                 }
                 bean = jC.b(sc_id).a(currentJavaFileName);
             }
@@ -213,6 +216,28 @@ public class ProjectFileSelector extends LinearLayout implements View.OnClickLis
         intent.putExtra("current_xml", currentXmlFileName);
         intent.putExtra("is_custom_view", currentFileIsCustomView);
         ((Activity) getContext()).startActivityForResult(intent, 263);
+    }
+
+    private String setClassType(ProjectFileBean bean){
+        String classType = "";
+
+        if (bean.getActivityName().equals("Main")){
+          classType = "Android Loader";
+        }
+        if (bean.getActivityName().equals("Gameview")){
+            classType = "Game Loader";
+        }
+        if (!bean.getActivityName().equals("Main") ||
+                !bean.getActivityName().equals("Gameview")) {
+            if (bean.getXmlName().contains("_fragment")
+                    && !bean.getXmlName().contains("_dialog_fragment")) {
+                classType = "Game Screen";
+            }
+            if (bean.getXmlName().contains("_dialog_fragment")){
+                classType = "Empty Class";
+            }
+        }
+        return classType;
     }
 
     private class JavaFileAdapter extends RecyclerView.Adapter<JavaFileAdapter.ViewHolder> {
@@ -239,14 +264,17 @@ public class ProjectFileSelector extends LinearLayout implements View.OnClickLis
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
             holder.javaFileName.setVisibility(View.VISIBLE);
             holder.xmlFileName.setVisibility(View.VISIBLE);
-            ProjectFileBean projectFileBean = jC.b(sc_id).b().get(position);
-            String javaName = projectFileBean.getJavaName();
-            String xmlName = projectFileBean.getXmlName();
+            ProjectFileBean beany = jC.b(sc_id).b().get(position);
+            String javaName = beany.getJavaName();
+            String xmlName = beany.getXmlName();
             holder.javaFileName.setText(javaName);
             //holder.javaFileName.setText(javaName);
-            holder.xmlFileName.setText(xmlName);
+            if (beany!=null) {
+                holder.xmlFileName.setText(setClassType(beany));
+            }
         }
 
         @Override

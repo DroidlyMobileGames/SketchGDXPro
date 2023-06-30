@@ -46,6 +46,8 @@ public class EventsMakerCreator extends Activity {
     private MaterialButton save;
     private ImageView selectIcon;
 
+    final private ArrayList<String> checkeventnames = new ArrayList<>();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +73,15 @@ public class EventsMakerCreator extends Activity {
         if (isEdit) {
             fillUp();
         }
+        seteventnames();
+    }
+    private void seteventnames(){
+        checkeventnames.add("render".toLowerCase());
+        checkeventnames.add("resize".toLowerCase());
+        checkeventnames.add("pause".toLowerCase());
+        checkeventnames.add("hide".toLowerCase());
+        checkeventnames.add("resume".toLowerCase());
+        checkeventnames.add("dispose".toLowerCase());
     }
 
     private void fillUp() {
@@ -134,44 +145,49 @@ public class EventsMakerCreator extends Activity {
     }
 
     private void save() {
-        if (!filledIn()) {
-            SketchwareUtil.toast("Some required fields are empty!");
-            return;
+        if (!checkeventnames.contains(eventName.getText().toString().toLowerCase())) {
+            if (!filledIn()) {
+                SketchwareUtil.toast("Some required fields are empty!");
+                return;
+            }
+            if (!OldResourceIdMapper.isValidIconId(eventIcon.getText().toString())) {
+                eventIconTil.setError("Invalid icon ID");
+                eventIcon.requestFocus();
+                return;
+            }
+            ArrayList<HashMap<String, Object>> arrayList;
+            String concat = FileUtil.getExternalStorageDir().concat("/.sketchwaregames/data/system/events.json");
+            if (FileUtil.isExistFile(concat)) {
+                arrayList = new Gson().fromJson(FileUtil.readFile(concat), Helper.TYPE_MAP_LIST);
+            } else {
+                arrayList = new ArrayList<>();
+            }
+            HashMap<String, Object> hashMap = new HashMap<>();
+            if (isEdit) {
+                hashMap = arrayList.get(figureP(_name));
+            }
+            hashMap.put("name", eventName.getText().toString());
+            hashMap.put("var", eventVar.getText().toString());
+            if (isActivityEvent) {
+                hashMap.put("listener", "");
+            } else {
+                hashMap.put("listener", lisName);
+            }
+            hashMap.put("icon", eventIcon.getText().toString());
+            hashMap.put("description", eventDesc.getText().toString());
+            hashMap.put("parameters", eventParams.getText().toString());
+            hashMap.put("code", eventCode.getText().toString());
+            hashMap.put("headerSpec", eventSpec.getText().toString());
+            if (!isEdit) {
+                arrayList.add(hashMap);
+            }
+            FileUtil.writeFile(concat, new Gson().toJson(arrayList));
+            SketchwareUtil.toast("Saved");
+            finish();
+        }else {
+            SketchwareUtil.toast("Event Name Invalid");
         }
-        if (!OldResourceIdMapper.isValidIconId(eventIcon.getText().toString())) {
-            eventIconTil.setError("Invalid icon ID");
-            eventIcon.requestFocus();
-            return;
-        }
-        ArrayList<HashMap<String, Object>> arrayList;
-        String concat = FileUtil.getExternalStorageDir().concat("/.sketchwaregames/data/system/events.json");
-        if (FileUtil.isExistFile(concat)) {
-            arrayList = new Gson().fromJson(FileUtil.readFile(concat), Helper.TYPE_MAP_LIST);
-        } else {
-            arrayList = new ArrayList<>();
-        }
-        HashMap<String, Object> hashMap = new HashMap<>();
-        if (isEdit) {
-            hashMap = arrayList.get(figureP(_name));
-        }
-        hashMap.put("name", eventName.getText().toString());
-        hashMap.put("var", eventVar.getText().toString());
-        if (isActivityEvent) {
-            hashMap.put("listener", "");
-        } else {
-            hashMap.put("listener", lisName);
-        }
-        hashMap.put("icon", eventIcon.getText().toString());
-        hashMap.put("description", eventDesc.getText().toString());
-        hashMap.put("parameters", eventParams.getText().toString());
-        hashMap.put("code", eventCode.getText().toString());
-        hashMap.put("headerSpec", eventSpec.getText().toString());
-        if (!isEdit) {
-            arrayList.add(hashMap);
-        }
-        FileUtil.writeFile(concat, new Gson().toJson(arrayList));
-        SketchwareUtil.toast("Saved");
-        finish();
+        //DNA MOBILE EDIT checks the name of the event so the user can't add invalid names
     }
 
     private int figureP(String str) {

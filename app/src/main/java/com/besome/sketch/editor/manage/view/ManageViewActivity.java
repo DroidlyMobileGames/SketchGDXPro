@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -19,10 +20,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.android.tools.r8.internal.I;
 import com.besome.sketch.beans.EventBean;
 import com.besome.sketch.beans.ProjectFileBean;
 import com.besome.sketch.beans.ViewBean;
 import com.besome.sketch.lib.base.BaseAppCompatActivity;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.sketchware.remodgdx.R;
@@ -33,16 +36,18 @@ import java.util.Iterator;
 import a.a.a.By;
 import a.a.a.Fw;
 import a.a.a.MA;
+import a.a.a.MB;
 import a.a.a.bB;
 import a.a.a.eC;
 import a.a.a.jC;
 import a.a.a.mB;
+import a.a.a.qw;
 import a.a.a.wq;
 import a.a.a.xB;
 import a.a.a.xw;
 
 public class ManageViewActivity extends BaseAppCompatActivity implements OnClickListener, ViewPager.OnPageChangeListener {
-    private static final int TAB_COUNT = 2;
+    private static final int TAB_COUNT = 1;
     private static final int REQUEST_CODE_ADD_ACTIVITY = 264;
     private static final int REQUEST_CODE_ADD_CUSTOM_VIEW = 266;
 
@@ -113,8 +118,13 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         for (ViewBean viewBean : eC.a(var2)) {
             viewBean.id = a(viewBean.type, var1.getXmlName());
             jC.a(sc_id).a(var1.getXmlName(), viewBean);
-            if (viewBean.type == ViewBean.VIEW_TYPE_WIDGET_BUTTON && var1.fileType == ProjectFileBean.PROJECT_FILE_TYPE_ACTIVITY) {
-                jC.a(sc_id).a(var1.getJavaName(), EventBean.EVENT_TYPE_VIEW, viewBean.type, viewBean.id, "onClick");
+
+            if (viewBean.type == ViewBean.VIEW_TYPE_WIDGET_BUTTON
+                    && var1.fileType == ProjectFileBean.PROJECT_FILE_TYPE_ACTIVITY) {
+                jC.a(sc_id).a(var1.getJavaName(),
+                        EventBean.EVENT_TYPE_VIEW,
+                        viewBean.type, viewBean.id, "onClick");
+
             }
         }
     }
@@ -128,9 +138,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         } else {
             actionButtonsContainer.setVisibility(View.GONE);
         }
-
         activitiesFragment.a(selecting);
-        customViewsFragment.a(selecting);
     }
 
     @Override
@@ -140,27 +148,21 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
 
     // signature mustn't be changed: used in La/a/a/Fw;->b(Lcom/besome/sketch/beans/ProjectFileBean;)V
     public void b(String var1) {
-        customViewsFragment.a(var1);
-        customViewsFragment.g();
+        /*customViewsFragment.a(var1);
+        customViewsFragment.g();*/
     }
 
     // signature mustn't be changed: used in La/a/a/Fw;->b(Lcom/besome/sketch/beans/ProjectFileBean;)V, La/a/a/Fw;->f()V
     public void c(String var1) {
-        customViewsFragment.b(var1);
-        customViewsFragment.g();
+      /*  customViewsFragment.b(var1);
+        customViewsFragment.g();*/
     }
 
     public ArrayList<String> l() {
         ArrayList<String> projectLayoutFiles = new ArrayList<>();
         projectLayoutFiles.add("debug");
         ArrayList<ProjectFileBean> activitiesFiles = activitiesFragment.c();
-        ArrayList<ProjectFileBean> customViewsFiles = customViewsFragment.c();
-
         for (ProjectFileBean projectFileBean : activitiesFiles) {
-            projectLayoutFiles.add(projectFileBean.fileName);
-        }
-
-        for (ProjectFileBean projectFileBean : customViewsFiles) {
             projectLayoutFiles.add(projectFileBean.fileName);
         }
 
@@ -169,7 +171,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
 
     public final void m() {
         jC.b(sc_id).a(activitiesFragment.c());
-        jC.b(sc_id).b(customViewsFragment.c());
+        //jC.b(sc_id).b(customViewsFragment.c());
         jC.b(sc_id).l();
         jC.b(sc_id).j();
         jC.a(sc_id).a(jC.b(sc_id));
@@ -183,6 +185,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
             if (resultCode == RESULT_OK) {
                 projectFileBean = data.getParcelableExtra("project_file");
                 activitiesFragment.a(projectFileBean);
+
                 if (projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_DRAWER)) {
                     b(projectFileBean.getDrawerName());
                 }
@@ -200,7 +203,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
             customViewsFragment.a(projectFileBean);
             customViewsFragment.g();
             if (data.hasExtra("preset_views")) {
-                a(projectFileBean, data.getParcelableArrayListExtra("preset_views"));
+               // a(projectFileBean, data.getParcelableArrayListExtra("preset_views"));
             }
         }
     }
@@ -232,25 +235,40 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
             } else if (viewId == R.id.btn_delete) {
                 if (selecting) {
                     activitiesFragment.f();
-                    customViewsFragment.f();
                     a(false);
                     activitiesFragment.g();
-                    customViewsFragment.g();
-                    bB.a(getApplicationContext(), xB.b().a(getApplicationContext(), R.string.common_message_complete_delete), bB.TOAST_WARNING).show();
+                    bB.a(getApplicationContext(),
+                            xB.b().a(getApplicationContext(), R.string.common_message_complete_delete), bB.TOAST_WARNING).show();
                     s.show();
                 }
             } else if (viewId == R.id.fab) {
-                a(false);
-
-                boolean isActivitiesTab = viewPager.getCurrentItem() == 0;
-                Intent intent = new Intent(this, isActivitiesTab ? AddViewActivity.class : AddCustomViewActivity.class);
-                intent.putStringArrayListExtra("screen_names", l());
-                if (isActivitiesTab) {
-                    intent.putExtra("request_code", REQUEST_CODE_ADD_ACTIVITY);
-                }
-                startActivityForResult(intent, isActivitiesTab ? REQUEST_CODE_ADD_ACTIVITY : REQUEST_CODE_ADD_CUSTOM_VIEW);
+                newView(1);
             }
+            //DNA MOBILE EDIT
         }
+    }
+
+    public void newView(int viewtype){
+        String ext = "";
+        if (viewtype == 0){
+            ext = "_fragment";//Creates a Screen extension
+        }
+        if (viewtype == 1){
+            ext = "_dialog_fragment";//Converts to an empty object class
+        }
+        a(false);
+        try {
+        ProjectFileBean var8 =
+                new ProjectFileBean(0,
+                        "player" + ext, 0, 0,
+                        true, true, false, false);
+
+        activitiesFragment.a(var8);
+
+        }catch (Exception e){
+
+        }
+
     }
 
     @Override
@@ -372,7 +390,9 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         public b(FragmentManager fragmentManager) {
             super(fragmentManager);
             f = new String[]{
-                    xB.b().a(getApplicationContext(), R.string.common_word_view).toUpperCase(), xB.b().a(getApplicationContext(), R.string.common_word_custom_view).toUpperCase()};
+                    xB.b().a(getApplicationContext(), R.string.common_word_view)
+                            .toUpperCase(), xB.b().a(getApplicationContext(),
+                    R.string.common_word_custom_view).toUpperCase()};
         }
 
         @Override
@@ -389,18 +409,14 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         @NonNull
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             Fragment var3 = (Fragment) super.instantiateItem(container, position);
-            if (position != 0) {
-                customViewsFragment = (xw) var3;
-            } else {
-                activitiesFragment = (Fw) var3;
-            }
+            activitiesFragment = (Fw) var3;
             return var3;
         }
 
         @Override
         @NonNull
         public Fragment getItem(int position) {
-            return position != 1 ? new Fw() : new xw();
+            return position != 1 ? new Fw() : null;
         }
     }
 }

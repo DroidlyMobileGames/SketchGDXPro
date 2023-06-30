@@ -133,6 +133,7 @@ public class MyProjectSettingActivity extends BaseDialogActivity implements View
             if (isInputValid()) {
                 new SaveProjectAsyncTask(getApplicationContext()).execute();
             }
+            //DNA MOBILE creates the project files
         } else if (id == R.id.img_theme_color_help) {
             if (colorGuide.getVisibility() == View.VISIBLE) {
                 colorGuide.setVisibility(View.GONE);

@@ -351,7 +351,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
 
             case 462:
                 if (resultCode == RESULT_OK && data.getBooleanExtra("req_update_design_activity", false)) {
-                    viewTabAdapter.j();
+                    //viewTabAdapter.j();
                 }
                 break;
 
@@ -486,10 +486,11 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
 
         projectFileSelector = findViewById(R.id.file_selector);
         projectFileSelector.setScId(sc_id);
+
         projectFileSelector.setOnSelectedFileChangeListener((i, projectFileBean) -> {
             if (i == 1) {
-                if (viewTabAdapter != null && projectFileBean != null) {
-                   /* int orientation = projectFileBean.orientation;
+                /*if (viewTabAdapter != null && projectFileBean != null) {
+                   *//* int orientation = projectFileBean.orientation;
                     if (orientation == ProjectFileBean.ORIENTATION_PORTRAIT) {
                         xmlLayoutOrientation.setImageResource(R.drawable.ic_screen_portrait_grey600_24dp);
                     } else if (orientation == ProjectFileBean.ORIENTATION_LANDSCAPE) {
@@ -497,9 +498,8 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                     } else {
                         xmlLayoutOrientation.setImageResource(R.drawable.ic_screen_rotation_grey600_24dp);
                     }
-                    viewTabAdapter.a(projectFileBean);*/
-                }
-            } else if (i == 0) {
+                    viewTabAdapter.a(projectFileBean);*//*
+                }*/
                 if (eventTabAdapter != null) {
                     if (projectFileBean != null) {
                         eventTabAdapter.setCurrentActivity(projectFileBean);
@@ -512,12 +512,25 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                     componentTabAdapter.a(projectFileBean);
                     componentTabAdapter.d();
                 }
+            } else if (i == 0) {
+               /* if (eventTabAdapter != null) {
+                    if (projectFileBean != null) {
+                        eventTabAdapter.setCurrentActivity(projectFileBean);
+                        eventTabAdapter.refreshEvents();
+                    } else {
+                        return;
+                    }
+                }
+                if (componentTabAdapter != null && projectFileBean != null) {
+                    componentTabAdapter.a(projectFileBean);
+                    componentTabAdapter.d();
+                }*/
             }
         });
         viewPager = findViewById(R.id.viewpager);
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),
                 this));
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(2);
         viewPager.addOnPageChangeListener(
                 new ViewPager.OnPageChangeListener() {
 
@@ -539,16 +552,10 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                     componentTabAdapter.c();
                 }
                 if (position == 0) {
-                    /*if (viewTabAdapter != null) {
-                        viewTabAdapter.c(true);
-                        xmlLayoutOrientation.setVisibility(View.VISIBLE);
-                        projectFileSelector.setFileType(0);
-                        projectFileSelector.syncState();
-                    }*/
                     if (viewTabAdapter != null) {
                         xmlLayoutOrientation.setVisibility(View.GONE);
                         viewTabAdapter.c(false);
-                        projectFileSelector.setFileType(1);
+                        projectFileSelector.setFileType(0);
                         projectFileSelector.syncState();
                         if (eventTabAdapter != null) {
                             eventTabAdapter.refreshEvents();
@@ -556,34 +563,15 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                         }
                     }
                 } else if (position == 1) {
-                    /*if (viewTabAdapter != null) {
-                        xmlLayoutOrientation.setVisibility(View.GONE);
-                        viewTabAdapter.c(false);
-                        projectFileSelector.setFileType(1);
-                        projectFileSelector.syncState();
-                        if (eventTabAdapter != null) {
-                            eventTabAdapter.refreshEvents();
-                        }
-                    }*/
                     if (viewTabAdapter != null) {
                         viewTabAdapter.c(false);
                         xmlLayoutOrientation.setVisibility(View.GONE);
-                        projectFileSelector.setFileType(1);
+                        projectFileSelector.setFileType(0);
                         projectFileSelector.syncState();
                         if (componentTabAdapter != null) {
                             componentTabAdapter.d();
                         }
                     }
-                } else {
-                    /*if (viewTabAdapter != null) {
-                        viewTabAdapter.c(false);
-                        xmlLayoutOrientation.setVisibility(View.GONE);
-                        projectFileSelector.setFileType(1);
-                        projectFileSelector.syncState();
-                        if (componentTabAdapter != null) {
-                            componentTabAdapter.d();
-                        }
-                    }*/
                 }
                 currentTabNumber = position;
             }
@@ -1112,21 +1100,21 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                         return;
                     }
 
-                    publishProgress("Merging DEX files...");
+                    publishProgress("Merging YOUR MOMS files...");
                     mDp.getDexFilesReady();
                     if (canceled) {
                         cancel(true);
                         return;
                     }
 
-                    publishProgress("Building APK...");
+                    publishProgress("Building GAME...");
                     mDp.buildApk();
                     if (canceled) {
                         cancel(true);
                         return;
                     }
 
-                    publishProgress("Signing APK...");
+                    publishProgress("Signing GAME...");
                     mDp.signDebugApk();
                     if (canceled) {
                         cancel(true);
@@ -1255,11 +1243,11 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         public void a() {
             if (savedInstanceState != null) {
                 projectFileSelector.onRestoreInstanceState(savedInstanceState);
-                if (savedInstanceState.getInt("file_selector_current_file_type") == 0) {
+                /*if (savedInstanceState.getInt("file_selector_current_file_type") == 0) {
                     xmlLayoutOrientation.setVisibility(View.VISIBLE);
                 } else {
                     xmlLayoutOrientation.setVisibility(View.GONE);
-                }
+                }*/
             }
 
             projectFileSelector.syncState();
@@ -1455,19 +1443,16 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
             Fragment fragment = (Fragment)
                     super.instantiateItem(container, position);
             try {
-
-
             if (position == 0) {
-                //viewTabAdapter = (ViewEditorFragment) fragment;
                 if (eventTabAdapter!=null){
                     eventTabAdapter = (rs) fragment;
+                    projectFileSelector.setFileType(1);
                 }
             } else if (position == 1) {
                 if (componentTabAdapter!=null) {
                     componentTabAdapter = (br) fragment;
                 }
             }
-                eventTabAdapter.refreshEvents();
 
             }catch (Exception e){
 

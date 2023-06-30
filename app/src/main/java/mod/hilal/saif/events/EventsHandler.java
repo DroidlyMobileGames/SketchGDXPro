@@ -52,24 +52,6 @@ public class EventsHandler {
         array.add("Resize");*/
         //DNA MOBILE EDIT JUNE 27th
 
-        /*array.add("Import");
-        array.add("initializeLogic");
-        array.add("onActivityResult");
-        array.add("onBackPressed");
-        array.add("onPostCreate");
-        array.add("onStart");
-        array.add("onResume");
-        array.add("onPause");
-        array.add("onStop");
-        array.add("onDestroy");
-        array.add("onSaveInstanceState");
-        array.add("onRestoreInstanceState");
-        array.add("onCreateOptionsMenu");
-        array.add("onOptionsItemSelected");
-        array.add("onCreateContextMenu");
-        array.add("onContextItemSelected");
-        array.add("onTabLayoutNewTabAdded");*/
-
         for (int i = cachedCustomEvents.size() - 1; i >= 0; i--) {
             HashMap<String, Object> customEvent = cachedCustomEvents.get(i);
             if (customEvent != null) {
