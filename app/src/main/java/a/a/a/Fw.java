@@ -37,7 +37,7 @@ public class Fw extends qA {
     private ProjectFilesAdapter projectFilesAdapter = null;
     private String sc_id;
     private String isAppCompatUsed = "N";
-    private ArrayList<ProjectFileBean> activitiesFiles;
+    private ArrayList<ProjectFileBean> activitiesFiles = new ArrayList<>();
 
     public Fw() {
     }
@@ -107,11 +107,11 @@ public class Fw extends qA {
         newProjectFile.options = projectFileBean.options;
 
         String drawerName = ProjectFileBean.getDrawerName(newProjectFile.fileName);
-        if (projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_DRAWER)) {
+        /*if (projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_DRAWER)) {
             ((ManageViewActivity) getActivity()).b(drawerName);
         } else {
             ((ManageViewActivity) getActivity()).c(drawerName);
-        }
+        }*/
 
         if (projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_DRAWER) || projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_FAB)) {
             jC.c(sc_id).c().useYn = "Y";
@@ -177,9 +177,6 @@ public class Fw extends qA {
                 ProjectFileBean projectFileBean = activitiesFiles.get(i);
                 if (projectFileBean.isSelected) {
                     activitiesFiles.remove(i);
-                    if (projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_DRAWER)) {
-                        ((ManageViewActivity) getActivity()).c(ProjectFileBean.getDrawerName(projectFileBean.fileName));
-                    }
                 }
             } else {
                 projectFilesAdapter.notifyDataSetChanged();

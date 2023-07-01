@@ -148,14 +148,14 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivityForResult(intent, 222);
             }else {
-                intent = new Intent(getActivity()
+            /*    intent = new Intent(getActivity()
                         .getApplicationContext(),
                         AddEventActivity.class);
                 category = categoryAdapter.index;
                 intent.putExtra("sc_id", sc_id);
                 intent.putExtra("project_file", currentActivity);
                 intent.putExtra("category_index", category);
-                startActivityForResult(intent, REQUEST_CODE_ADD_EVENT);
+                startActivityForResult(intent, REQUEST_CODE_ADD_EVENT);*/
             }
 
 

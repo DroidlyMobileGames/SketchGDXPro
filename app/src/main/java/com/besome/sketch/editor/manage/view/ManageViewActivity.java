@@ -1,9 +1,13 @@
 package com.besome.sketch.editor.manage.view;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,14 +16,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.android.tools.r8.graph.P;
 import com.android.tools.r8.internal.I;
 import com.besome.sketch.beans.EventBean;
 import com.besome.sketch.beans.ProjectFileBean;
@@ -28,9 +36,12 @@ import com.besome.sketch.lib.base.BaseAppCompatActivity;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.sketchware.remodgdx.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import a.a.a.By;
@@ -45,6 +56,7 @@ import a.a.a.qw;
 import a.a.a.wq;
 import a.a.a.xB;
 import a.a.a.xw;
+import mod.SketchwareUtil;
 
 public class ManageViewActivity extends BaseAppCompatActivity implements OnClickListener, ViewPager.OnPageChangeListener {
     private static final int TAB_COUNT = 1;
@@ -61,6 +73,13 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
     private ViewPager viewPager;
     private final int[] x = new int[19];
     private String sc_id;
+    private String viewName = "";
+    private int viewtype = 0;
+    private int typeselected = 0;
+    private ArrayList<HashMap<String, Object>> _dialogselector = new ArrayList<>();
+    private String selectiontext = "";
+    private ArrayList<String> checknames = new ArrayList<>();
+
 
     public final String a(int var1, String var2) {
         String var3 = wq.b(var1);
@@ -139,23 +158,13 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
             actionButtonsContainer.setVisibility(View.GONE);
         }
         activitiesFragment.a(selecting);
+
+
     }
 
     @Override
     public void onPageSelected(int var1) {
         s.show();
-    }
-
-    // signature mustn't be changed: used in La/a/a/Fw;->b(Lcom/besome/sketch/beans/ProjectFileBean;)V
-    public void b(String var1) {
-        /*customViewsFragment.a(var1);
-        customViewsFragment.g();*/
-    }
-
-    // signature mustn't be changed: used in La/a/a/Fw;->b(Lcom/besome/sketch/beans/ProjectFileBean;)V, La/a/a/Fw;->f()V
-    public void c(String var1) {
-      /*  customViewsFragment.b(var1);
-        customViewsFragment.g();*/
     }
 
     public ArrayList<String> l() {
@@ -175,20 +184,18 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         jC.b(sc_id).l();
         jC.b(sc_id).j();
         jC.a(sc_id).a(jC.b(sc_id));
+
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         ProjectFileBean projectFileBean;
+
         if (requestCode == REQUEST_CODE_ADD_ACTIVITY) {
             if (resultCode == RESULT_OK) {
                 projectFileBean = data.getParcelableExtra("project_file");
                 activitiesFragment.a(projectFileBean);
-
-                if (projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_DRAWER)) {
-                    b(projectFileBean.getDrawerName());
-                }
 
                 if (projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_DRAWER) || projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_FAB)) {
                     jC.c(sc_id).c().useYn = "Y";
@@ -197,15 +204,11 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
                 if (data.hasExtra("preset_views")) {
                     a(projectFileBean, data.getParcelableArrayListExtra("preset_views"));
                 }
-            }
-        } else if (requestCode == REQUEST_CODE_ADD_CUSTOM_VIEW && resultCode == RESULT_OK) {
-            projectFileBean = data.getParcelableExtra("project_file");
-            customViewsFragment.a(projectFileBean);
-            customViewsFragment.g();
-            if (data.hasExtra("preset_views")) {
-               // a(projectFileBean, data.getParcelableArrayListExtra("preset_views"));
+
             }
         }
+
+
     }
 
     @Override
@@ -216,7 +219,10 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
             k();
 
             try {
-                new Handler().postDelayed(() -> (new a(getApplicationContext())).execute(), 500L);
+                new Handler().postDelayed(() -> (
+
+                        new a(getApplicationContext())).execute(),
+                        500L);
             } catch (Exception e) {
                 e.printStackTrace();
                 h();
@@ -242,13 +248,14 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
                     s.show();
                 }
             } else if (viewId == R.id.fab) {
-                newView(1);
+                newViewDialog();
             }
             //DNA MOBILE EDIT
         }
     }
 
-    public void newView(int viewtype){
+
+    public void newView(int viewtype,final String name){
         String ext = "";
         if (viewtype == 0){
             ext = "_fragment";//Creates a Screen extension
@@ -260,7 +267,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         try {
         ProjectFileBean var8 =
                 new ProjectFileBean(0,
-                        "player" + ext, 0, 0,
+                        name + ext, 0, 0,
                         true, true, false, false);
 
         activitiesFragment.a(var8);
@@ -271,12 +278,68 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
 
     }
 
+    private void newViewDialog(){
+        final AlertDialog dialog4 = new AlertDialog.Builder(ManageViewActivity.this).create();
+        View inflate = getLayoutInflater ().inflate(R.layout.manage_view_dialog_select, null);
+        dialog4.setView(inflate);
+        final EditText edittext1 = (EditText)inflate.findViewById(R.id.edittext1);
+        final TextView title = (TextView) inflate.findViewById(R.id.manageviewdialogtitle);
+        final TextView cancel = (TextView)inflate.findViewById(R.id.manageviewcancel);
+        final TextView save = (TextView)inflate.findViewById(R.id.manageviewsave);
+        final RecyclerView manageviewselect = (RecyclerView)inflate.findViewById(R.id.manageviewselector);
+
+        edittext1.setHint("Enter Name");
+
+        manageviewselect.setLayoutManager(new
+                LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false));
+        manageviewselect.setAdapter(new Recyclerview1Adapter(_dialogselector));
+        cancel.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View view) {
+                dialog4.dismiss();
+            }
+        });
+        save.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View view) {
+                viewName = edittext1.getText().toString();
+                if (!viewName.equals("")) {
+                    if (!edittext1.getText().toString().trim().isEmpty()) {
+                        if (viewtype == 69){
+                            if (edittext1.getText().toString()
+                                    .toLowerCase().equals("gameview")) {
+                                newView(viewtype, viewName);
+                                dialog4.dismiss();
+                            }else {
+                                SketchwareUtil.toast("Game can only be named gameview");
+                            }
+                        }else {
+                            newView(viewtype, viewName);
+                            dialog4.dismiss();
+                        }
+
+                    }else {
+                        SketchwareUtil.toast("Name cannot have spaces");
+                    }
+                }else {
+                    SketchwareUtil.toast("Enter view name");
+                }
+            }
+        });
+        dialog4.setCancelable(true);
+        dialog4.show();
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (!super.j()) {
             finish();
         }
+        selectiontext = "[{\"a\":\" Screen \"},{\"a\":\"|\"},{\"a\":\" Class   \"},{\"a\":\"|\"},{\"a\":\" Game   \"}]";
+        _dialogselector = new Gson().fromJson(selectiontext,
+                new TypeToken<ArrayList<HashMap<String,
+                        Object>>>(){}.getType());
 
         setContentView(R.layout.manage_view);
         Toolbar m = findViewById(R.id.toolbar);
@@ -300,6 +363,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         if (savedInstanceState == null) {
             sc_id = getIntent().getStringExtra("sc_id");
             isAppCompatEnabled = getIntent().getStringExtra("compatUseYn");
+
         } else {
             sc_id = savedInstanceState.getString("sc_id");
             isAppCompatEnabled = savedInstanceState.getString("compatUseYn");
@@ -313,12 +377,15 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         tabLayout.setupWithViewPager(viewPager);
         s = findViewById(R.id.fab);
         s.setOnClickListener(this);
+
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.manage_screen_menu, menu);
         menu.findItem(R.id.menu_screen_delete).setVisible(!selecting);
+
         return true;
     }
 
@@ -336,13 +403,16 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         if (!super.j()) {
             finish();
         }
+
     }
 
     @Override
     public void onSaveInstanceState(Bundle newState) {
         newState.putString("sc_id", sc_id);
         newState.putString("compatUseYn", isAppCompatEnabled);
+
         super.onSaveInstanceState(newState);
+
     }
 
     public class a extends MA {
@@ -417,6 +487,98 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         @NonNull
         public Fragment getItem(int position) {
             return position != 1 ? new Fw() : null;
+        }
+    }
+    public class Recyclerview1Adapter extends RecyclerView.Adapter<Recyclerview1Adapter.ViewHolder> {
+
+        ArrayList<HashMap<String, Object>> _data;
+
+        public Recyclerview1Adapter(ArrayList<HashMap<String, Object>> _arr) {
+            _data = _arr;
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            LayoutInflater _inflater = getLayoutInflater();
+            View _v = _inflater.inflate(R.layout.manageviewrecyclerlayout,
+                    null);
+            RecyclerView.LayoutParams _lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            _v.setLayoutParams(_lp);
+            return new ViewHolder(_v);
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder _holder, @SuppressLint("RecyclerView") final int _position) {
+
+            View _view = _holder.itemView;
+
+            final TextView selectiontxt = _view.findViewById(R.id.selectiontxt);
+            selectiontxt.setText(_dialogselector.get(_position).get("a").toString());
+
+            if (_position == typeselected){
+                selectiontxt.setBackgroundColor(Color.WHITE);
+                selectiontxt.setTextColor(Color.BLUE);
+            }else {
+
+                selectiontxt.setBackgroundColor(Color.TRANSPARENT);
+                selectiontxt.setTextColor(Color.WHITE);
+            }
+
+            RecyclerView.LayoutParams _lp =
+                    new RecyclerView.LayoutParams(
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT);
+            _view.setLayoutParams(_lp);
+
+            selectiontxt.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (_position!=1) {
+                        if (_position == 2) {
+                            viewtype = 1;
+                            typeselected = 2;
+                        }
+                        if (_position == 0){
+                            viewtype = 0;
+                            typeselected = 0;
+                        }
+                        if (_position == 4){
+                            viewtype = 69;
+                            typeselected = 4;
+
+                        }
+                        notifyDataSetChanged();
+                    }
+                }
+            });
+
+            selectiontxt.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (_position == 0){
+                        SketchwareUtil.toast("Creates a Screen Class");
+                    }
+                    if (_position == 2){
+                        SketchwareUtil.toast("Creates an Object Class");
+                    }
+                    if (_position == 4){
+                        SketchwareUtil.toast("Required to load your Screens");
+                    }
+                    return true;
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return _data.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            public ViewHolder(View v) {
+                super(v);
+            }
         }
     }
 }

@@ -64,6 +64,7 @@ import java.util.List;
 
 import a.a.a.DB;
 import a.a.a.Dp;
+import a.a.a.Fw;
 import a.a.a.GB;
 import a.a.a.MA;
 import a.a.a.ViewEditorFragment;
@@ -148,7 +149,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
 
     private ManageNativelibsActivity manageNativelibsActivity = new ManageNativelibsActivity();
     private AddLocalLibraries addLocalLibraries;
-
+    private Fw activitiesFragment = new Fw();
     /**
      * Saves the app's version information to the currently opened
      * Sketchware project file.
@@ -464,6 +465,9 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         }
         new AddDefaultComponents(this);
 
+
+
+
         r = new DB(getApplicationContext(), "P1");
         t = new DB(getApplicationContext(), "P12");
 
@@ -489,17 +493,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
 
         projectFileSelector.setOnSelectedFileChangeListener((i, projectFileBean) -> {
             if (i == 1) {
-                /*if (viewTabAdapter != null && projectFileBean != null) {
-                   *//* int orientation = projectFileBean.orientation;
-                    if (orientation == ProjectFileBean.ORIENTATION_PORTRAIT) {
-                        xmlLayoutOrientation.setImageResource(R.drawable.ic_screen_portrait_grey600_24dp);
-                    } else if (orientation == ProjectFileBean.ORIENTATION_LANDSCAPE) {
-                        xmlLayoutOrientation.setImageResource(R.drawable.ic_screen_landscape_grey600_24dp);
-                    } else {
-                        xmlLayoutOrientation.setImageResource(R.drawable.ic_screen_rotation_grey600_24dp);
-                    }
-                    viewTabAdapter.a(projectFileBean);*//*
-                }*/
+
                 if (eventTabAdapter != null) {
                     if (projectFileBean != null) {
                         eventTabAdapter.setCurrentActivity(projectFileBean);
@@ -513,18 +507,6 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                     componentTabAdapter.d();
                 }
             } else if (i == 0) {
-               /* if (eventTabAdapter != null) {
-                    if (projectFileBean != null) {
-                        eventTabAdapter.setCurrentActivity(projectFileBean);
-                        eventTabAdapter.refreshEvents();
-                    } else {
-                        return;
-                    }
-                }
-                if (componentTabAdapter != null && projectFileBean != null) {
-                    componentTabAdapter.a(projectFileBean);
-                    componentTabAdapter.d();
-                }*/
             }
         });
         viewPager = findViewById(R.id.viewpager);
@@ -580,6 +562,11 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         viewPager.getAdapter().notifyDataSetChanged();
         ((TabLayout) findViewById(R.id.tab_layout))
                 .setupWithViewPager(viewPager);
+        try {
+            //toViewManager();
+        }catch (Exception e){
+            System.out.println("FUCK POOP" + e);
+        }
     }
 
     @Override
@@ -918,7 +905,8 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
      * Opens {@link ManageViewActivity}.
      */
     void toViewManager() {
-        launchActivity(ManageViewActivity.class, REQUEST_CODE_VIEW_MANAGER);
+        launchActivity(ManageViewActivity.class,
+                REQUEST_CODE_VIEW_MANAGER);
     }
 
     /**

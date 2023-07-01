@@ -271,6 +271,7 @@ public class ProjectFileSelector extends LinearLayout implements View.OnClickLis
             String javaName = beany.getJavaName();
             String xmlName = beany.getXmlName();
             holder.javaFileName.setText(javaName);
+            holder.xmlFileName.setTextSize(1,12);
             //holder.javaFileName.setText(javaName);
             if (beany!=null) {
                 holder.xmlFileName.setText(setClassType(beany));
