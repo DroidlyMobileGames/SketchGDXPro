@@ -85,10 +85,12 @@ public class ProjectFileSelector extends LinearLayout implements View.OnClickLis
     public void setJavaFileName(String fileName) {
         currentJavaFileName = fileName;
         setShownText(currentJavaFileName);
+
     }
 
     public void setOnSelectedFileChangeListener(by listener) {
         selectedFileChangeListener = listener;
+
     }
 
     public void setScId(String sc_id) {
@@ -185,7 +187,8 @@ public class ProjectFileSelector extends LinearLayout implements View.OnClickLis
         availableFilesDialog.a(R.drawable.java_96);
         View customView = wB.a(getContext(), R.layout.file_selector_popup_select_java);
         RecyclerView recyclerView = customView.findViewById(R.id.file_list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
+                RecyclerView.VERTICAL, false));
         recyclerView.setAdapter(new JavaFileAdapter());
         availableFilesDialog.a(customView);
         availableFilesDialog.show();
@@ -250,6 +253,7 @@ public class ProjectFileSelector extends LinearLayout implements View.OnClickLis
                 super(itemView);
                 javaFileName = itemView.findViewById(R.id.tv_filename);
                 xmlFileName = itemView.findViewById(R.id.tv_linked_filename);
+
                 itemView.setOnClickListener(v -> {
                     ProjectFileBean projectFileBean = jC.b(sc_id).b().get(getLayoutPosition());
                     setJavaFileName(projectFileBean.getJavaName());
@@ -259,6 +263,7 @@ public class ProjectFileSelector extends LinearLayout implements View.OnClickLis
                     selectedFileChangeListener.a(1, projectFileBean);
                     availableFilesDialog.dismiss();
                 });
+
             }
         }
 

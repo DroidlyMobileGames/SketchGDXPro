@@ -756,8 +756,8 @@ public class yq {
         }
 
         if (!javaFiles.contains(new File(javaDir + "RequestNetwork.java")) && N.isHttp3Used) {
-            srcCodeBeans.add(new SrcCodeBean("RequestNetwork.java",
-                    Lx.j(Lx.h(packageName), false)));
+            /*srcCodeBeans.add(new SrcCodeBean("RequestNetwork.java",
+                    Lx.j(Lx.h(packageName), false)));*/
         }
 
         if (!FileUtil.isExistFile(javaDir + "RequestNetworkController.java") && N.isHttp3Used) {

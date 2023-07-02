@@ -192,6 +192,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         ProjectFileBean projectFileBean;
 
         if (requestCode == REQUEST_CODE_ADD_ACTIVITY) {
+
             if (resultCode == RESULT_OK) {
                 projectFileBean = data.getParcelableExtra("project_file");
                 activitiesFragment.a(projectFileBean);//Loads the project files from the projectlist to the list
@@ -205,6 +206,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
                 }
 
             }
+
         }
 
 
@@ -219,7 +221,6 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
 
             try {
                 new Handler().postDelayed(() -> (
-
                         new a(getApplicationContext())).execute(),
                         500L);
             } catch (Exception e) {
@@ -337,7 +338,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         if (!super.j()) {
             finish();
         }
-        selectiontext = "[{\"a\":\" Screen \"},{\"a\":\"|\"},{\"a\":\" Class   \"},{\"a\":\"|\"},{\"a\":\" Game   \"}]";
+        selectiontext = "[{\"a\":\" Screen \"},{\"a\":\"|\"},{\"a\":\" Class   \"}]";
         _dialogselector = new Gson().fromJson(selectiontext,
                 new TypeToken<ArrayList<HashMap<String,
                         Object>>>(){}.getType());
@@ -379,6 +380,9 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         s = findViewById(R.id.fab);
         s.setOnClickListener(this);
 
+        if (getIntent().getStringExtra("checkgameview").equals("poop")){
+            onBackPressed();
+        }
 
     }
 
@@ -403,6 +407,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         super.onResume();
         if (!super.j()) {
             finish();
+
         }
 
     }
@@ -413,7 +418,6 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         newState.putString("compatUseYn", isAppCompatEnabled);
 
         super.onSaveInstanceState(newState);
-
     }
 
     public class a extends MA {
@@ -432,6 +436,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         @Override
         public void a(String var1) {
             h();
+
         }
 
         @Override
@@ -481,12 +486,15 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             Fragment var3 = (Fragment) super.instantiateItem(container, position);
             activitiesFragment = (Fw) var3;
+            if (var3.isAdded()){
+            }
             return var3;
         }
 
         @Override
         @NonNull
         public Fragment getItem(int position) {
+
             return position != 1 ? new Fw() : null;
         }
     }

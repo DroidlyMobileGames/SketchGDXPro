@@ -61,7 +61,7 @@ import mod.hey.studios.util.Helper;
 public class rs extends qA implements View.OnClickListener, MoreblockImporterDialog.CallBack {
     private static final int REQUEST_CODE_ADD_EVENT = 223;
 
-    private ProjectFileBean currentActivity;
+    public ProjectFileBean currentActivity;
     private CategoryAdapter categoryAdapter;
     private EventAdapter eventAdapter;
     private FloatingActionButton fab;
@@ -126,6 +126,7 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
         jC.a(sc_id).a(
                currentActivity
                        .getJavaName(), str, str2);
+
     }
 
 
@@ -230,6 +231,7 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
             for (Pair<String, String> moreBlock : jC.a(sc_id).i(
                     currentActivity.getJavaName())) {
 
+
                 EventBean eventBean = new EventBean(EventBean.EVENT_TYPE_ETC, -1,
                         moreBlock.first, "moreBlock");
                 eventBean.initValue();
@@ -291,6 +293,7 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
 
             for (EventBean eventBean : jC.a(sc_id).g(
                     currentActivity.getJavaName())) {
+
                 eventBean.initValue();
                 int i = eventBean.eventType;
                 if (i == EventBean.EVENT_TYPE_VIEW) {
@@ -365,6 +368,7 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
         if (currentActivity != null) {
             for (Map.Entry<Integer,
                     ArrayList<EventBean>> entry : events.entrySet()) {
+
                 for (EventBean bean : entry.getValue()) {
                     bean.initValue();
                 }

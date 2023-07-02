@@ -26,18 +26,21 @@ import com.sketchware.remodgdx.R;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import mod.hey.studios.util.ProjectFile;
+
 public class Fw extends qA {
 
     private static final int REQUEST_CODE_PRESET_ACTIVITY = 276;
     private static final int REQUEST_CODE_ADD_VIEW_ACTIVITY = 265;
-    private RecyclerView activitiesList;
+    public RecyclerView activitiesList;
     private Boolean k = false;
     private TextView tvGuide;
     private final int[] m = new int[19];
-    private ProjectFilesAdapter projectFilesAdapter = null;
+    public ProjectFilesAdapter projectFilesAdapter = null;
     private String sc_id;
     private String isAppCompatUsed = "N";
-    private ArrayList<ProjectFileBean> activitiesFiles = new ArrayList<>();
+    public ArrayList<ProjectFileBean> activitiesFiles = new ArrayList<>();
+
 
     public Fw() {
     }
@@ -92,6 +95,8 @@ public class Fw extends qA {
     public void a(ProjectFileBean var1) {
         activitiesFiles.add(var1);
         projectFilesAdapter.notifyDataSetChanged();
+
+
     }
 
     public void a(boolean var1) {
@@ -120,11 +125,14 @@ public class Fw extends qA {
     }
 
     public ArrayList<ProjectFileBean> c() {
+
         return activitiesFiles;
     }
 
     public final void c(ProjectFileBean var1) {
-        ProjectFileBean projectFileBean = activitiesFiles.get(projectFilesAdapter.layoutPosition);
+        ProjectFileBean projectFileBean =
+                activitiesFiles.get(projectFilesAdapter.layoutPosition);
+
 
         ArrayList<ViewBean> fileViewBeans = jC.a(sc_id).d(projectFileBean.getXmlName());
         for (int i = fileViewBeans.size() - 1; i >= 0; --i) {
@@ -139,10 +147,12 @@ public class Fw extends qA {
                 jC.a(sc_id).a(projectFileBean.getJavaName(), 1, viewBean.type, viewBean.id, "onClick");
             }
         }
+
     }
 
     public void d() {
         sc_id = getActivity().getIntent().getStringExtra("sc_id");
+
         isAppCompatUsed = getActivity().getIntent().getStringExtra("compatUseYn");
         ArrayList<ProjectFileBean> projectFiles = jC.b(sc_id).b();
         if (projectFiles != null) {
@@ -151,17 +161,17 @@ public class Fw extends qA {
                 if (projectFileBean.fileName.equals("main")) {
                     activitiesFiles.add(0, projectFileBean);
                     isMainActivityFile = true;
-
                 } else {
                     activitiesFiles.add(projectFileBean);
-
                 }
             }
             if (!isMainActivityFile) {
                 activitiesFiles.add(0,
                         new ProjectFileBean(0, "main"));
             }
+
         }
+
     }
 
     public final void e() {
@@ -191,10 +201,24 @@ public class Fw extends qA {
             if (activitiesFiles.size() == 0) {
                 tvGuide.setVisibility(View.VISIBLE);
                 activitiesList.setVisibility(View.GONE);
+
             } else {
                 activitiesList.setVisibility(View.VISIBLE);
                 tvGuide.setVisibility(View.GONE);
             }
+
+            if (activitiesFiles.size()<2){
+                ProjectFileBean var8 =
+                        new ProjectFileBean(0,
+                                "gameview", 0, 0,
+                                true, true, false, false);
+
+                a(var8);
+                projectFilesAdapter.notifyDataSetChanged();
+
+
+            }
+
         }
     }
 
@@ -211,6 +235,7 @@ public class Fw extends qA {
 
         projectFilesAdapter.notifyDataSetChanged();
         g();
+
     }
 
     @Override
@@ -226,6 +251,7 @@ public class Fw extends qA {
             b(projectFileBean);
             c(projectFileBean);
             projectFilesAdapter.notifyItemChanged(projectFilesAdapter.layoutPosition);
+
         }
     }
 
@@ -240,6 +266,7 @@ public class Fw extends qA {
         activitiesList.setAdapter(projectFilesAdapter);
         tvGuide = root.findViewById(R.id.tv_guide);
         tvGuide.setText(xB.b().a(getActivity(), R.string.design_manager_view_description_guide_create_activity));
+
         return root;
     }
 
@@ -384,6 +411,7 @@ public class Fw extends qA {
                         startActivityForResult(intent, REQUEST_CODE_PRESET_ACTIVITY);
                     }
                 });
+
             }
         }
     }

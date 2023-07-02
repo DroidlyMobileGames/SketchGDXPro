@@ -38,7 +38,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.android.tools.r8.S;
 import com.besome.sketch.beans.EventBean;
+import com.besome.sketch.beans.ProjectFileBean;
 import com.besome.sketch.common.SrcViewerActivity;
 import com.besome.sketch.editor.manage.ManageCollectionActivity;
 import com.besome.sketch.editor.manage.image.ManageImageActivity;
@@ -54,6 +56,7 @@ import com.sketchware.remodgdx.R;
 import com.topjohnwu.superuser.Shell;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -146,6 +149,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
     private ManageNativelibsActivity manageNativelibsActivity = new ManageNativelibsActivity();
     private AddLocalLibraries addLocalLibraries;
     private Fw activitiesFragment = new Fw();
+    private String getGameview = "";
     /**
      * Saves the app's version information to the currently opened
      * Sketchware project file.
@@ -170,6 +174,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
             var2.g();
             var2.e();
         }
+
     }
 
     public void b(boolean var1) {
@@ -463,7 +468,6 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
 
 
 
-
         r = new DB(getApplicationContext(), "P1");
         t = new DB(getApplicationContext(), "P12");
 
@@ -487,6 +491,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         projectFileSelector = findViewById(R.id.file_selector);
         projectFileSelector.setScId(sc_id);
 
+
         projectFileSelector.setOnSelectedFileChangeListener((i, projectFileBean) -> {
             if (i == 1) {
 
@@ -505,6 +510,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
             } else if (i == 0) {
             }
         });
+
         viewPager = findViewById(R.id.viewpager);
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),
                 this));
@@ -558,11 +564,22 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         viewPager.getAdapter().notifyDataSetChanged();
         ((TabLayout) findViewById(R.id.tab_layout))
                 .setupWithViewPager(viewPager);
-        try {
-            //toViewManager();
-        }catch (Exception e){
-            System.out.println("FUCK POOP" + e);
+
+        ArrayList<ProjectFileBean> projectFiles = jC.b(sc_id).b();
+        ArrayList<String> javanames = new ArrayList<>();
+        if (projectFiles != null) {
+            for (int i = 0; i < projectFiles.size(); i++) {
+                javanames.add(projectFiles.get(i).fileName);
+            }
+            if (javanames.contains("gameview")){
+                System.out.println("GET POOP" + "TRUE");
+            }else {
+                getGameview = "poop";
+                launchActivity(ManageViewActivity.class,69);
+            }
+
         }
+
     }
 
     @Override
@@ -615,6 +632,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         if (freeMegabytes < 100L && freeMegabytes > 0L) {
             warnAboutInsufficientStorageSpace();
         }
+        getGameview = "";
     }
 
     @Override
@@ -928,6 +946,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         Intent intent = new Intent(getApplicationContext(), toLaunch);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra("sc_id", sc_id);
+        intent.putExtra("checkgameview",getGameview);
         for (Pair<String, String> extra : extras) {
             intent.putExtra(extra.first, extra.second);
         }
@@ -1423,6 +1442,9 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                 if (eventTabAdapter!=null){
                     eventTabAdapter = (rs) fragment;
                     projectFileSelector.setFileType(1);
+                    if (projectFileSelector.getFileName().contains("Gameview.java")){
+
+                    }
                 }
             } else if (position == 1) {
                 if (componentTabAdapter!=null) {
@@ -1440,11 +1462,6 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         @Override
         @NonNull
         public Fragment getItem(int position) {
-            /*if (position == 0) {
-                return new ViewEditorFragment();
-            } else {
-                return position == 1 ? new rs() : new br();
-            }*/
             return position == 0 ? new rs() : new br();
         }
     }
