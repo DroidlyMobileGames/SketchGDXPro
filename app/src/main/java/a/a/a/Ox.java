@@ -26,7 +26,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import dev.aldi.sayuti.editor.injection.AppCompatInjection;
+import mod.dev.aldi.sayuti.editor.injection.AppCompatInjection;
 import mod.agus.jcoderz.beans.ViewBeans;
 import mod.jbk.util.LogUtil;
 

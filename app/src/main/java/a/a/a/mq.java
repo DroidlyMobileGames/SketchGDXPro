@@ -4,7 +4,7 @@ import com.besome.sketch.beans.ComponentBean;
 
 import java.util.ArrayList;
 
-import dev.aldi.sayuti.block.ExtraBlockClassInfo;
+import mod.dev.aldi.sayuti.block.ExtraBlockClassInfo;
 import mod.hilal.saif.components.ComponentsHandler;
 import mod.hilal.saif.events.EventsHandler;
 

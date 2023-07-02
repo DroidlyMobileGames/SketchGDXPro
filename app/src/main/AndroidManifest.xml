@@ -115,22 +115,10 @@
             android:name="com.besome.sketch.editor.manage.view.ManageViewActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="com.besome.sketch.editor.manage.sound.ManageSoundActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name="com.besome.sketch.editor.manage.sound.ManageSoundImportActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
             android:name="com.besome.sketch.editor.manage.image.ManageImageActivity"
             android:configChanges="orientation|screenSize" />
         <activity
             android:name="com.besome.sketch.editor.manage.image.ManageImageImportActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name="com.besome.sketch.editor.manage.font.ManageFontActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name="com.besome.sketch.editor.manage.font.ManageFontImportActivity"
             android:configChanges="orientation|screenSize" />
         <activity
             android:name="com.besome.sketch.editor.manage.library.ManageLibraryActivity"
@@ -173,16 +161,6 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.Translucent"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name="com.besome.sketch.editor.manage.sound.AddSoundActivity"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.Translucent"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity
-            android:name="com.besome.sketch.editor.manage.font.AddFontActivity"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.Translucent"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity
             android:name="com.besome.sketch.editor.manage.ShowBlockCollectionActivity"
             android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="false"
@@ -213,34 +191,19 @@
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.Translucent"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity
-            android:name="com.besome.sketch.editor.manage.library.admob.AdmobActivity"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.Translucent.FullScreen" />
+
         <activity
             android:name="com.besome.sketch.editor.manage.library.firebase.FirebaseActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.Translucent.FullScreen" />
         <activity
-            android:name="com.besome.sketch.editor.manage.library.firebase.ManageFirebaseActivity"
+            android:name="mod.dev.aldi.sayuti.editor.injection.AddCustomAttributeActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="com.besome.sketch.editor.manage.library.admob.ManageAdmobActivity"
+            android:name="mod.dev.aldi.sayuti.editor.manage.ManageCustomAttributeActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="com.besome.sketch.editor.manage.library.compat.ManageCompatActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name="com.besome.sketch.editor.manage.library.googlemap.ManageGoogleMapActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name="dev.aldi.sayuti.editor.injection.AddCustomAttributeActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name="dev.aldi.sayuti.editor.manage.ManageCustomAttributeActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name="dev.aldi.sayuti.editor.manage.ManageLocalLibraryActivity"
+            android:name="mod.dev.aldi.sayuti.editor.manage.ManageLocalLibraryActivity"
             android:configChanges="orientation|screenSize" />
         <activity
             android:name="mod.agus.jcoderz.editor.manage.permission.ManagePermissionActivity"

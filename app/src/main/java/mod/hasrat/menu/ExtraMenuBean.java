@@ -34,7 +34,7 @@ import a.a.a.eC;
 import a.a.a.jC;
 import a.a.a.uq;
 import a.a.a.wB;
-import dev.aldi.sayuti.block.ExtraMenuBlock;
+import mod.dev.aldi.sayuti.block.ExtraMenuBlock;
 import mod.agus.jcoderz.editor.manage.block.makeblock.BlockMenu;
 import mod.agus.jcoderz.lib.FilePathUtil;
 import mod.agus.jcoderz.lib.FileResConfig;

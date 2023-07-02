@@ -111,7 +111,7 @@ import a.a.a.xB;
 import a.a.a.xq;
 import a.a.a.yq;
 import a.a.a.yy;
-import dev.aldi.sayuti.block.ExtraPaletteBlock;
+import mod.dev.aldi.sayuti.block.ExtraPaletteBlock;
 import io.github.rosemoe.sora.langs.java.JavaLanguage;
 import io.github.rosemoe.sora.widget.CodeEditor;
 import io.github.rosemoe.sora.widget.component.Magnifier;

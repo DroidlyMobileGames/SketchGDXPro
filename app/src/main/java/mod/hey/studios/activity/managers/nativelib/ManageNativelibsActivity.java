@@ -16,7 +16,6 @@ import android.widget.PopupMenu;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.besome.sketch.design.DesignActivity;
 import com.github.angads25.filepicker.model.DialogConfigs;
 import com.github.angads25.filepicker.model.DialogProperties;
 import com.github.angads25.filepicker.view.FilePickerDialog;
@@ -31,7 +30,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-import dev.aldi.sayuti.editor.manage.ManageLocalLibraryActivity;
 import mod.SketchwareUtil;
 import mod.agus.jcoderz.lib.FilePathUtil;
 import mod.agus.jcoderz.lib.FileResConfig;

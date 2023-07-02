@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import dev.aldi.sayuti.block.ExtraBlockFile;
+import mod.dev.aldi.sayuti.block.ExtraBlockFile;
 import mod.SketchwareUtil;
 
 public class PaletteSelector {
