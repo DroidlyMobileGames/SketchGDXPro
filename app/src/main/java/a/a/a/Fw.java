@@ -113,7 +113,8 @@ public class Fw extends qA {
             ((ManageViewActivity) getActivity()).c(drawerName);
         }*/
 
-        if (projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_DRAWER) || projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_FAB)) {
+        if (projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_DRAWER)
+                || projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_FAB)) {
             jC.c(sc_id).c().useYn = "Y";
         }
     }

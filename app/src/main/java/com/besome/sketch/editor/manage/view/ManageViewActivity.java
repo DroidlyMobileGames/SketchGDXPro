@@ -148,8 +148,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         }
     }
 
-    // signature mustn't be changed: used in La/a/a/Dw;->onLongClick(Landroid/view/View;)Z, La/a/a/vw;->onLongClick(Landroid/view/View;)Z
-    public void a(boolean var1) {
+    public void a(boolean var1) {//Checks if the user long pressed the list of projects
         selecting = var1;
         invalidateOptionsMenu();
         if (selecting) {
@@ -195,7 +194,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         if (requestCode == REQUEST_CODE_ADD_ACTIVITY) {
             if (resultCode == RESULT_OK) {
                 projectFileBean = data.getParcelableExtra("project_file");
-                activitiesFragment.a(projectFileBean);
+                activitiesFragment.a(projectFileBean);//Loads the project files from the projectlist to the list
 
                 if (projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_DRAWER) || projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_FAB)) {
                     jC.c(sc_id).c().useYn = "Y";
@@ -240,11 +239,12 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
                 }
             } else if (viewId == R.id.btn_delete) {
                 if (selecting) {
-                    activitiesFragment.f();
+                    activitiesFragment.f();//Deletes the activity from the project
                     a(false);
-                    activitiesFragment.g();
+                    activitiesFragment.g();//After deltion this handles resetting the views to not show the delete/cancel buttons
                     bB.a(getApplicationContext(),
-                            xB.b().a(getApplicationContext(), R.string.common_message_complete_delete), bB.TOAST_WARNING).show();
+                            xB.b().a(getApplicationContext(),
+                                    R.string.common_message_complete_delete), bB.TOAST_WARNING).show();
                     s.show();
                 }
             } else if (viewId == R.id.fab) {
@@ -254,7 +254,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         }
     }
 
-
+    /**Creates a new class while checking the class type*/
     public void newView(int viewtype,final String name){
         String ext = "";
         if (viewtype == 0){
@@ -271,6 +271,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
                         true, true, false, false);
 
         activitiesFragment.a(var8);
+
 
         }catch (Exception e){
 
@@ -502,7 +503,9 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
             LayoutInflater _inflater = getLayoutInflater();
             View _v = _inflater.inflate(R.layout.manageviewrecyclerlayout,
                     null);
-            RecyclerView.LayoutParams _lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            RecyclerView.LayoutParams _lp = new RecyclerView
+                    .LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
             _v.setLayoutParams(_lp);
             return new ViewHolder(_v);
         }
