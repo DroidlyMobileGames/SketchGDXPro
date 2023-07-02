@@ -480,12 +480,12 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
                             maybeAddListToListOfToBeAddedLists(3, str);
                         } else if (!gx.b("resource_bg") && !gx.b("resource")) {
                             if (gx.b("sound")) {
-                                maybeAddSoundToListOfToBeAddedSounds(str);
+                              //  maybeAddSoundToListOfToBeAddedSounds(str);
                             } else if (gx.b("font")) {
-                                maybeAddFontToListOfToBeAddedFonts(str);
+                                //maybeAddFontToListOfToBeAddedFonts(str);
                             }
                         } else {
-                            maybeAddImageToListOfToBeAddedImages(str);
+                            //maybeAddImageToListOfToBeAddedImages(str);
                         }
                     }
                 }
