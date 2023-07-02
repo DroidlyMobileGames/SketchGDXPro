@@ -12,11 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
 import com.besome.sketch.beans.ProjectLibraryBean;
-import com.besome.sketch.editor.manage.library.admob.AdmobActivity;
-import com.besome.sketch.editor.manage.library.admob.ManageAdmobActivity;
-import com.besome.sketch.editor.manage.library.compat.ManageCompatActivity;
-import com.besome.sketch.editor.manage.library.firebase.ManageFirebaseActivity;
-import com.besome.sketch.editor.manage.library.googlemap.ManageGoogleMapActivity;
+
 import com.besome.sketch.lib.base.BaseAppCompatActivity;
 import com.sketchware.remodgdx.R;
 
@@ -74,11 +70,7 @@ public class ManageLibraryActivity extends BaseAppCompatActivity implements View
     }
 
     private void toCompatActivity(ProjectLibraryBean compatLibraryBean, ProjectLibraryBean firebaseLibraryBean) {
-        Intent intent = new Intent(getApplicationContext(), ManageCompatActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("compat", compatLibraryBean);
-        intent.putExtra("firebase", firebaseLibraryBean);
-        startActivityForResult(intent, REQUEST_CODE_APPCOMPAT_ACTIVITY);
+
     }
 
     private void initializeLibrary(@Nullable ProjectLibraryBean libraryBean) {
@@ -118,33 +110,14 @@ public class ManageLibraryActivity extends BaseAppCompatActivity implements View
     }
 
     private void toAdmobActivity(ProjectLibraryBean libraryBean) {
-        Intent intent;
-        if (!libraryBean.reserved1.isEmpty()) {
-            intent = new Intent(getApplicationContext(), ManageAdmobActivity.class);
-        } else {
-            intent = new Intent(getApplicationContext(), AdmobActivity.class);
-        }
 
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("sc_id", sc_id);
-        intent.putExtra("admob", libraryBean);
-        startActivityForResult(intent, REQUEST_CODE_ADMOB_ACTIVITY);
     }
 
     private void toFirebaseActivity(ProjectLibraryBean libraryBean) {
-        Intent intent = new Intent(getApplicationContext(), ManageFirebaseActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("sc_id", sc_id);
-        intent.putExtra("firebase", libraryBean);
-        startActivityForResult(intent, REQUEST_CODE_FIREBASE_ACTIVITY);
     }
 
     private void toGoogleMapActivity(ProjectLibraryBean libraryBean) {
-        Intent intent = new Intent(getApplicationContext(), ManageGoogleMapActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("sc_id", sc_id);
-        intent.putExtra("google_map", libraryBean);
-        startActivityForResult(intent, REQUEST_CODE_GOOGLE_MAPS_ACTIVITY);
+
     }
 
     private void toExcludeBuiltinLibrariesActivity() {
