@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.besome.sketch.beans.ProjectResourceBean;
-import com.besome.sketch.editor.manage.sound.ManageSoundActivity;
 import com.besome.sketch.editor.manage.sound.ManageSoundImportActivity;
 import com.sketchware.remodgdx.R;
 
@@ -91,11 +90,6 @@ public class Yv extends qA implements View.OnClickListener {
                 }
             }
             if (arrayList.size() > 0) {
-                ArrayList<ProjectResourceBean> d = ((ManageSoundActivity) requireActivity()).m().d();
-                Intent intent = new Intent(requireActivity(), ManageSoundImportActivity.class);
-                intent.putParcelableArrayListExtra("project_sounds", d);
-                intent.putParcelableArrayListExtra("selected_collections", arrayList);
-                importSoundsHandler.launch(intent);
             }
             unselectAll();
             adapter.notifyDataSetChanged();
@@ -254,8 +248,6 @@ public class Yv extends qA implements View.OnClickListener {
             arrayList2.add(new ProjectResourceBean(ProjectResourceBean.PROJECT_RES_TYPE_FILE, next.resName, next.resFullName));
         }
         if (arrayList2.size() > 0) {
-            ((ManageSoundActivity) requireActivity()).m().a(arrayList2);
-            ((ManageSoundActivity) requireActivity()).f(0);
         }
     }
 }

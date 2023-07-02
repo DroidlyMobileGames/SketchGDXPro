@@ -23,8 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.besome.sketch.beans.ProjectResourceBean;
-import com.besome.sketch.editor.manage.sound.AddSoundActivity;
-import com.besome.sketch.editor.manage.sound.ManageSoundActivity;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sketchware.remodgdx.R;
 
@@ -61,21 +60,10 @@ public class ow extends qA implements View.OnClickListener {
 
     private void addSound() {
         f();
-        Intent intent = new Intent(getContext(), AddSoundActivity.class);
-        intent.putExtra("sc_id", sc_id);
-        intent.putExtra("dir_path", A);
-        intent.putExtra("sound_names", c());
-        startActivityForResult(intent, 269);
     }
 
     private void editSound() {
-        Intent intent = new Intent(getContext(), AddSoundActivity.class);
-        intent.putExtra("sc_id", sc_id);
-        intent.putExtra("dir_path", A);
-        intent.putExtra("sound_names", c());
-        intent.putExtra("request_code", 270);
-        intent.putExtra("project_resource", sounds.get(adapter.lastSelectedSound));
-        startActivityForResult(intent, 270);
+
     }
 
     @Override
@@ -111,14 +99,12 @@ public class ow extends qA implements View.OnClickListener {
                 bB.a(requireActivity(), xB.b().a(requireActivity(), R.string.design_manager_message_add_complete), 1).show();
                 adapter.notifyDataSetChanged();
                 i();
-                ((ManageSoundActivity) requireActivity()).l().e();
             }
         } else if (requestCode == 270 && resultCode == Activity.RESULT_OK) {
             sounds.set(adapter.lastSelectedSound, (ProjectResourceBean) data.getParcelableExtra("project_resource"));
             bB.a(requireActivity(), xB.b().a(requireActivity(), R.string.design_manager_message_edit_complete), 1).show();
             adapter.notifyDataSetChanged();
             i();
-            ((ManageSoundActivity) requireActivity()).l().e();
         }
     }
 

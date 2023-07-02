@@ -83,9 +83,6 @@
             android:name="com.besome.sketch.design.DesignActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="com.besome.sketch.design.MyDesignActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
             android:name="dnamobile.SWLoader"
             android:exported="true"></activity>
         <activity

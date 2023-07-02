@@ -43,10 +43,8 @@ import com.besome.sketch.beans.ProjectFileBean;
 import com.besome.sketch.common.SrcViewerActivity;
 import com.besome.sketch.editor.event.AddEventActivity;
 import com.besome.sketch.editor.manage.ManageCollectionActivity;
-import com.besome.sketch.editor.manage.font.ManageFontActivity;
 import com.besome.sketch.editor.manage.image.ManageImageActivity;
 import com.besome.sketch.editor.manage.library.ManageLibraryActivity;
-import com.besome.sketch.editor.manage.sound.ManageSoundActivity;
 import com.besome.sketch.editor.manage.view.ManageViewActivity;
 import com.besome.sketch.editor.view.ProjectFileSelector;
 import com.besome.sketch.lib.base.BaseAppCompatActivity;
@@ -879,11 +877,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         launchActivity(ManageStringfogActivity.class, null);
     }
 
-    /**
-     * Opens {@link ManageFontActivity}.
-     */
     void toFontManager() {
-        launchActivity(ManageFontActivity.class, REQUEST_CODE_FONT_MANAGER);
     }
 
     /**
@@ -909,11 +903,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                 REQUEST_CODE_VIEW_MANAGER);
     }
 
-    /**
-     * Opens {@link ManageSoundActivity}.
-     */
     void toSoundManager() {
-        launchActivity(ManageSoundActivity.class, REQUEST_CODE_SOUND_MANAGER);
     }
 
     /**
