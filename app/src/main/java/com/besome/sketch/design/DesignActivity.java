@@ -1224,6 +1224,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                 } else {
                     xmlLayoutOrientation.setVisibility(View.GONE);
                 }*/
+                xmlLayoutOrientation.setVisibility(View.GONE);
             }
 
             projectFileSelector.syncState();
@@ -1397,7 +1398,6 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         public ViewPagerAdapter(FragmentManager xf, Context context) {
             super(xf);
             labels = new String[]{
-                    /*Helper.getResString(R.string.design_tab_title_view),*/
                     Helper.getResString(R.string.design_tab_title_event),
                     Helper.getResString(R.string.design_tab_title_component)};
 

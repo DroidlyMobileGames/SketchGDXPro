@@ -352,7 +352,8 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
         if (jC.a(sc_id).f(currentActivity.getJavaName(), moreBlock.targetId)) {
             bB.b(getContext(), xB.b().a(getContext(), R.string.logic_editor_message_currently_used_block), 0).show();
         } else {
-            jC.a(sc_id).n(currentActivity.getJavaName(), moreBlock.targetId);
+            jC.a(sc_id).n(currentActivity.getJavaName(),
+                    moreBlock.targetId);
             bB.a(getContext(), xB.b().a(getContext(), R.string.common_message_complete_delete), 0).show();
             events.get(categoryAdapter.index).remove(eventAdapter.lastSelectedItem);
             eventAdapter.notifyItemRemoved(eventAdapter.lastSelectedItem);
@@ -1086,7 +1087,8 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
                                     EventAdapter.this.notifyItemChanged(lastSelectedItem);
                                 } else if (eventBean.buttonPressed == 1) {
                                     eventBean.isConfirmation = false;
-                                    if (categoryAdapter.index != 4) {
+
+                                    if (categoryAdapter.index != 2) {
                                         deleteEvent(eventBean);
                                     } else {
                                         deleteMoreBlock(eventBean);
