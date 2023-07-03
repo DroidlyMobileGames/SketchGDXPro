@@ -78,7 +78,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
     private int typeselected = 0;
     private ArrayList<HashMap<String, Object>> _dialogselector = new ArrayList<>();
     private String selectiontext = "";
-    private ArrayList<String> checknames = new ArrayList<>();
+    public ArrayList<String> checknames = new ArrayList<>();
 
 
     public final String a(int var1, String var2) {
@@ -308,22 +308,12 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
                 viewName = edittext1.getText().toString();
                 if (!viewName.equals("")) {
                     if (!edittext1.getText().toString().trim().isEmpty()) {
-                        /*if (viewtype == 69){
-                            if (edittext1.getText().toString()
-                                    .toLowerCase().equals("gameview")) {
-                                newView(viewtype, viewName);
-                                dialog4.dismiss();
-                            }else {
-                                SketchwareUtil.toast("Game can only be named gameview");
-                            }
+                        if (!checknames.contains(edittext1.getText().toString().toLowerCase())) {
+                            newView(viewtype, viewName);
+                            dialog4.dismiss();
                         }else {
-
-                        }*/
-                       /* if (!edittext1.getText().toString().toLowerCase()){
-
-                        }*/
-                        newView(viewtype, viewName);
-                        dialog4.dismiss();
+                            SketchwareUtil.toast("Name already exists");
+                        }
 
                     }else {
                         SketchwareUtil.toast("Name cannot have spaces");
@@ -387,6 +377,13 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
 
         if (getIntent().getStringExtra("checkgameview").equals("poop")){
             onBackPressed();
+        }
+        ArrayList<ProjectFileBean> projectFiles = jC.b(sc_id).b();
+        if (projectFiles != null) {
+            for (int i = 0; i < projectFiles.size(); i++) {
+                checknames.add(projectFiles.get(i).fileName.replace("_fragment","").replace("_dialog","").toLowerCase());
+            }
+
         }
     }
 
@@ -490,7 +487,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             Fragment var3 = (Fragment) super.instantiateItem(container, position);
             activitiesFragment = (Fw) var3;
-
+            System.out.println("GET POOP" + checknames);
             return var3;
         }
 

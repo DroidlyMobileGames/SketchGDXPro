@@ -215,7 +215,7 @@ public class Jx {
         if (isDialogFragment) {
             sb.append("public class ")
                     .append(projectFileBean.getActivityName()
-                            .replace("DialogFragment", "classView"));
+                            .replace("DialogFragment", "View"));
         }
             if (!isDialogFragment && !isFragment) {
                 sb.append("public class ")
@@ -320,7 +320,7 @@ public class Jx {
             sb.append("}").append(EOL);
         }
         if (isDialogFragment){
-            sb.append("public ").append(projectFileBean.getActivityName().replace("DialogFragment", "classView")).append("() {");
+            sb.append("public ").append(projectFileBean.getActivityName().replace("DialogFragment", "View")).append("() {");
             sb.append(EOL);
             sb.append("initializeClass();");
         }

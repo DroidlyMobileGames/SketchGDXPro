@@ -41,6 +41,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.android.tools.r8.S;
 import com.besome.sketch.beans.EventBean;
 import com.besome.sketch.beans.ProjectFileBean;
+import com.besome.sketch.beans.ViewBean;
 import com.besome.sketch.common.SrcViewerActivity;
 import com.besome.sketch.editor.manage.ManageCollectionActivity;
 import com.besome.sketch.editor.manage.image.ManageImageActivity;
@@ -72,6 +73,7 @@ import a.a.a.bB;
 import a.a.a.bC;
 import a.a.a.br;
 import a.a.a.cC;
+import a.a.a.eC;
 import a.a.a.jC;
 import a.a.a.kC;
 import a.a.a.lC;
@@ -571,9 +573,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
             for (int i = 0; i < projectFiles.size(); i++) {
                 javanames.add(projectFiles.get(i).fileName);
             }
-            if (javanames.contains("gameview")){
-                System.out.println("GET POOP" + "TRUE");
-            }else {
+            if (!javanames.contains("gameview")){
                 getGameview = "poop";
                 launchActivity(ManageViewActivity.class,69);
             }
