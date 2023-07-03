@@ -215,7 +215,7 @@ public class Jx {
         if (isDialogFragment) {
             sb.append("public class ")
                     .append(projectFileBean.getActivityName()
-                            .replace("DialogFragment", "View"));
+                            .replace("DialogFragment", "classView"));
         }
             if (!isDialogFragment && !isFragment) {
                 sb.append("public class ")
@@ -320,7 +320,7 @@ public class Jx {
             sb.append("}").append(EOL);
         }
         if (isDialogFragment){
-            sb.append("public ").append(projectFileBean.getActivityName().replace("DialogFragment", "View")).append("() {");
+            sb.append("public ").append(projectFileBean.getActivityName().replace("DialogFragment", "classView")).append("() {");
             sb.append(EOL);
             sb.append("initializeClass();");
         }
@@ -479,11 +479,6 @@ public class Jx {
 
         }
         sb.append("}").append(EOL);
-
-        /*if (projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_DRAWER)) {
-            eventManager.a("onBackPressed",
-                    "DrawerLayout", "_drawer");
-        }*/
 
         ArrayList<ViewBean> beans = projectDataManager.d(projectFileBean.getXmlName());
 

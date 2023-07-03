@@ -246,6 +246,11 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
                     !screencheck.contains("_dialog_fragment")){
                 //Only add extra default methods in the screen for now
                //Add default activity methods here
+                EventBean eventBean2 = new EventBean(
+                        EventBean.EVENT_TYPE_ACTIVITY, -1,
+                        "Show", "show");
+                eventBean2.initValue();
+                activityEvents.add(eventBean2);
                 EventBean eventBean3 = new EventBean(
                         EventBean.EVENT_TYPE_ACTIVITY, -1,
                         "Render", "render");

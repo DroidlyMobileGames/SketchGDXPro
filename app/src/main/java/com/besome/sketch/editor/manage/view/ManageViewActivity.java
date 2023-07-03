@@ -168,6 +168,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
 
     public ArrayList<String> l() {
         ArrayList<String> projectLayoutFiles = new ArrayList<>();
+
         projectLayoutFiles.add("debug");
         ArrayList<ProjectFileBean> activitiesFiles = activitiesFragment.c();
         for (ProjectFileBean projectFileBean : activitiesFiles) {
@@ -307,7 +308,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
                 viewName = edittext1.getText().toString();
                 if (!viewName.equals("")) {
                     if (!edittext1.getText().toString().trim().isEmpty()) {
-                        if (viewtype == 69){
+                        /*if (viewtype == 69){
                             if (edittext1.getText().toString()
                                     .toLowerCase().equals("gameview")) {
                                 newView(viewtype, viewName);
@@ -316,9 +317,13 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
                                 SketchwareUtil.toast("Game can only be named gameview");
                             }
                         }else {
-                            newView(viewtype, viewName);
-                            dialog4.dismiss();
-                        }
+
+                        }*/
+                       /* if (!edittext1.getText().toString().toLowerCase()){
+
+                        }*/
+                        newView(viewtype, viewName);
+                        dialog4.dismiss();
 
                     }else {
                         SketchwareUtil.toast("Name cannot have spaces");
@@ -383,7 +388,6 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         if (getIntent().getStringExtra("checkgameview").equals("poop")){
             onBackPressed();
         }
-
     }
 
     @Override
@@ -486,8 +490,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             Fragment var3 = (Fragment) super.instantiateItem(container, position);
             activitiesFragment = (Fw) var3;
-            if (var3.isAdded()){
-            }
+
             return var3;
         }
 

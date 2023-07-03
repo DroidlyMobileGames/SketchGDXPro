@@ -40,7 +40,7 @@ public class Fw extends qA {
     private String sc_id;
     private String isAppCompatUsed = "N";
     public ArrayList<ProjectFileBean> activitiesFiles = new ArrayList<>();
-
+    public ArrayList<String> activitynames = new ArrayList<>();
 
     public Fw() {
     }

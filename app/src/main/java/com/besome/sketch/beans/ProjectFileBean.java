@@ -186,7 +186,7 @@ public class ProjectFileBean extends SelectableBean implements Parcelable {
 
     public static String getJavaName(String filename) {
         return getActivityName(filename).replace("Fragment","View")
-                .replace("Dialog","") + ".java";
+                .replace("Dialog","class") + ".java";
     }
 
     public static String getXmlName(String filename) {
