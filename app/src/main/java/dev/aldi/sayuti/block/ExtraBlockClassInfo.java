@@ -32,7 +32,8 @@ public class ExtraBlockClassInfo {
         for (int i = 0; i < jSONArray.length(); i++) {
             try {
                 JSONObject jSONObject = jSONArray.getJSONObject(i);
-                if (str.equals(jSONObject.getString("type")) && str.equals(jSONObject.getString("name"))) {
+                if (str.equals(jSONObject.getString("type"))
+                        && str.equals(jSONObject.getString("name"))) {
                     return new Gx(jSONObject.getString("typeVar"));
                 }
             } catch (JSONException e) {
@@ -46,7 +47,8 @@ public class ExtraBlockClassInfo {
         for (int i = 0; i < jSONArray.length(); i++) {
             try {
                 JSONObject jSONObject = jSONArray.getJSONObject(i);
-                if (str.equals(jSONObject.getString("id")) && jSONObject.has("name")) {
+                if (str.equals(jSONObject.getString("id"))
+                        && jSONObject.has("name")) {
                     return jSONObject.getString("name");
                 }
             } catch (JSONException e) {
@@ -60,7 +62,8 @@ public class ExtraBlockClassInfo {
         for (int i = 0; i < jSONArray.length(); i++) {
             try {
                 JSONObject jSONObject = jSONArray.getJSONObject(i);
-                if (jSONObject.has("name") && str.equals(jSONObject.getString("name"))) {
+                if (jSONObject.has("name")
+                        && str.equals(jSONObject.getString("name"))) {
                     return jSONObject.getString("type");
                 }
             } catch (JSONException e) {
