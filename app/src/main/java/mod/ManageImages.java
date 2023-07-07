@@ -3,6 +3,7 @@ package mod;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.drawable.BitmapDrawableKt;
 
 import android.app.Activity;
 import android.content.ClipData;
@@ -10,10 +11,15 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
@@ -53,6 +59,7 @@ public class ManageImages extends AppCompatActivity {
     private GridView imageslistgrid;
     private ArrayList<Integer> positions = new ArrayList<>();
     private boolean deletingenabled = false;
+    private ArrayList<String> imagenameslist = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,13 +74,14 @@ public class ManageImages extends AppCompatActivity {
         m.setNavigationOnClickListener(view -> {
             if (!mB.a()) onBackPressed();
         });
+
         fab = findViewById(R.id.addimagefab);
         imageslistgrid = findViewById(R.id.imagesgrid);
 
 
         projectID = getIntent().getStringExtra("sc_id");
         imageassetspath = FileUtil.getExternalStorageDir().concat("/.sketchwaregames/data/" + projectID + "/files/assets/images/");
-        picker.setType("image/*");
+        picker.setType("image/png");
         picker.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +125,31 @@ public class ManageImages extends AppCompatActivity {
                 break;
         }
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.manage_screen_menu, menu);
+        menu.findItem(R.id.menu_screen_delete).setVisible(deletingenabled);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        if (menuItem.getItemId() == R.id.menu_screen_delete) {
+            deleteImagesSelected();
+        }
+        return super.onOptionsItemSelected(menuItem);
+    }
+
+    private void deleteImagesSelected() {
+        //imageslist
+        for (int i = 0; i<positions.size(); i++){
+            FileUtil.deleteFile(imageslist.get(positions.get(i)).get("i").toString());
+        }
+        deletingenabled = false;
+        positions.clear();
+        invalidateOptionsMenu();
+        loadProjectImageAssets();
+
+    }
 
     public void _ImagePickerDialog(final boolean _check) {
         final AlertDialog dialog5 = new AlertDialog
@@ -128,7 +161,9 @@ public class ManageImages extends AppCompatActivity {
         final ImageView imageview1 = (ImageView)inflate.findViewById(R.id.imageview1);
         final EditText edittext1 = (EditText)inflate.findViewById(R.id.edittext1);
         final TextView textview4 = (TextView)inflate.findViewById(R.id.textview4);
-
+        final TextView textview5 = (TextView)inflate.findViewById(R.id.textview5);
+        imageview1.setImageResource(R.drawable.imageiconmanager);
+        linear3.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b, int c, int d) { this.setCornerRadius(a); this.setStroke(b, c); this.setColor(d); return this; } }.getIns((int)25, (int)1, 0xFF607D8B, Color.TRANSPARENT));
         imageview1.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
@@ -142,11 +177,15 @@ public class ManageImages extends AppCompatActivity {
                 filename = edittext1.getText().toString();
                 if (!filename.equals("")) {
                     if (!filepath.equals("")) {
-                        dialog5.hide();
-                        saveImageToImageAssets();
-                        filename = "";
-                        filepath = "";
-                        fileextension = "";
+                        if (!imagenameslist.contains(filename.toLowerCase())) {
+                            dialog5.hide();
+                            saveImageToImageAssets();
+                            filename = "";
+                            filepath = "";
+                            fileextension = "";
+                        }else {
+                            SketchwareUtil.toast("Image name already exists");
+                        }
                     }else {
                         SketchwareUtil.toast("Please pick an image");
                     }
@@ -156,8 +195,12 @@ public class ManageImages extends AppCompatActivity {
             }
         });
         if (_check) {
-            imageview1.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(
-                    filepath, 1024, 1024));
+            BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+            bitmapOptions.inScaled = false;
+            Bitmap imagefrompath = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(filepath,bitmapOptions),
+                    griditemwidthheight()/2,griditemwidthheight()/2,false);
+            imageview1.setImageBitmap(imagefrompath);
+            textview5.setVisibility(View.GONE);
             fileextension = filepath.substring(filepath.lastIndexOf("."));
             filename = Uri.parse(filepath).getLastPathSegment().replace(fileextension,"");
             edittext1.setText(filename);
@@ -174,11 +217,13 @@ public class ManageImages extends AppCompatActivity {
         ArrayList<String> liststring = new ArrayList<>();
         liststring.clear();
         imageslist.clear();
+        imagenameslist.clear();
         FileUtil.listDir(imageassetspath, liststring);
         for (int i = 0; i < liststring.size(); i++){
             HashMap<String,Object> mapdata = new HashMap<>();
             mapdata.put("i", liststring.get(i).toString());
-            mapdata.put("n", Uri.parse(liststring.get(i)).getLastPathSegment().replace(".png","").replace(".jpg",""));
+            mapdata.put("n", Uri.parse(liststring.get(i)).getLastPathSegment().replace(".png",""));
+            imagenameslist.add(Uri.parse(liststring.get(i)).getLastPathSegment().replace(".png","").toLowerCase());
             imageslist.add(mapdata);
         }
         imageslistgrid.setAdapter(new Gridview1Adapter(imageslist));
@@ -187,9 +232,10 @@ public class ManageImages extends AppCompatActivity {
     public void setViewBgFromPath(View view,String path){
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
         bitmapOptions.inScaled = false;
-        Bitmap bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(path),griditemwidthheight(),griditemwidthheight(),false);
+        Bitmap bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(path,bitmapOptions),
+                griditemwidthheight()/2,griditemwidthheight()/2,false);
         BitmapDrawable bd = new BitmapDrawable(bitmap);
-        view.setBackgroundDrawable(bd);
+        view.setBackground(bd);
     }
     public void _setViewWidthHeight(final View _view, final int _width, final int _height) {
         _view.getLayoutParams().width = _width;
@@ -202,6 +248,10 @@ public class ManageImages extends AppCompatActivity {
     public void enableDelete(int position){
         if (positions.contains(position)){
             positions.remove(positions.indexOf(position));
+            if (positions.size()<1){
+                deletingenabled = false;
+                invalidateOptionsMenu();
+            }
         }else {
             positions.add(position);
         }
@@ -260,7 +310,9 @@ public class ManageImages extends AppCompatActivity {
                         deletingenabled = true;
                         positions.add(_position);
                         notifyDataSetChanged();
+                        invalidateOptionsMenu();
                     }
+
                     return false;
                 }
             });
@@ -270,11 +322,10 @@ public class ManageImages extends AppCompatActivity {
                     if (deletingenabled){
                         if (positions.size()>0) {
                             enableDelete(_position);
-                            notifyDataSetChanged();
-                        }else {
-                            deletingenabled = false;
                         }
                     }
+                    notifyDataSetChanged();
+                    invalidateOptionsMenu();
                 }
             });
             return _view;

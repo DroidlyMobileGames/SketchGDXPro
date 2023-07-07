@@ -98,6 +98,7 @@ import io.github.rosemoe.sora.widget.component.Magnifier;
 import io.github.rosemoe.sora.widget.schemes.EditorColorScheme;
 import mod.AddDefaultComponents;
 import mod.ManageImages;
+import mod.ManageSounds;
 import mod.SetupAssets;
 import mod.SketchwareUtil;
 import mod.agus.jcoderz.editor.manage.permission.ManagePermissionActivity;
@@ -929,6 +930,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
     }
 
     void toSoundManager() {
+        launchActivity(ManageSounds.class,REQUEST_CODE_SOUND_MANAGER);
     }
 
     /**

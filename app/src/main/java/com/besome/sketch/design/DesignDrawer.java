@@ -61,6 +61,9 @@ public class DesignDrawer extends LinearLayout implements View.OnClickListener {
         menusLayout.addView(addDrawerItem(5, false,
                 R.drawable.ic_picture_48dp, R.string.design_drawer_menu_title_image, R.string.design_drawer_menu_description_image
         ));
+        menusLayout.addView(addDrawerItem(6, false,
+                R.drawable.ic_sound_wave_48dp, R.string.design_drawer_menu_title_sound, R.string.design_drawer_menu_description_sound
+        ));
         /* Add Image Manager */
         /*
         *//* Add Sound Manager *//*

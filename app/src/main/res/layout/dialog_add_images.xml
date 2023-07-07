@@ -39,7 +39,8 @@
                 android:id="@+id/imageview1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/default_image"
+                android:layout_weight="1"
+                android:src="@drawable/imageiconmanager"
                 android:scaleType="fitCenter" />
             <TextView
                 android:id="@+id/textview5"

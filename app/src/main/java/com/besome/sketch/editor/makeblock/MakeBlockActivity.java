@@ -121,7 +121,6 @@ public class MakeBlockActivity extends BaseAppCompatActivity {
         if (!super.j()) {
             finish();
         }
-        System.out.println("LOGIC SAVE SNIFFBUTT");
     }
 
     @Override
