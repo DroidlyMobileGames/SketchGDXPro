@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.tools.r8.internal.Ur;
+import com.bumptech.glide.BitmapOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -184,8 +185,10 @@ public class ManageImages extends AppCompatActivity {
     }
 
     public void setViewBgFromPath(View view,String path){
-        Bitmap bitmap = BitmapFactory.decodeFile(path);
-        BitmapDrawable bd = new BitmapDrawable( bitmap);
+        BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+        bitmapOptions.inScaled = false;
+        Bitmap bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(path),griditemwidthheight(),griditemwidthheight(),false);
+        BitmapDrawable bd = new BitmapDrawable(bitmap);
         view.setBackgroundDrawable(bd);
     }
     public void _setViewWidthHeight(final View _view, final int _width, final int _height) {
