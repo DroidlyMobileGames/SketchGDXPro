@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import mod.agus.jcoderz.lib.FileUtil;
 
 public class ManageImages extends AppCompatActivity {
-    public final int REQ_CD_PICKER = 101;
+    public final int REQ_CD_PICKER = 478;
     public String filename,filepath;
     private Intent picker = new Intent(Intent.ACTION_GET_CONTENT);
     private String projectID;
@@ -111,9 +111,9 @@ public class ManageImages extends AppCompatActivity {
         if (_check) {
             imageview1.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(
                     filepath, 1024, 1024));
-            fileextension = filename.substring(filename.lastIndexOf("."));
+            fileextension = filepath.substring(filepath.lastIndexOf("."));
             filename = Uri.parse(filepath).getLastPathSegment().replace(fileextension,"");
-            edittext1.setText(filename.substring(filename.lastIndexOf(".")));
+            edittext1.setText(filename);
         }
         dialog5.setCancelable(true);
         dialog5.show();
