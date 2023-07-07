@@ -3,6 +3,7 @@ package mod.hasrat.menu;
 import static android.text.TextUtils.isEmpty;
 import static mod.SketchwareUtil.getDip;
 
+import android.net.Uri;
 import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import com.besome.sketch.editor.LogicEditorActivity;
 import com.github.angads25.filepicker.model.DialogConfigs;
 import com.github.angads25.filepicker.model.DialogProperties;
 import com.github.angads25.filepicker.view.FilePickerDialog;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.sketchware.remodgdx.R;
 
 import java.io.File;
@@ -34,7 +37,7 @@ import a.a.a.eC;
 import a.a.a.jC;
 import a.a.a.uq;
 import a.a.a.wB;
-import mod.dev.aldi.sayuti.block.ExtraMenuBlock;
+import dev.aldi.sayuti.block.ExtraMenuBlock;
 import mod.agus.jcoderz.editor.manage.block.makeblock.BlockMenu;
 import mod.agus.jcoderz.lib.FilePathUtil;
 import mod.agus.jcoderz.lib.FileResConfig;
@@ -80,7 +83,7 @@ public class ExtraMenuBean {
     private final LogicEditorActivity logicEditor;
     private final DialogProperties mProperty = new DialogProperties();
     private final eC projectDataManager;
-    private final String sc_id;
+    private String sc_id;
     private final String javaName;
     private String splitter;
 
@@ -670,9 +673,21 @@ public class ExtraMenuBean {
                     }
                 }
                 break;
+            case "img":
+                title = "Select an Image";
+                menus = new Gson().fromJson(new Gson().toJson(getImages()),
+                        new TypeToken<ArrayList<String>>(){}.getType());
+                break;
+            case "sfx":
+                title = "Select a Sound";
+                menus = new Gson().fromJson(new Gson().toJson(getSounds()),
+                        new TypeToken<ArrayList<String>>(){}.getType());
+                break;
+
 
             default:
-                Pair<String, String[]> menuPair = BlockMenu.getMenu(menu.getMenuName());
+                Pair<String, String[]> menuPair =
+                        BlockMenu.getMenu(menu.getMenuName());
                 title = menuPair.first;
                 menus = new ArrayList<>(Arrays.asList(menuPair.second));
                 extraMenuBlock.a(menu, dialog, menus);
@@ -730,6 +745,28 @@ public class ExtraMenuBean {
             dialog.dismiss();
         });
         dialog.show();
+    }
+
+    private ArrayList<String> getImages(){
+        ArrayList<String> imageslist = new ArrayList<>();
+        ArrayList<String> imageslistnames = new ArrayList<>();
+        String imagespath = FileUtil.getExternalStorageDir().concat("/.sketchwaregames/data/" + sc_id + "/files/assets/images");
+        FileUtil.listDir(imagespath,imageslist);
+        for(int i = 0; i < (int)(imageslist.size()); i++) {
+            imageslistnames.add(Uri.parse(imageslist.get((int)(i))).getLastPathSegment());
+        }
+        return imageslistnames;
+    }
+
+    private ArrayList<String> getSounds(){
+        ArrayList<String> soundslist = new ArrayList<>();
+        ArrayList<String> soundslistnames = new ArrayList<>();
+        String imagespath = FileUtil.getExternalStorageDir().concat("/.sketchwaregames/data/" + sc_id + "/files/assets/sounds");
+        FileUtil.listDir(imagespath,soundslist);
+        for(int i = 0; i < (int)(soundslist.size()); i++) {
+            soundslistnames.add(Uri.parse(soundslist.get((int)(i))).getLastPathSegment());
+        }
+        return soundslistnames;
     }
 
     private ArrayList<String> getVarMenus(int type) {

@@ -290,6 +290,7 @@ public class ManageCollectionActivity extends BaseAppCompatActivity implements V
                     }
                     Pp.h().e();
                     loadMoreBlocks();
+
                 }
             }
         }
@@ -301,7 +302,9 @@ public class ManageCollectionActivity extends BaseAppCompatActivity implements V
             fab.show();
         }
 
-        bB.a(getApplicationContext(), Helper.getResString(R.string.common_message_complete_delete), 1).show();
+        bB.a(getApplicationContext(),
+                Helper.getResString(
+                        R.string.common_message_complete_delete), 1).show();
         collectionAdapter.notifyDataSetChanged();
     }
 

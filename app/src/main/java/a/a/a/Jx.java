@@ -480,11 +480,6 @@ public class Jx {
         }
         sb.append("}").append(EOL);
 
-        /*if (projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_DRAWER)) {
-            eventManager.a("onBackPressed",
-                    "DrawerLayout", "_drawer");
-        }*/
-
         ArrayList<ViewBean> beans = projectDataManager.d(projectFileBean.getXmlName());
 
         if (eventManager.k.length() > 0) {

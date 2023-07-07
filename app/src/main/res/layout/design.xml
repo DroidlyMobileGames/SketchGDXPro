@@ -68,7 +68,7 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center_vertical"
                             android:scaleType="fitXY"
-                            android:src="@drawable/ic_screen_portrait_grey600_24dp" />
+                            android:src="@drawable/java_96" />
 
                         <com.besome.sketch.editor.view.ProjectFileSelector
                             android:id="@+id/file_selector"

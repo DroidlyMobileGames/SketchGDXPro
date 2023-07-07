@@ -78,7 +78,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
     private int typeselected = 0;
     private ArrayList<HashMap<String, Object>> _dialogselector = new ArrayList<>();
     private String selectiontext = "";
-    private ArrayList<String> checknames = new ArrayList<>();
+    public ArrayList<String> checknames = new ArrayList<>();
 
 
     public final String a(int var1, String var2) {
@@ -168,6 +168,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
 
     public ArrayList<String> l() {
         ArrayList<String> projectLayoutFiles = new ArrayList<>();
+
         projectLayoutFiles.add("debug");
         ArrayList<ProjectFileBean> activitiesFiles = activitiesFragment.c();
         for (ProjectFileBean projectFileBean : activitiesFiles) {
@@ -192,6 +193,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         ProjectFileBean projectFileBean;
 
         if (requestCode == REQUEST_CODE_ADD_ACTIVITY) {
+
             if (resultCode == RESULT_OK) {
                 projectFileBean = data.getParcelableExtra("project_file");
                 activitiesFragment.a(projectFileBean);//Loads the project files from the projectlist to the list
@@ -205,6 +207,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
                 }
 
             }
+
         }
 
 
@@ -219,7 +222,6 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
 
             try {
                 new Handler().postDelayed(() -> (
-
                         new a(getApplicationContext())).execute(),
                         500L);
             } catch (Exception e) {
@@ -306,17 +308,11 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
                 viewName = edittext1.getText().toString();
                 if (!viewName.equals("")) {
                     if (!edittext1.getText().toString().trim().isEmpty()) {
-                        if (viewtype == 69){
-                            if (edittext1.getText().toString()
-                                    .toLowerCase().equals("gameview")) {
-                                newView(viewtype, viewName);
-                                dialog4.dismiss();
-                            }else {
-                                SketchwareUtil.toast("Game can only be named gameview");
-                            }
-                        }else {
+                        if (!checknames.contains(edittext1.getText().toString().toLowerCase())) {
                             newView(viewtype, viewName);
                             dialog4.dismiss();
+                        }else {
+                            SketchwareUtil.toast("Name already exists");
                         }
 
                     }else {
@@ -337,7 +333,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         if (!super.j()) {
             finish();
         }
-        selectiontext = "[{\"a\":\" Screen \"},{\"a\":\"|\"},{\"a\":\" Class   \"},{\"a\":\"|\"},{\"a\":\" Game   \"}]";
+        selectiontext = "[{\"a\":\" Screen \"},{\"a\":\"|\"},{\"a\":\" Class   \"}]";
         _dialogselector = new Gson().fromJson(selectiontext,
                 new TypeToken<ArrayList<HashMap<String,
                         Object>>>(){}.getType());
@@ -379,7 +375,16 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         s = findViewById(R.id.fab);
         s.setOnClickListener(this);
 
+        if (getIntent().getStringExtra("checkgameview").equals("poop")){
+            onBackPressed();
+        }
+        ArrayList<ProjectFileBean> projectFiles = jC.b(sc_id).b();
+        if (projectFiles != null) {
+            for (int i = 0; i < projectFiles.size(); i++) {
+                checknames.add(projectFiles.get(i).fileName.replace("_fragment","").replace("_dialog","").toLowerCase());
+            }
 
+        }
     }
 
     @Override
@@ -403,6 +408,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         super.onResume();
         if (!super.j()) {
             finish();
+
         }
 
     }
@@ -413,7 +419,6 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         newState.putString("compatUseYn", isAppCompatEnabled);
 
         super.onSaveInstanceState(newState);
-
     }
 
     public class a extends MA {
@@ -432,6 +437,7 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         @Override
         public void a(String var1) {
             h();
+
         }
 
         @Override
@@ -481,12 +487,14 @@ public class ManageViewActivity extends BaseAppCompatActivity implements OnClick
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             Fragment var3 = (Fragment) super.instantiateItem(container, position);
             activitiesFragment = (Fw) var3;
+            System.out.println("GET POOP" + checknames);
             return var3;
         }
 
         @Override
         @NonNull
         public Fragment getItem(int position) {
+
             return position != 1 ? new Fw() : null;
         }
     }

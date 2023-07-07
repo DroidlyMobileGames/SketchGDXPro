@@ -6,7 +6,7 @@
     <style name="AppTheme" parent="@style/AppBaseTheme">
         <item name="colorAccent">@color/color_accent</item>
         <item name="colorControlHighlight">@color/color_control_highlight</item>
-        <item name="colorControlNormal">@color/color_primary</item>
+        <item name="colorControlNormal">#676565</item>
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
     </style>
@@ -107,7 +107,7 @@
     </style>
 
     <style name="DesignTabLayout" parent="@style/Widget.Design.TabLayout">
-        <item name="android:background">@color/design_tab_background</item>
+        <item name="android:background">#474444</item>
         <item name="tabGravity">fill</item>
         <item name="tabIndicatorColor">@color/design_tab_indicator_color</item>
         <item name="tabIndicatorHeight">3.0dip</item>

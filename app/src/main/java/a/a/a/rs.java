@@ -61,7 +61,7 @@ import mod.hey.studios.util.Helper;
 public class rs extends qA implements View.OnClickListener, MoreblockImporterDialog.CallBack {
     private static final int REQUEST_CODE_ADD_EVENT = 223;
 
-    private ProjectFileBean currentActivity;
+    public ProjectFileBean currentActivity;
     private CategoryAdapter categoryAdapter;
     private EventAdapter eventAdapter;
     private FloatingActionButton fab;
@@ -126,6 +126,7 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
         jC.a(sc_id).a(
                currentActivity
                        .getJavaName(), str, str2);
+
     }
 
 
@@ -230,6 +231,7 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
             for (Pair<String, String> moreBlock : jC.a(sc_id).i(
                     currentActivity.getJavaName())) {
 
+
                 EventBean eventBean = new EventBean(EventBean.EVENT_TYPE_ETC, -1,
                         moreBlock.first, "moreBlock");
                 eventBean.initValue();
@@ -244,6 +246,11 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
                     !screencheck.contains("_dialog_fragment")){
                 //Only add extra default methods in the screen for now
                //Add default activity methods here
+                EventBean eventBean2 = new EventBean(
+                        EventBean.EVENT_TYPE_ACTIVITY, -1,
+                        "Show", "show");
+                eventBean2.initValue();
+                activityEvents.add(eventBean2);
                 EventBean eventBean3 = new EventBean(
                         EventBean.EVENT_TYPE_ACTIVITY, -1,
                         "Render", "render");
@@ -291,6 +298,7 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
 
             for (EventBean eventBean : jC.a(sc_id).g(
                     currentActivity.getJavaName())) {
+
                 eventBean.initValue();
                 int i = eventBean.eventType;
                 if (i == EventBean.EVENT_TYPE_VIEW) {
@@ -352,7 +360,8 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
         if (jC.a(sc_id).f(currentActivity.getJavaName(), moreBlock.targetId)) {
             bB.b(getContext(), xB.b().a(getContext(), R.string.logic_editor_message_currently_used_block), 0).show();
         } else {
-            jC.a(sc_id).n(currentActivity.getJavaName(), moreBlock.targetId);
+            jC.a(sc_id).n(currentActivity.getJavaName(),
+                    moreBlock.targetId);
             bB.a(getContext(), xB.b().a(getContext(), R.string.common_message_complete_delete), 0).show();
             events.get(categoryAdapter.index).remove(eventAdapter.lastSelectedItem);
             eventAdapter.notifyItemRemoved(eventAdapter.lastSelectedItem);
@@ -364,6 +373,7 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
         if (currentActivity != null) {
             for (Map.Entry<Integer,
                     ArrayList<EventBean>> entry : events.entrySet()) {
+
                 for (EventBean bean : entry.getValue()) {
                     bean.initValue();
                 }
@@ -479,12 +489,12 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
                             maybeAddListToListOfToBeAddedLists(3, str);
                         } else if (!gx.b("resource_bg") && !gx.b("resource")) {
                             if (gx.b("sound")) {
-                                maybeAddSoundToListOfToBeAddedSounds(str);
+                              //  maybeAddSoundToListOfToBeAddedSounds(str);
                             } else if (gx.b("font")) {
-                                maybeAddFontToListOfToBeAddedFonts(str);
+                                //maybeAddFontToListOfToBeAddedFonts(str);
                             }
                         } else {
-                            maybeAddImageToListOfToBeAddedImages(str);
+                            //maybeAddImageToListOfToBeAddedImages(str);
                         }
                     }
                 }
@@ -1086,7 +1096,8 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
                                     EventAdapter.this.notifyItemChanged(lastSelectedItem);
                                 } else if (eventBean.buttonPressed == 1) {
                                     eventBean.isConfirmation = false;
-                                    if (categoryAdapter.index != 4) {
+
+                                    if (categoryAdapter.index != 2) {
                                         deleteEvent(eventBean);
                                     } else {
                                         deleteMoreBlock(eventBean);

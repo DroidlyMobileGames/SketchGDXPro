@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -38,7 +40,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.android.tools.r8.S;
 import com.besome.sketch.beans.EventBean;
+import com.besome.sketch.beans.ProjectFileBean;
+import com.besome.sketch.beans.ViewBean;
 import com.besome.sketch.common.SrcViewerActivity;
 import com.besome.sketch.editor.manage.ManageCollectionActivity;
 import com.besome.sketch.editor.manage.image.ManageImageActivity;
@@ -48,12 +53,17 @@ import com.besome.sketch.editor.view.ProjectFileSelector;
 import com.besome.sketch.lib.base.BaseAppCompatActivity;
 import com.besome.sketch.lib.ui.CustomViewPager;
 import com.besome.sketch.tools.CompileLogActivity;
+import com.bumptech.glide.BitmapOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.sketchware.remodgdx.R;
 import com.topjohnwu.superuser.Shell;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -69,6 +79,7 @@ import a.a.a.bB;
 import a.a.a.bC;
 import a.a.a.br;
 import a.a.a.cC;
+import a.a.a.eC;
 import a.a.a.jC;
 import a.a.a.kC;
 import a.a.a.lC;
@@ -78,14 +89,16 @@ import a.a.a.wq;
 import a.a.a.yB;
 import a.a.a.yq;
 import a.a.a.zy;
-import mod.dev.aldi.sayuti.editor.manage.AddLocalLibraries;
-import mod.dev.aldi.sayuti.editor.manage.ManageCustomAttributeActivity;
-import mod.dev.aldi.sayuti.editor.manage.ManageLocalLibraryActivity;
+import dev.aldi.sayuti.editor.manage.AddLocalLibraries;
+import dev.aldi.sayuti.editor.manage.ManageCustomAttributeActivity;
+import dev.aldi.sayuti.editor.manage.ManageLocalLibraryActivity;
 import io.github.rosemoe.sora.langs.java.JavaLanguage;
 import io.github.rosemoe.sora.widget.CodeEditor;
 import io.github.rosemoe.sora.widget.component.Magnifier;
 import io.github.rosemoe.sora.widget.schemes.EditorColorScheme;
 import mod.AddDefaultComponents;
+import mod.ManageImages;
+import mod.SetupAssets;
 import mod.SketchwareUtil;
 import mod.agus.jcoderz.editor.manage.permission.ManagePermissionActivity;
 import mod.agus.jcoderz.editor.manage.resource.ManageResourceActivity;
@@ -146,6 +159,8 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
     private ManageNativelibsActivity manageNativelibsActivity = new ManageNativelibsActivity();
     private AddLocalLibraries addLocalLibraries;
     private Fw activitiesFragment = new Fw();
+    private String getGameview = "";
+    private boolean viewmanager = false;
     /**
      * Saves the app's version information to the currently opened
      * Sketchware project file.
@@ -170,6 +185,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
             var2.g();
             var2.e();
         }
+
     }
 
     public void b(boolean var1) {
@@ -459,10 +475,8 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         if (addLocalLibraries.checkPath()){
             addLocalLibraries.setProjectLibraries();
         }
-        new AddDefaultComponents(this);
-
-
-
+        new AddDefaultComponents(this);//Only adds if not already added
+        new SetupAssets(sc_id);
 
         r = new DB(getApplicationContext(), "P1");
         t = new DB(getApplicationContext(), "P12");
@@ -487,6 +501,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         projectFileSelector = findViewById(R.id.file_selector);
         projectFileSelector.setScId(sc_id);
 
+
         projectFileSelector.setOnSelectedFileChangeListener((i, projectFileBean) -> {
             if (i == 1) {
 
@@ -505,6 +520,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
             } else if (i == 0) {
             }
         });
+
         viewPager = findViewById(R.id.viewpager);
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),
                 this));
@@ -558,17 +574,25 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         viewPager.getAdapter().notifyDataSetChanged();
         ((TabLayout) findViewById(R.id.tab_layout))
                 .setupWithViewPager(viewPager);
-        try {
-            //toViewManager();
-        }catch (Exception e){
-            System.out.println("FUCK POOP" + e);
+
+        ArrayList<ProjectFileBean> projectFiles = jC.b(sc_id).b();
+        ArrayList<String> javanames = new ArrayList<>();
+        if (projectFiles != null) {
+            for (int i = 0; i < projectFiles.size(); i++) {
+                javanames.add(projectFiles.get(i).fileName);
+            }
+            if (!javanames.contains("gameview")){
+                getGameview = "poop";
+                launchActivity(ManageViewActivity.class,69);
+            }
+
         }
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.design_menu, menu);
-
         return true;
     }
 
@@ -615,6 +639,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         if (freeMegabytes < 100L && freeMegabytes > 0L) {
             warnAboutInsufficientStorageSpace();
         }
+        getGameview = "";
     }
 
     @Override
@@ -882,7 +907,8 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
      * Opens {@link ManageImageActivity}.
      */
     void toImageManager() {
-        launchActivity(ManageImageActivity.class, REQUEST_CODE_IMAGE_MANAGER);
+        launchActivity(ManageImages.class,
+                888);
     }
 
     /**
@@ -897,6 +923,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
      * Opens {@link ManageViewActivity}.
      */
     void toViewManager() {
+        viewmanager = true;
         launchActivity(ManageViewActivity.class,
                 REQUEST_CODE_VIEW_MANAGER);
     }
@@ -928,6 +955,9 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         Intent intent = new Intent(getApplicationContext(), toLaunch);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra("sc_id", sc_id);
+        //if (viewmanager) {
+            intent.putExtra("checkgameview", getGameview);
+        //}
         for (Pair<String, String> extra : extras) {
             intent.putExtra(extra.first, extra.second);
         }
@@ -1224,6 +1254,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                 } else {
                     xmlLayoutOrientation.setVisibility(View.GONE);
                 }*/
+                xmlLayoutOrientation.setVisibility(View.GONE);
             }
 
             projectFileSelector.syncState();
@@ -1397,7 +1428,6 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         public ViewPagerAdapter(FragmentManager xf, Context context) {
             super(xf);
             labels = new String[]{
-                    /*Helper.getResString(R.string.design_tab_title_view),*/
                     Helper.getResString(R.string.design_tab_title_event),
                     Helper.getResString(R.string.design_tab_title_component)};
 
@@ -1423,6 +1453,9 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                 if (eventTabAdapter!=null){
                     eventTabAdapter = (rs) fragment;
                     projectFileSelector.setFileType(1);
+                    if (projectFileSelector.getFileName().contains("Gameview.java")){
+
+                    }
                 }
             } else if (position == 1) {
                 if (componentTabAdapter!=null) {
@@ -1440,11 +1473,6 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         @Override
         @NonNull
         public Fragment getItem(int position) {
-            /*if (position == 0) {
-                return new ViewEditorFragment();
-            } else {
-                return position == 1 ? new rs() : new br();
-            }*/
             return position == 0 ? new rs() : new br();
         }
     }

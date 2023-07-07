@@ -25,6 +25,9 @@
         android:requestLegacyExternalStorage="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name="mod.ManageImages"
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -39,9 +42,9 @@
         <activity
             android:name="com.besome.sketch.common.SrcViewerActivity"
             android:configChanges="orientation|screenSize" />
-        <activity android:name="com.besome.sketch.help.ModdingInfo"
-            android:configChanges="orientation|screenSize"
-            />
+        <activity
+            android:name="com.besome.sketch.help.ModdingInfo"
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name="com.besome.sketch.common.ImportIconActivity"
             android:configChanges="orientation|screenSize"
@@ -50,8 +53,10 @@
             android:name="com.besome.sketch.common.FullscreenImageActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
-        <!--<activity android:name=".LicenseActivity" />
-        <activity android:name=".ProgramInfoActivity" />-->
+        <!--
+<activity android:name=".LicenseActivity" />
+        <activity android:name=".ProgramInfoActivity" />
+        -->
         <activity
             android:name="com.besome.sketch.help.SystemSettingActivity"
             android:configChanges="orientation|screenSize" />
@@ -84,7 +89,7 @@
             android:configChanges="orientation|screenSize" />
         <activity
             android:name="dnamobile.SWLoader"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name="com.besome.sketch.MainActivity"
             android:configChanges="orientation|screenSize"
@@ -191,19 +196,18 @@
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.Translucent"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-
         <activity
             android:name="com.besome.sketch.editor.manage.library.firebase.FirebaseActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.Translucent.FullScreen" />
         <activity
-            android:name="mod.dev.aldi.sayuti.editor.injection.AddCustomAttributeActivity"
+            android:name="dev.aldi.sayuti.editor.injection.AddCustomAttributeActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="mod.dev.aldi.sayuti.editor.manage.ManageCustomAttributeActivity"
+            android:name="dev.aldi.sayuti.editor.manage.ManageCustomAttributeActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="mod.dev.aldi.sayuti.editor.manage.ManageLocalLibraryActivity"
+            android:name="dev.aldi.sayuti.editor.manage.ManageLocalLibraryActivity"
             android:configChanges="orientation|screenSize" />
         <activity
             android:name="mod.agus.jcoderz.editor.manage.permission.ManagePermissionActivity"

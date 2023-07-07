@@ -26,18 +26,21 @@ import com.sketchware.remodgdx.R;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import mod.hey.studios.util.ProjectFile;
+
 public class Fw extends qA {
 
     private static final int REQUEST_CODE_PRESET_ACTIVITY = 276;
     private static final int REQUEST_CODE_ADD_VIEW_ACTIVITY = 265;
-    private RecyclerView activitiesList;
+    public RecyclerView activitiesList;
     private Boolean k = false;
     private TextView tvGuide;
     private final int[] m = new int[19];
-    private ProjectFilesAdapter projectFilesAdapter = null;
+    public ProjectFilesAdapter projectFilesAdapter = null;
     private String sc_id;
     private String isAppCompatUsed = "N";
-    private ArrayList<ProjectFileBean> activitiesFiles = new ArrayList<>();
+    public ArrayList<ProjectFileBean> activitiesFiles = new ArrayList<>();
+    public ArrayList<String> activitynames = new ArrayList<>();
 
     public Fw() {
     }
@@ -92,6 +95,8 @@ public class Fw extends qA {
     public void a(ProjectFileBean var1) {
         activitiesFiles.add(var1);
         projectFilesAdapter.notifyDataSetChanged();
+
+
     }
 
     public void a(boolean var1) {
@@ -107,11 +112,6 @@ public class Fw extends qA {
         newProjectFile.options = projectFileBean.options;
 
         String drawerName = ProjectFileBean.getDrawerName(newProjectFile.fileName);
-        /*if (projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_DRAWER)) {
-            ((ManageViewActivity) getActivity()).b(drawerName);
-        } else {
-            ((ManageViewActivity) getActivity()).c(drawerName);
-        }*/
 
         if (projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_DRAWER)
                 || projectFileBean.hasActivityOption(ProjectFileBean.OPTION_ACTIVITY_FAB)) {
@@ -120,11 +120,14 @@ public class Fw extends qA {
     }
 
     public ArrayList<ProjectFileBean> c() {
+
         return activitiesFiles;
     }
 
     public final void c(ProjectFileBean var1) {
-        ProjectFileBean projectFileBean = activitiesFiles.get(projectFilesAdapter.layoutPosition);
+        ProjectFileBean projectFileBean =
+                activitiesFiles.get(projectFilesAdapter.layoutPosition);
+
 
         ArrayList<ViewBean> fileViewBeans = jC.a(sc_id).d(projectFileBean.getXmlName());
         for (int i = fileViewBeans.size() - 1; i >= 0; --i) {
@@ -139,10 +142,12 @@ public class Fw extends qA {
                 jC.a(sc_id).a(projectFileBean.getJavaName(), 1, viewBean.type, viewBean.id, "onClick");
             }
         }
+
     }
 
     public void d() {
         sc_id = getActivity().getIntent().getStringExtra("sc_id");
+
         isAppCompatUsed = getActivity().getIntent().getStringExtra("compatUseYn");
         ArrayList<ProjectFileBean> projectFiles = jC.b(sc_id).b();
         if (projectFiles != null) {
@@ -151,16 +156,15 @@ public class Fw extends qA {
                 if (projectFileBean.fileName.equals("main")) {
                     activitiesFiles.add(0, projectFileBean);
                     isMainActivityFile = true;
-
                 } else {
                     activitiesFiles.add(projectFileBean);
-
                 }
             }
             if (!isMainActivityFile) {
                 activitiesFiles.add(0,
                         new ProjectFileBean(0, "main"));
             }
+
         }
     }
 
@@ -191,11 +195,27 @@ public class Fw extends qA {
             if (activitiesFiles.size() == 0) {
                 tvGuide.setVisibility(View.VISIBLE);
                 activitiesList.setVisibility(View.GONE);
+
             } else {
                 activitiesList.setVisibility(View.VISIBLE);
                 tvGuide.setVisibility(View.GONE);
             }
+
+
+            if (activitiesFiles.size()<2){
+                ProjectFileBean var8 =
+                        new ProjectFileBean(0,
+                                "gameview", 0, 0,
+                                true, true, false, false);
+
+                a(var8);
+                projectFilesAdapter.notifyDataSetChanged();
+
+
+            }
+
         }
+
     }
 
     @Override
@@ -211,6 +231,7 @@ public class Fw extends qA {
 
         projectFilesAdapter.notifyDataSetChanged();
         g();
+
     }
 
     @Override
@@ -226,6 +247,7 @@ public class Fw extends qA {
             b(projectFileBean);
             c(projectFileBean);
             projectFilesAdapter.notifyItemChanged(projectFilesAdapter.layoutPosition);
+
         }
     }
 
@@ -240,6 +262,7 @@ public class Fw extends qA {
         activitiesList.setAdapter(projectFilesAdapter);
         tvGuide = root.findViewById(R.id.tv_guide);
         tvGuide.setText(xB.b().a(getActivity(), R.string.design_manager_view_description_guide_create_activity));
+
         return root;
     }
 
@@ -283,7 +306,7 @@ public class Fw extends qA {
         public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
             viewHolder.imgActivity.setVisibility(View.VISIBLE);
             viewHolder.deleteImgContainer.setVisibility(View.GONE);
-            if (position == 0) {
+            if (position == 0 || position == 1) {
                 viewHolder.checkBox.setVisibility(View.GONE);
             } else {
                 viewHolder.deleteImgContainer.setVisibility(k ? View.VISIBLE : View.GONE);
@@ -309,9 +332,6 @@ public class Fw extends qA {
                     viewHolder.tvActivityName.setText("Empty Class");
                 }
             }
-
-
-            //viewHolder.tvScreenName.setVisibility(View.GONE);
 
             viewHolder.imgDelete.setImageResource(projectFileBean.isSelected ? R.drawable.ic_checkmark_green_48dp : R.drawable.ic_trashcan_white_48dp);
         }
@@ -351,28 +371,33 @@ public class Fw extends qA {
                 checkBox.setVisibility(View.GONE);
 
                 viewItem.setOnClickListener(view -> {
-                    if (!mB.a()) {
-                        layoutPosition = getLayoutPosition();
-                        if (Fw.this.k) {
-                            if (layoutPosition != 0) {
-                                checkBox.setChecked(!checkBox.isChecked());
-                                activitiesFiles.get(layoutPosition).isSelected = checkBox.isChecked();
-                                notifyItemChanged(layoutPosition);
+                    if (!tvScreenName.getText().toString().equals("Gameview.java")) {
+                        if (!mB.a()) {
+                            layoutPosition = getLayoutPosition();
+                            if (Fw.this.k) {
+                                if (layoutPosition != 0 && layoutPosition != 1) {
+                                    checkBox.setChecked(!checkBox.isChecked());
+                                    activitiesFiles.get(layoutPosition).isSelected = checkBox.isChecked();
+                                    notifyItemChanged(layoutPosition);
+                                }
+                            } else {
+                                Intent intent = new Intent(getContext(),
+                                        AddViewActivity.class);
+                                intent.putExtra("project_file", activitiesFiles.get(layoutPosition));
+                                intent.putExtra("request_code", REQUEST_CODE_ADD_VIEW_ACTIVITY);
+                                startActivityForResult(intent, REQUEST_CODE_ADD_VIEW_ACTIVITY);
                             }
-                        } else {
-                            Intent intent = new Intent(getContext(),
-                                    AddViewActivity.class);
-                            intent.putExtra("project_file", activitiesFiles.get(layoutPosition));
-                            intent.putExtra("request_code", REQUEST_CODE_ADD_VIEW_ACTIVITY);
-                            startActivityForResult(intent, REQUEST_CODE_ADD_VIEW_ACTIVITY);
                         }
                     }
                 });
                 viewItem.setOnLongClickListener(view -> {
-                    ((ManageViewActivity) getActivity()).a(true);
-                    layoutPosition = getLayoutPosition();
-                    checkBox.setChecked(!checkBox.isChecked());
-                    activitiesFiles.get(layoutPosition).isSelected = checkBox.isChecked();
+                    System.out.println("GET POOP " + tvScreenName.getText().toString());
+                    if (!tvScreenName.getText().toString().equals("Gameview.java")) {
+                        ((ManageViewActivity) getActivity()).a(true);
+                        layoutPosition = getLayoutPosition();
+                        checkBox.setChecked(!checkBox.isChecked());
+                        activitiesFiles.get(layoutPosition).isSelected = checkBox.isChecked();
+                    }
                     return true;
                 });
                 imgPresetSettings.setOnClickListener(view -> {
@@ -384,6 +409,7 @@ public class Fw extends qA {
                         startActivityForResult(intent, REQUEST_CODE_PRESET_ACTIVITY);
                     }
                 });
+
             }
         }
     }
