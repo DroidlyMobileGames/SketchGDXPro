@@ -1,12 +1,18 @@
 package mod;
 
+import android.content.Context;
+import android.media.MediaPlayer;
+import android.provider.MediaStore;
+
 import java.io.File;
 
+import dev.aldi.sayuti.editor.view.palette.IconYoutubePlayer;
 import mod.agus.jcoderz.lib.FileUtil;
 
 public class SetupAssets {
     String projID;
     String imagespath,soundspath,fontspath;
+    Context c;
 
     public SetupAssets(String projID){
        this.projID = projID;

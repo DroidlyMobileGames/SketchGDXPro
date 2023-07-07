@@ -97,6 +97,7 @@ import io.github.rosemoe.sora.widget.CodeEditor;
 import io.github.rosemoe.sora.widget.component.Magnifier;
 import io.github.rosemoe.sora.widget.schemes.EditorColorScheme;
 import mod.AddDefaultComponents;
+import mod.ManageImages;
 import mod.SetupAssets;
 import mod.SketchwareUtil;
 import mod.agus.jcoderz.editor.manage.permission.ManagePermissionActivity;
@@ -159,6 +160,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
     private AddLocalLibraries addLocalLibraries;
     private Fw activitiesFragment = new Fw();
     private String getGameview = "";
+    private boolean viewmanager = false;
     /**
      * Saves the app's version information to the currently opened
      * Sketchware project file.
@@ -905,7 +907,8 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
      * Opens {@link ManageImageActivity}.
      */
     void toImageManager() {
-        launchActivity(ManageImageActivity.class, REQUEST_CODE_IMAGE_MANAGER);
+        launchActivity(ManageImages.class,
+                888);
     }
 
     /**
@@ -920,6 +923,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
      * Opens {@link ManageViewActivity}.
      */
     void toViewManager() {
+        viewmanager = true;
         launchActivity(ManageViewActivity.class,
                 REQUEST_CODE_VIEW_MANAGER);
     }
@@ -951,7 +955,9 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         Intent intent = new Intent(getApplicationContext(), toLaunch);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra("sc_id", sc_id);
-        intent.putExtra("checkgameview",getGameview);
+        //if (viewmanager) {
+            intent.putExtra("checkgameview", getGameview);
+        //}
         for (Pair<String, String> extra : extras) {
             intent.putExtra(extra.first, extra.second);
         }
