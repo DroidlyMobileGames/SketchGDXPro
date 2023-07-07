@@ -56,10 +56,7 @@
             android:name="com.besome.sketch.common.FullscreenImageActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
-        <!--
-<activity android:name=".LicenseActivity" />
-        <activity android:name=".ProgramInfoActivity" />
-        -->
+
         <activity
             android:name="com.besome.sketch.help.SystemSettingActivity"
             android:configChanges="orientation|screenSize" />
@@ -219,78 +216,78 @@
             android:name=".agus.jcoderz.editor.manage.resource.ManageResourceActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".hey.studios.activity.managers.assets.ManageAssetsActivity"
+            android:name="mod.hey.studios.activity.managers.assets.ManageAssetsActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".hey.studios.activity.managers.java.ManageJavaActivity"
+            android:name="mod.hey.studios.activity.managers.java.ManageJavaActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".hey.studios.activity.managers.nativelib.ManageNativelibsActivity"
+            android:name="mod.hey.studios.activity.managers.nativelib.ManageNativelibsActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".hey.studios.code.SrcCodeEditorLegacy"
+            android:name="mod.hey.studios.code.SrcCodeEditorLegacy"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".hey.studios.code.SrcCodeEditor"
+            android:name="mod.hey.studios.code.SrcCodeEditor"
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar.Bridge" />
         <activity
-            android:name=".hey.studios.project.proguard.ManageProguardActivity"
+            android:name="mod.hey.studios.project.proguard.ManageProguardActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".hey.studios.project.stringfog.ManageStringfogActivity"
+            android:name="mod.hey.studios.project.stringfog.ManageStringfogActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".hilal.saif.activities.android_manifest.AndroidManifestInjection"
+            android:name="mod.hilal.saif.activities.android_manifest.AndroidManifestInjection"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".hilal.saif.activities.android_manifest.AndroidManifestInjectionDetails"
+            android:name="mod.hilal.saif.activities.android_manifest.AndroidManifestInjectionDetails"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".hilal.saif.activities.tools.BlockSelectorActivity"
+            android:name="mod.hilal.saif.activities.tools.BlockSelectorActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".hilal.saif.activities.tools.BlocksManager"
+            android:name="mod.hilal.saif.activities.tools.BlocksManager"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".hilal.saif.activities.tools.BlocksManagerCreatorActivity"
+            android:name="mod.hilal.saif.activities.tools.BlocksManagerCreatorActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".hilal.saif.activities.tools.BlocksManagerDetailsActivity"
+            android:name="mod.hilal.saif.activities.tools.BlocksManagerDetailsActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".hilal.saif.activities.tools.ComponentsMaker"
+            android:name="mod.hilal.saif.activities.tools.ComponentsMaker"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".hilal.saif.activities.tools.ComponentsMakerCreator"
+            android:name="mod.hilal.saif.activities.tools.ComponentsMakerCreator"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".hilal.saif.activities.tools.ConfigActivity"
+            android:name="mod.hilal.saif.activities.tools.ConfigActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".hilal.saif.activities.tools.EventsMaker"
+            android:name="mod.hilal.saif.activities.tools.EventsMaker"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".hilal.saif.activities.tools.EventsMakerCreator"
+            android:name="mod.hilal.saif.activities.tools.EventsMakerCreator"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".hilal.saif.activities.tools.EventsMakerDetails"
+            android:name="mod.hilal.saif.activities.tools.EventsMakerDetails"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".hilal.saif.activities.tools.Tools"
+            android:name="mod.hilal.saif.activities.tools.Tools"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".ilyasse.activities.about.AboutModActivity"
+            android:name="mod.ilyasse.activities.about.AboutModActivity"
             android:configChanges="orientation|screenSize" />
-        <activity android:name=".jbk.editor.manage.library.ExcludeBuiltInLibrariesActivity" />
+        <activity android:name="mod.jbk.editor.manage.library.ExcludeBuiltInLibrariesActivity" />
         <activity
             android:name="com.besome.sketch.editor.manage.view.PresetSettingActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.Translucent"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name=".khaled.logcat.LogReaderActivity"
+            android:name="mod.khaled.logcat.LogReaderActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize" />
 
         <meta-data
