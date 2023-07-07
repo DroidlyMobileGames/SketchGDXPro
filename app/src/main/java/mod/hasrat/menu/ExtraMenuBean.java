@@ -683,6 +683,11 @@ public class ExtraMenuBean {
                 menus = new Gson().fromJson(new Gson().toJson(getSounds()),
                         new TypeToken<ArrayList<String>>(){}.getType());
                 break;
+            case "msc":
+                title = "Select Music";
+                menus = new Gson().fromJson(new Gson().toJson(getSounds()),
+                        new TypeToken<ArrayList<String>>(){}.getType());
+                break;
 
 
             default:
