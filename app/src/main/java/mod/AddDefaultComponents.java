@@ -20,6 +20,8 @@ public class AddDefaultComponents {
         if (!FileUtil.isExistFile(componentpath + "component.json")) {
             FileUtil.makeDir(componentpath);
             copyNativeLibraries();
+        }else {
+            copyNativeLibraries();
         }
     }
     public void copyNativeLibraries() {
