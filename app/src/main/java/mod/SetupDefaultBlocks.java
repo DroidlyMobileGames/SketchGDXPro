@@ -31,7 +31,6 @@ public class SetupDefaultBlocks {
     }
     public void checkPath(){
         if (!FileUtil.isExistFile(blockpath + "/block.json")){
-            System.out.println("COCKBALL");
             copyBlocks();
         }
     }
