@@ -24,7 +24,10 @@ public class SetupDefaultBlocks {
         if (!FileUtil.isDirectory(blockpath)){
             FileUtil.makeDir(blockpath);
             checkPath();
+        }else {
+            checkPath();
         }
+
     }
     public void checkPath(){
         if (!FileUtil.isExistFile(blockpath + "/block.json")){
