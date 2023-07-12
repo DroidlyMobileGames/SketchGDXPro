@@ -93,8 +93,8 @@ public class PaletteSelector extends LinearLayout implements View.OnClickListene
                 0xffe1a92a);
         addPalette(3, Helper.getResString(R.string.block_category_operator),
                 0xff5cb722);
-        addPalette(7, Helper.getResString(R.string.block_category_component_func),
-                0xff2ca5e2);
+        /*addPalette(7, Helper.getResString(R.string.block_category_component_func),
+                0xff2ca5e2);*/
         addPalette(8, Helper.getResString(R.string.block_category_moreblock),
                 0xff8a55d7);
 

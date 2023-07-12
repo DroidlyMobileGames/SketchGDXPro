@@ -328,6 +328,7 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
                 }
                 eventAdapter.a(events.get(categoryAdapter.index));
                 eventAdapter.notifyDataSetChanged();
+
             }
         }
     }

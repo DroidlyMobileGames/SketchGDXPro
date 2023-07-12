@@ -365,10 +365,9 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
 
             case 462:
                 if (resultCode == RESULT_OK && data.getBooleanExtra("req_update_design_activity", false)) {
-                    //viewTabAdapter.j();
+                    viewTabAdapter.j();
                 }
                 break;
-
 
         }
     }
@@ -502,7 +501,6 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         projectFileSelector = findViewById(R.id.file_selector);
         projectFileSelector.setScId(sc_id);
 
-
         projectFileSelector.setOnSelectedFileChangeListener((i, projectFileBean) -> {
             if (i == 1) {
 
@@ -515,7 +513,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                     }
                 }
                 if (componentTabAdapter != null && projectFileBean != null) {
-                    componentTabAdapter.a(projectFileBean);
+                    componentTabAdapter.a(projectFileBean);//Loads the files into a list
                     componentTabAdapter.d();
                 }
             } else if (i == 0) {
@@ -565,6 +563,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                         projectFileSelector.syncState();
                         if (componentTabAdapter != null) {
                             componentTabAdapter.d();
+
                         }
                     }
                 }
