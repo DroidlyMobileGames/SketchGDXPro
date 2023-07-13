@@ -169,7 +169,7 @@ public class LogicClickListener implements View.OnClickListener {
         modifierLayout.requestFocus();
     }
 
-    private void removeVariable() {
+    private void removeVariable() {//Shows the dialog when you want to remove variables this shows both custom and regular variables
         SketchDialog dialog = new SketchDialog(logicEditor);
         dialog.setTitle(Helper.getResString(R.string.logic_editor_title_remove_variable));
         dialog.setIcon(R.drawable.delete_96);

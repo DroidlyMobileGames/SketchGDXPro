@@ -60,7 +60,8 @@ public class PaletteSelector extends LinearLayout implements View.OnClickListene
             unselectAllPalettes();
             Ws paletteView = (Ws) v;
             paletteView.setSelected(true);
-            onBlockCategorySelectListener.a(paletteView.getId(), paletteView.getColor());
+            onBlockCategorySelectListener.a(paletteView.getId(),
+                    paletteView.getColor());
         }
     }
 
@@ -98,6 +99,7 @@ public class PaletteSelector extends LinearLayout implements View.OnClickListene
         addPalette(8, Helper.getResString(R.string.block_category_moreblock),
                 0xff8a55d7);
 
+        //This adds all of the custom blocks
         for (HashMap<String, Object> palette :
                 new mod.agus.jcoderz.editor.manage.block.palette.PaletteSelector()
                         .getPaletteSelector()) {
@@ -106,8 +108,6 @@ public class PaletteSelector extends LinearLayout implements View.OnClickListene
                     palette.get("text").toString(),
                     Integer.parseInt(palette.get("color").toString())
             );
-
-
         }
     }
 

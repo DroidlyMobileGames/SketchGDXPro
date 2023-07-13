@@ -50,6 +50,13 @@ public class FilePathUtil {
     public String getPathLocalLibrary(String sc_id) {
         return new File(SKETCHWARE_DATA, sc_id + "/local_library").getAbsolutePath();
     }
+    public String getPathComponents() {
+        return new File(SKETCHWARE_DATA, "/system").getAbsolutePath();
+    }
+    public String getPathResourceBlocks() {
+        return new File(FileUtil.getExternalStorageDir() + ".sketchwaregames/",
+                "/resources/block/My Block").getAbsolutePath();
+    }
 
     public String getJarPathLocalLibrary(String libraryName) {
         return new File(SKETCHWARE_LOCAL_LIBS, libraryName + "/classes.jar").getAbsolutePath();

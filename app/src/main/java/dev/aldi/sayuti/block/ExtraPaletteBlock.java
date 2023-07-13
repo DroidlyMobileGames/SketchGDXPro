@@ -212,15 +212,18 @@ public class ExtraPaletteBlock {
         }
 
         ArrayList<String> customVariables2 = jC.a(sc_id).e(javaName, 6);
+
         for (int i = 0; i < customVariables2.size(); i++) {
             if (i == 0) logicEditor.a("Custom Variable", 0xff555555);
 
             String variable = customVariables2.get(i);
             String temp = variable.replaceAll("\\b(?:public|private|protected|static|final)\\s\\b", "");
             String[] split = temp.split(" ");
-            logicEditor.a(String.valueOf(split.length), 0xff008dcd);
+            //logicEditor.a(String.valueOf(split.length), 0xff008dcd);
             if (split.length == 2 || split.length == 4) {
-                logicEditor.a(split[1], "v", split[0], "getVar").setTag(variable);
+                logicEditor.a(split[1], "v",
+                        split[0], "getVar").setTag(variable);
+
             } else {
                 SketchwareUtil.toastError("Found invalid data of Custom Variable #" + (i + 1) + ": \"" + variable + "\"");
             }

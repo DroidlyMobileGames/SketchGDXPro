@@ -9,8 +9,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -40,10 +38,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.android.tools.r8.S;
 import com.besome.sketch.beans.EventBean;
 import com.besome.sketch.beans.ProjectFileBean;
-import com.besome.sketch.beans.ViewBean;
 import com.besome.sketch.common.SrcViewerActivity;
 import com.besome.sketch.editor.manage.ManageCollectionActivity;
 import com.besome.sketch.editor.manage.image.ManageImageActivity;
@@ -53,16 +49,12 @@ import com.besome.sketch.editor.view.ProjectFileSelector;
 import com.besome.sketch.lib.base.BaseAppCompatActivity;
 import com.besome.sketch.lib.ui.CustomViewPager;
 import com.besome.sketch.tools.CompileLogActivity;
-import com.bumptech.glide.BitmapOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.sketchware.remodgdx.R;
 import com.topjohnwu.superuser.Shell;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -79,7 +71,6 @@ import a.a.a.bB;
 import a.a.a.bC;
 import a.a.a.br;
 import a.a.a.cC;
-import a.a.a.eC;
 import a.a.a.jC;
 import a.a.a.kC;
 import a.a.a.lC;
@@ -100,6 +91,7 @@ import mod.AddDefaultComponents;
 import mod.ManageImages;
 import mod.ManageSounds;
 import mod.SetupAssets;
+import mod.SetupDefaultBlocks;
 import mod.SketchwareUtil;
 import mod.agus.jcoderz.editor.manage.permission.ManagePermissionActivity;
 import mod.agus.jcoderz.editor.manage.resource.ManageResourceActivity;
@@ -370,6 +362,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                 break;
 
         }
+
     }
 
     @Override
@@ -466,17 +459,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         } else {
             sc_id = savedInstanceState.getString("sc_id");
         }
-        //Only adds them if they aren't present already
-        addLocalLibraries = new AddLocalLibraries(getApplicationContext(),sc_id);
-
-        if (!FileUtil.isExistFile(new FilePathUtil().getPathNativelibs(sc_id) + "/x86_64/libgdx.so")) {
-            new AddNativeLibs(getApplicationContext(),sc_id);
-        }
-        if (addLocalLibraries.checkPath()){
-            addLocalLibraries.setProjectLibraries();
-        }
-        new AddDefaultComponents(this);//Only adds if not already added
-        new SetupAssets(sc_id);
+        setupImportant();
 
         r = new DB(getApplicationContext(), "P1");
         t = new DB(getApplicationContext(), "P12");
@@ -589,6 +572,22 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         }
 
     }
+    public void setupImportant(){
+        //Only adds them if they aren't present already
+        addLocalLibraries = new AddLocalLibraries(this,sc_id);
+
+        if (!FileUtil.isExistFile(new FilePathUtil().getPathNativelibs(sc_id) + "/x86_64/libgdx.so")) {
+            new AddNativeLibs(this,sc_id);
+        }
+        if (!FileUtil.isExistFile(new FilePathUtil().getPathComponents() + "/component.json")){
+            new AddDefaultComponents(this);//Only adds if not already added
+        }
+        if (addLocalLibraries.checkPath()){
+            addLocalLibraries.setProjectLibraries();
+        }
+        new SetupAssets(sc_id);
+        new SetupDefaultBlocks(this);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -640,6 +639,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
             warnAboutInsufficientStorageSpace();
         }
         getGameview = "";
+        setupImportant();
     }
 
     @Override

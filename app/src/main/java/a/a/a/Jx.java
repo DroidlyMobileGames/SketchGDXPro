@@ -578,7 +578,8 @@ public class Jx {
         //ALL IMPORTS DNA MOBILE
         addImport("android.os.*");
         addImport("android.view.*");
-        addImport("com.badlogic.gdx.*");
+        addImport("com.badlogic.gdx.graphics.*");
+        /*addImport("com.badlogic.gdx.*");
         addImport("com.badlogic.gdx.math.*");
         addImport("com.badlogic.gdx.audio.*");
         addImport("com.badlogic.gdx.graphics.*");
@@ -588,7 +589,7 @@ public class Jx {
         addImport("com.badlogic.gdx.assets.*");
         addImport("com.badlogic.gdx.assets.loaders.*");
         addImport("com.badlogic.gdx.graphics.g2d.freetype.FreeType.*");
-        addImport("com.badlogic.gdx.backends.android.*");
+        addImport("com.badlogic.gdx.backends.android.*");*/
 
         //Main initializer to help with rendering the main logic in the within the class//
         onCreateEventCode = new Fx(projectFileBean.getActivityName(), buildConfig,
@@ -601,7 +602,8 @@ public class Jx {
     //Creates everything the game screen classes require including most imports//
     private void handleScreen() {
         addImport("android.os.Bundle");
-        addImport("com.badlogic.gdx.*");
+        addImport("com.badlogic.gdx.graphics.*");
+        /*addImport("com.badlogic.gdx.*");
         addImport("com.badlogic.gdx.math.*");
         addImport("com.badlogic.gdx.audio.*");
         addImport("com.badlogic.gdx.graphics.*");
@@ -611,7 +613,7 @@ public class Jx {
         addImport("com.badlogic.gdx.assets.*");
         addImport("com.badlogic.gdx.assets.loaders.*");
         addImport("com.badlogic.gdx.graphics.g2d.freetype.FreeType.*");
-        addImport("com.badlogic.gdx.backends.android.*");
+        addImport("com.badlogic.gdx.backends.android.*");*/
 
         onCreateEventCode = new Fx(projectFileBean.getActivityName(), buildConfig,
                 "Show_show",
