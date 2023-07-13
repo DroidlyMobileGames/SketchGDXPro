@@ -1,18 +1,33 @@
 # License
 
-It's a complicated situation as mod. Basically, try not to use parts of Sketchware Pro's code in other serious projects which
-aren't for personal use only, as the code might and probably is an infringement of Sketchware's copyright.
+SketchGDX is an open-source free to use custom modded version of Sketchware Pro.
+Sketchware Pro was modded from an original open-source free to use software called Sketchware which
+is not in development as of 2021 & copyright expired in 2018.  Below is the original Sketchware MIT
+license for further insight as to the licensing of this project, you are free to modify or use it at
+your discretion.
 
-Sketchware Pro is **not** open-source by official definition, but rather source-available - you can view it, and maybe even
-make/submit changes to it, but you don't own the code. Neither do we, in my opinion.
+Thank you for choosing SketchGDX for your game development!
 
-Still, feel free to fork this and improve it for personal purposes or just making Sketchware Pro better in general.
+Sketchware Original License
 
-## Exceptions
+MIT License
 
-Since compiling Kotlin code in Sketchware Pro projects was supported, two new modules were added to the codebase: `build-logic` and
-`kotlinc`, both taken from [CodeAssist](https://github.com/tyron12233/CodeAssist). The upstream project's licensed under GPL-3.0,
-so these modules are licensed under the same license.
+Copyright (c) 2021
 
-In addition to those modules, there also are two build flavors of module `main`, `minApi21` and `minApi26`. Since `minApi26` is
-a derivative work of the GPL-3.0-licensed modules, they must and are licensed under GPL-3.0 as well.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

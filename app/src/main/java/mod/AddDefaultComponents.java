@@ -19,10 +19,8 @@ public class AddDefaultComponents {
         componentpath = FileUtil.getExternalStorageDir().concat("/.sketchwaregames/data/system/");
         if (!FileUtil.isExistFile(componentpath + "component.json")) {
             FileUtil.makeDir(componentpath);
-            copyNativeLibraries();
-        }else {
-            copyNativeLibraries();
         }
+        copyNativeLibraries();
     }
     public void copyNativeLibraries() {
         //Copys items from assets to whatever location you'd like
@@ -39,7 +37,6 @@ public class AddDefaultComponents {
             File outFile = null;
             if (filename.equals("component.json")) {
                 try {
-
                     in = assetManager.open("component.json");
                     outFile = new File(componentpath, "component.json");
 

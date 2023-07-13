@@ -38,6 +38,7 @@ import a.a.a.jC;
 import a.a.a.uq;
 import a.a.a.wB;
 import dev.aldi.sayuti.block.ExtraMenuBlock;
+import mod.SketchwareUtil;
 import mod.agus.jcoderz.editor.manage.block.makeblock.BlockMenu;
 import mod.agus.jcoderz.lib.FilePathUtil;
 import mod.agus.jcoderz.lib.FileResConfig;
@@ -239,11 +240,13 @@ public class ExtraMenuBean {
         ViewGroup viewGroup = rootView.findViewById(R.id.rg_content);
         ArrayList<String> menus = new ArrayList<>();
         String title;
+
         switch (menuName) {
             case "varInt":
                 title = Helper.getResString(R.string.logic_editor_title_select_variable_number);
                 menus = getVarMenus(VARIABLE_TYPE_NUMBER);
                 break;
+
 
             case "varBool":
                 title = Helper.getResString(R.string.logic_editor_title_select_variable_boolean);
@@ -539,7 +542,7 @@ public class ExtraMenuBean {
                 }
                 break;
 
-            case "activity"://This is when a user selects Context
+            case "activity"://This is when a user selects Context loads all the activities available
                 ArrayList<String> activityMenu = new ArrayList<>();
                 title = Helper.getResString(R.string.logic_editor_title_select_activity);
 
@@ -673,6 +676,23 @@ public class ExtraMenuBean {
                     }
                 }
                 break;
+
+            case "int":
+                title = "Select a int variable";
+                menus = new Gson().fromJson(new Gson().toJson(loadType("int")),
+                        new TypeToken<ArrayList<String>>(){}.getType());
+                break;
+            case "float":
+                title = "Select a float variable";
+                menus = new Gson().fromJson(new Gson().toJson(loadType("float")),
+                        new TypeToken<ArrayList<String>>(){}.getType());
+                break;
+            case "long":
+                title = "Select a long variable";
+                menus = new Gson().fromJson(new Gson().toJson(loadType("long")),
+                        new TypeToken<ArrayList<String>>(){}.getType());
+                break;
+
             case "img":
                 title = "Select an Image";
                 menus = new Gson().fromJson(new Gson().toJson(getImages()),
@@ -712,8 +732,9 @@ public class ExtraMenuBean {
                         menus.add(componentBean.componentId);
                     }
                 }
-        }
 
+
+        }
         for (String menuArg : menus) {
             viewGroup.addView(logicEditor.e(menuArg));
         }
@@ -750,6 +771,21 @@ public class ExtraMenuBean {
             dialog.dismiss();
         });
         dialog.show();
+    }
+
+    private ArrayList loadType(String type) {
+        ArrayList<String> types = new ArrayList<>();
+        ArrayList<String> customVariables2 = jC.a(sc_id).e(javaName, 6);
+
+        for (int i = 0; i < customVariables2.size(); i++) {
+            String variable = customVariables2.get(i);
+            String temp = variable.replaceAll("\\b(?:public|private|protected|static|final)\\s\\b", "");
+            String[] split = temp.split(" ");
+            if (split[0].equals(type)) {
+                types.add(split[1]);
+            }
+        }
+        return types;
     }
 
     private ArrayList<String> getImages(){

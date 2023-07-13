@@ -314,7 +314,7 @@ public class ComponentAddActivity extends BaseDialogActivity implements View.OnC
         super.onPostCreate(savedInstanceState);
         //DNA MOBILE EDIT PLACES ALL COMPONENTS HERE
         componentList = new ArrayList<>();
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_INTENT));
+        //componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_INTENT));
         ComponentsHandler.add(componentList);
         componentsAdapter.notifyDataSetChanged();
     }
@@ -325,9 +325,10 @@ public class ComponentAddActivity extends BaseDialogActivity implements View.OnC
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putString("sc_id", sc_id);
         savedInstanceState.putParcelable("project_file", projectFileBean);
-        super.onSaveInstanceState(savedInstanceState);
+
     }
 
     private void p() {
