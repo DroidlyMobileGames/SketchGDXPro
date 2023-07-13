@@ -31,8 +31,8 @@ public class SetupDefaultBlocks {
     }
     public void checkPath(){
         if (!FileUtil.isExistFile(blockpath + "/block.json")){
-            copyBlocks();
         }
+        copyBlocks();
     }
 
     private void copyBlocks() {

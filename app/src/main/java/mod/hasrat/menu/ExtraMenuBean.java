@@ -240,6 +240,7 @@ public class ExtraMenuBean {
         ViewGroup viewGroup = rootView.findViewById(R.id.rg_content);
         ArrayList<String> menus = new ArrayList<>();
         String title;
+
         switch (menuName) {
             case "varInt":
                 title = Helper.getResString(R.string.logic_editor_title_select_variable_number);
@@ -731,8 +732,9 @@ public class ExtraMenuBean {
                         menus.add(componentBean.componentId);
                     }
                 }
-        }
 
+
+        }
         for (String menuArg : menus) {
             viewGroup.addView(logicEditor.e(menuArg));
         }
