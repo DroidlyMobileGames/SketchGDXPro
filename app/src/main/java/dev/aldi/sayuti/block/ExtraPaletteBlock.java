@@ -366,7 +366,7 @@ public class ExtraPaletteBlock {
         }
     }
 
-    private void list() {
+    private void list() {//lists the custom lists
         for (Pair<Integer, String> list : jC.a(sc_id).j(javaName)) {
             int type = list.first;
             String name = list.second;

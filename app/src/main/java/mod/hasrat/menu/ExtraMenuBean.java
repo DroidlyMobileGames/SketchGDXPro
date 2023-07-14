@@ -35,6 +35,7 @@ import a.a.a.Ss;
 import a.a.a.aB;
 import a.a.a.eC;
 import a.a.a.jC;
+import a.a.a.kq;
 import a.a.a.uq;
 import a.a.a.wB;
 import dev.aldi.sayuti.block.ExtraMenuBlock;
@@ -278,10 +279,10 @@ public class ExtraMenuBean {
                 menus = getListMenus(LIST_TYPE_MAP);
                 break;
 
-            case "list":
+            /*case "list":
                 title = Helper.getResString(R.string.logic_editor_title_select_list);
                 menus = projectDataManager.c(javaName);
-                break;
+                break;*/
 
             case "intent":
                 title = Helper.getResString(R.string.logic_editor_title_select_component_intent);
@@ -708,6 +709,11 @@ public class ExtraMenuBean {
                 menus = new Gson().fromJson(new Gson().toJson(getSounds()),
                         new TypeToken<ArrayList<String>>(){}.getType());
                 break;
+            case "list":
+                title = "Select List";
+                menus = new Gson().fromJson(new Gson().toJson(loadTypeList()),
+                        new TypeToken<ArrayList<String>>(){}.getType());
+                break;
 
 
             default:
@@ -771,6 +777,33 @@ public class ExtraMenuBean {
             dialog.dismiss();
         });
         dialog.show();
+    }
+
+    private ArrayList loadTypeList(){
+        ArrayList<String> types = new ArrayList<>();
+        for (Pair<Integer, String> list : jC.a(sc_id).j(javaName)) {
+            int type = list.first;
+            String name = list.second;
+
+            switch (type) {
+                case 1:
+                case 2:
+                case 3:
+                    logicEditor.a(name, "l", kq.a(type), "getVar").setTag(name);
+                    break;
+
+                default:
+                    String[] splitName = name.split(" ");
+                    if (splitName.length > 1) {
+                        logicEditor.a(splitName[1], "l", "List", "getVar").setTag(name);
+                        types.add(splitName[1]);
+                    } else {
+                        SketchwareUtil.toastError("Found invalid List data, type:" + type + ", name: \"" + name + "\"");
+                    }
+                    break;
+            }
+        }
+        return types;
     }
 
     private ArrayList loadType(String type) {

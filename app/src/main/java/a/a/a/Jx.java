@@ -163,18 +163,13 @@ public class Jx {
         boolean isBottomDialogFragment = false;
         boolean isFragment = false;
         isDialogFragment = projectFileBean.fileName.contains("_dialog");
-        //isBottomDialogFragment = projectFileBean.fileName.contains("_bottomdialog_fragment");
         isFragment = projectFileBean.fileName.contains("_fragment") && !projectFileBean.fileName.contains("_dialog");
 
         extraVariables();
         if (isFragment){
             handleScreen();
         }else if (isDialogFragment){
-            onCreateEventCode = new Fx(projectFileBean.getActivityName(), buildConfig,
-                    "Show_show",
-                    projectDataManager.a(
-                            projectFileBean.getJavaName(),
-                            "Show_show")).a();
+            handleClass();
         }else {
             handleAppCompat();
         }
@@ -183,7 +178,6 @@ public class Jx {
         addDrawerComponentInitializer();
         initializeEventsCodeGenerator();
         addMoreBlockCodes();
-        //addAdapterCode();
         addRequestCodeConstants();
         addImportsForBlocks();
         addLocalLibraryImports();
@@ -310,22 +304,20 @@ public class Jx {
 
         sb.append(EOL);
 
-        /**Going to change this to automatically load the Gameview class then turn the
-         * activity into Screens, Fragments into Classes perhaps*/
         if (isFragment) {
             sb.append("private Gameview game;").append(EOL);
             sb.append("public ".concat(projectFileBean.getActivityName().replace("Fragment","View").concat("(Gameview game) {"))).append(EOL);
             sb.append("this.game = game;").append(EOL);
-            sb.append("show();").append(EOL);
             sb.append("}").append(EOL);
         }
         if (isDialogFragment){
-            sb.append("public ").append(projectFileBean.getActivityName().replace("DialogFragment", "View")).append("() {");
-            sb.append(EOL);
+            sb.append("private Gameview game;").append(EOL);
+            sb.append("public ").append(projectFileBean.getActivityName().replace("DialogFragment", "View")).append("(Gameview game) {").append(EOL);
+            sb.append("this.game = game;").append(EOL);
             sb.append("initializeClass();");
         }
         //If Main
-        if (!isDialogFragment && !isFragment) {
+        if (!isDialogFragment && !isFragment) {//Default Main don't touch
             if (projectFileBean.getJavaName().equals("Main.java")) {
                 sb.append("@Override").append(EOL);
                 sb.append("protected void onCreate(Bundle _savedInstanceState) {").append(EOL);
@@ -579,17 +571,6 @@ public class Jx {
         addImport("android.os.*");
         addImport("android.view.*");
         addImport("com.badlogic.gdx.graphics.*");
-        /*addImport("com.badlogic.gdx.*");
-        addImport("com.badlogic.gdx.math.*");
-        addImport("com.badlogic.gdx.audio.*");
-        addImport("com.badlogic.gdx.graphics.*");
-        addImport("com.badlogic.gdx.graphics.g2d.*");
-        addImport("com.badlogic.gdx.files.*");
-        addImport("com.badlogic.gdx.utils.*");
-        addImport("com.badlogic.gdx.assets.*");
-        addImport("com.badlogic.gdx.assets.loaders.*");
-        addImport("com.badlogic.gdx.graphics.g2d.freetype.FreeType.*");
-        addImport("com.badlogic.gdx.backends.android.*");*/
 
         //Main initializer to help with rendering the main logic in the within the class//
         onCreateEventCode = new Fx(projectFileBean.getActivityName(), buildConfig,
@@ -603,17 +584,6 @@ public class Jx {
     private void handleScreen() {
         addImport("android.os.Bundle");
         addImport("com.badlogic.gdx.graphics.*");
-        /*addImport("com.badlogic.gdx.*");
-        addImport("com.badlogic.gdx.math.*");
-        addImport("com.badlogic.gdx.audio.*");
-        addImport("com.badlogic.gdx.graphics.*");
-        addImport("com.badlogic.gdx.graphics.g2d.*");
-        addImport("com.badlogic.gdx.files.*");
-        addImport("com.badlogic.gdx.utils.*");
-        addImport("com.badlogic.gdx.assets.*");
-        addImport("com.badlogic.gdx.assets.loaders.*");
-        addImport("com.badlogic.gdx.graphics.g2d.freetype.FreeType.*");
-        addImport("com.badlogic.gdx.backends.android.*");*/
 
         onCreateEventCode = new Fx(projectFileBean.getActivityName(), buildConfig,
                 "Show_show",
@@ -652,6 +622,18 @@ public class Jx {
                         "Dispose_dispose")).a();
 
     }
+    public void handleClass(){
+        addImport("android.os.*");
+        addImport("android.view.*");
+        addImport("com.badlogic.gdx.graphics.*");
+        //handles allowing the user to edit event when inside the logiceditor
+        onCreateEventCode = new Fx(projectFileBean.getActivityName(), buildConfig,
+                "Show_show",
+                projectDataManager.a(
+                        projectFileBean.getJavaName(),
+                        "Show_show")).a();
+    }
+
 
     private String getDrawerViewInitializer(ViewBean viewBean) {
         String replaceAll = WIDGET_NAME_PATTERN.matcher(viewBean.convert).replaceAll("");
@@ -659,25 +641,6 @@ public class Jx {
             replaceAll = viewBean.getClassInfo().a();
         }
         return Lx.getDrawerViewInitializer(replaceAll, viewBean.id, "_nav_view");
-    }
-
-    private void addAdapterCode() {
-        for (ViewBean viewBean : projectDataManager.f(projectFileBean.getXmlName())) {
-            /*String xmlName = ProjectFileBean.getXmlName(viewBean.customView);
-            projectFileBean.getJavaName();
-            String eventName = viewBean.id + "_onBindCustomView";
-            String adapterLogic = new Fx(projectFileBean.getActivityName(), buildConfig, eventName, projectDataManager
-                    .a(projectFileBean.getJavaName(), eventName)).a();
-            String adapterCode;
-            if (viewBean.type == ViewBeans.VIEW_TYPE_LAYOUT_VIEWPAGER) {
-                adapterCode = Lx.pagerAdapter(viewBean.id, viewBean.customView, projectDataManager.d(xmlName), adapterLogic);
-            } else if (viewBean.type == ViewBeans.VIEW_TYPE_WIDGET_RECYCLERVIEW) {
-                adapterCode = Lx.recyclerViewAdapter(viewBean.id, viewBean.customView, projectDataManager.d(xmlName), adapterLogic);
-            } else {
-                adapterCode = Lx.getListAdapterCode(viewBean.id, viewBean.customView, projectDataManager.d(xmlName), adapterLogic);
-            }
-            adapterClasses.add(adapterCode);*/
-        }
     }
 
     private String getViewInitializer(ViewBean viewBean) {

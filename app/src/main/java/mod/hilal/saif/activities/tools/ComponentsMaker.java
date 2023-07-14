@@ -7,6 +7,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.RippleDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.Menu;
@@ -28,6 +29,7 @@ import com.sketchware.remodgdx.R;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import mod.SketchwareUtil;
@@ -93,6 +95,9 @@ public class ComponentsMaker extends Activity {
         }
         Parcelable savedState = listView.onSaveInstanceState();
         listView.setAdapter(new ListAdapter(listMap));
+
+
+
         ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
         listView.onRestoreInstanceState(savedState);
     }

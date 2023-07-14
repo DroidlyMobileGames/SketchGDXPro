@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
@@ -35,6 +36,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.sketchware.remodgdx.R;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import a.a.a.GB;
@@ -46,6 +48,7 @@ import a.a.a.jC;
 import a.a.a.mB;
 import a.a.a.uq;
 import a.a.a.wB;
+import mod.SketchwareUtil;
 import mod.hey.studios.util.Helper;
 import mod.hilal.saif.components.ComponentsHandler;
 
@@ -315,6 +318,9 @@ public class ComponentAddActivity extends BaseDialogActivity implements View.OnC
         //DNA MOBILE EDIT PLACES ALL COMPONENTS HERE
         componentList = new ArrayList<>();
         //componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_INTENT));
+
+
+
         ComponentsHandler.add(componentList);
         componentsAdapter.notifyDataSetChanged();
     }
