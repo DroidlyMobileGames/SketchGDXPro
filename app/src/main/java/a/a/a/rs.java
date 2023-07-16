@@ -148,15 +148,6 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
                 intent.putExtra("project_file", currentActivity);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivityForResult(intent, 222);
-            }else {
-            /*    intent = new Intent(getActivity()
-                        .getApplicationContext(),
-                        AddEventActivity.class);
-                category = categoryAdapter.index;
-                intent.putExtra("sc_id", sc_id);
-                intent.putExtra("project_file", currentActivity);
-                intent.putExtra("category_index", category);
-                startActivityForResult(intent, REQUEST_CODE_ADD_EVENT);*/
             }
 
 
@@ -238,8 +229,6 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
                 moreBlocks.add(eventBean);
             }
 
-
-
             String screencheck = currentActivity.getXmlName();
 
             if (screencheck.contains("_fragment") &&
@@ -286,6 +275,8 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
                         "Dispose", "dispose");
                 eventBean8.initValue();
                 activityEvents.add(eventBean8);
+
+
             }else {
                 /**OOPS fixed this June29th forgot to allow for custom events to be shown
                 DNA MOBILE Might change this based on the class type later**/
@@ -294,6 +285,13 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
                         "Show", "show");
                 eventBean2.initValue();
                 activityEvents.add(eventBean2);
+                if (screencheck.contains("main")) {
+                    EventBean eventBean9 = new EventBean(
+                            EventBean.EVENT_TYPE_ACTIVITY, -1,
+                            "onBackPressed", "onBackPressed");
+                    eventBean9.initValue();
+                    activityEvents.add(eventBean9);
+                }
             }
 
             for (EventBean eventBean : jC.a(sc_id).g(
@@ -329,30 +327,6 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
                 eventAdapter.a(events.get(categoryAdapter.index));
                 eventAdapter.notifyDataSetChanged();
 
-            }
-        }
-    }
-
-    private void maybeAddFontToListOfToBeAddedFonts(String fontName) {
-        if (toBeAddedFonts == null) {
-            toBeAddedFonts = new ArrayList<>();
-        }
-        for (String fontInProjectName : jC.d(sc_id).k()) {
-            if (fontInProjectName.equals(fontName)) {
-                return;
-            }
-        }
-        ProjectResourceBean font = Np.g().a(fontName);
-        if (font != null) {
-            boolean alreadyToBeAdded = false;
-            for (ProjectResourceBean toBeAddedFont : toBeAddedFonts) {
-                if (toBeAddedFont.resName.equals(fontName)) {
-                    alreadyToBeAdded = true;
-                    break;
-                }
-            }
-            if (!alreadyToBeAdded) {
-                toBeAddedFonts.add(font);
             }
         }
     }
@@ -428,11 +402,6 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
         activityEvents = new ArrayList<>();
         drawerViewEvents = new ArrayList<>();
 
-        /*events.put(0, activityEvents);
-        events.put(1, viewEvents);
-        events.put(2, componentEvents);
-        events.put(3, drawerViewEvents);
-        events.put(4, moreBlocks);*/
         events.put(0, activityEvents);
         events.put(1, componentEvents);
         events.put(2, moreBlocks);
@@ -641,30 +610,6 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
         dialog.show();
     }
 
-    private void maybeAddSoundToListOfToBeAddedSounds(String soundName) {
-        if (toBeAddedSounds == null) {
-            toBeAddedSounds = new ArrayList<>();
-        }
-        for (String soundInProjectName : jC.d(sc_id).p()) {
-            if (soundInProjectName.equals(soundName)) {
-                return;
-            }
-        }
-        ProjectResourceBean sound = Qp.g().a(soundName);
-        if (sound != null) {
-            boolean alreadyToBeAdded = false;
-            for (ProjectResourceBean toBeAddedSound : toBeAddedSounds) {
-                if (toBeAddedSound.resName.equals(soundName)) {
-                    alreadyToBeAdded = true;
-                    break;
-                }
-            }
-            if (!alreadyToBeAdded) {
-                toBeAddedSounds.add(sound);
-            }
-        }
-    }
-
     public void setCurrentActivity(ProjectFileBean projectFileBean) {
         currentActivity = projectFileBean;
     }
@@ -822,7 +767,6 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
             }
         }
     }
-
     private void addMoreBlockFromCollectionsCreateEvent(MoreBlockCollectionBean moreBlock) {
         String moreBlockName = ReturnMoreblockManager.getMbNameWithTypeFromSpec(moreBlock.spec);
 
@@ -907,14 +851,6 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
             @Override
             public void onClick(View v) {
                 notifyItemChanged(index);
-                /*if (getLayoutPosition() == 2){
-                    index = 4;
-                }else
-                if (getLayoutPosition() == 1){
-                    index = 3;
-                }else {
-                    index = 0;
-                }*/
                 index = getLayoutPosition();
                 notifyItemChanged(index);
                 initializeEvents(events.get(index));

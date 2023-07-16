@@ -366,7 +366,7 @@ public class ExtraPaletteBlock {
         }
     }
 
-    private void list() {
+    private void list() {//lists the custom lists
         for (Pair<Integer, String> list : jC.a(sc_id).j(javaName)) {
             int type = list.first;
             String name = list.second;
@@ -416,6 +416,7 @@ public class ExtraPaletteBlock {
             case 0:
                 logicEditor.b("Add variable", "variableAdd");
                 logicEditor.b("Add custom variable", "variableAddNew", clickListener);
+                logicEditor.b("Add custom class", "classAddNew", clickListener);
                 logicEditor.b("Remove variable", "variableRemove", clickListener);
                 variables();
                 return;

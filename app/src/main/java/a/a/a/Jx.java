@@ -83,6 +83,7 @@ public class Jx {
     private String onCreateEventCode5 = "";
     private String onCreateEventCode6 = "";
     private String onCreateEventCode7 = "";
+    private String onBackPressedEventCode = "";
     public Jx(jq jqVar, ProjectFileBean projectFileBean, eC eCVar) {
         packageName = jqVar.packageName;
         this.projectFileBean = projectFileBean;
@@ -160,30 +161,23 @@ public class Jx {
     @SuppressWarnings("DynamicRegexReplaceableByCompiledPattern")
     public String generateCode() {
         boolean isDialogFragment = false;
-        boolean isBottomDialogFragment = false;
         boolean isFragment = false;
         isDialogFragment = projectFileBean.fileName.contains("_dialog");
-        //isBottomDialogFragment = projectFileBean.fileName.contains("_bottomdialog_fragment");
         isFragment = projectFileBean.fileName.contains("_fragment") && !projectFileBean.fileName.contains("_dialog");
 
         extraVariables();
         if (isFragment){
             handleScreen();
         }else if (isDialogFragment){
-            onCreateEventCode = new Fx(projectFileBean.getActivityName(), buildConfig,
-                    "Show_show",
-                    projectDataManager.a(
-                            projectFileBean.getJavaName(),
-                            "Show_show")).a();
+            handleClass();
         }else {
-            handleAppCompat();
+            handleDefaultClass();
         }
 
         addFieldsDeclaration();
         addDrawerComponentInitializer();
         initializeEventsCodeGenerator();
         addMoreBlockCodes();
-        //addAdapterCode();
         addRequestCodeConstants();
         addImportsForBlocks();
         addLocalLibraryImports();
@@ -310,22 +304,20 @@ public class Jx {
 
         sb.append(EOL);
 
-        /**Going to change this to automatically load the Gameview class then turn the
-         * activity into Screens, Fragments into Classes perhaps*/
         if (isFragment) {
             sb.append("private Gameview game;").append(EOL);
             sb.append("public ".concat(projectFileBean.getActivityName().replace("Fragment","View").concat("(Gameview game) {"))).append(EOL);
             sb.append("this.game = game;").append(EOL);
-            sb.append("show();").append(EOL);
             sb.append("}").append(EOL);
         }
         if (isDialogFragment){
-            sb.append("public ").append(projectFileBean.getActivityName().replace("DialogFragment", "View")).append("() {");
-            sb.append(EOL);
+            sb.append("private Gameview game;").append(EOL);
+            sb.append("public ").append(projectFileBean.getActivityName().replace("DialogFragment", "View")).append("(Gameview game) {").append(EOL);
+            sb.append("this.game = game;").append(EOL);
             sb.append("initializeClass();");
         }
         //If Main
-        if (!isDialogFragment && !isFragment) {
+        if (!isDialogFragment && !isFragment) {//Default Main don't touch
             if (projectFileBean.getJavaName().equals("Main.java")) {
                 sb.append("@Override").append(EOL);
                 sb.append("protected void onCreate(Bundle _savedInstanceState) {").append(EOL);
@@ -401,7 +393,13 @@ public class Jx {
         if (!isFragment && !isDialogFragment) {//This means that the user has created a Game Activity(First options)
             if (projectFileBean.getJavaName().equals("Main.java")) {
                 sb.append("}").append(EOL);
+                sb.append("@Override").append(EOL);
+                sb.append("public void onBackPressed() {").append(EOL);
+                if (onBackPressedEventCode.length() > 0) {
+                    sb.append(onBackPressedEventCode).append(EOL);
+                }sb.append("}").append(EOL);
                 sb.append("private void initializeLogic() {").append(EOL);
+
             } else {
                 sb.append("}").append(EOL);
                 sb.append("private void initializeCreate() {").append(EOL);
@@ -477,6 +475,7 @@ public class Jx {
                 sb.append(onCreateEventCode7).append(EOL);
             }
 
+
         }
         sb.append("}").append(EOL);
 
@@ -510,19 +509,21 @@ public class Jx {
 
         return CommandBlock.CB(Lx.j(code, false));
     }
-
+    /**Adds the list code and imports*/
     private String getListDeclarationAndAddImports(int listType, String listName) {
         String typeName = mq.b(listType);
         addImports(mq.getImportsByTypeName(typeName));
-        return Lx.a(typeName, listName, Lx.AccessModifier.PRIVATE);
+        return Lx.a(typeName, listName,
+                Lx.AccessModifier.PUBLIC);
     }
-
+    /**Adds the component code*/
     private String getComponentDeclarationAndAddImports(ComponentBean componentBean) {
         String typeName = mq.a(componentBean.type);
         addImports(mq.getImportsByTypeName(typeName));
-        return Lx.a(typeName, componentBean.componentId, Lx.AccessModifier.PRIVATE, componentBean.param1, componentBean.param2, componentBean.param3);
+        return Lx.a(typeName, componentBean.componentId,
+                Lx.AccessModifier.PUBLIC, componentBean.param1, componentBean.param2, componentBean.param3);
     }
-
+    /**Adds the drawer code and imports*/
     private String getDrawerViewDeclarationAndAddImports(ViewBean viewBean) {
         String viewType = WIDGET_NAME_PATTERN.matcher(viewBean.convert).replaceAll("");
         if (viewType.equals("")) {
@@ -532,13 +533,11 @@ public class Jx {
         return Lx.a(viewType, "_drawer_" + viewBean.id, Lx.AccessModifier.PRIVATE);
     }
 
-    /**
-     * @return Definition line for a Variable
-     */
+    /**Adds the variable code and imports*/
     private String getVariableDeclarationAndAddImports(int variableType, String name) {
         String variableTypeName = mq.c(variableType);
         addImports(mq.getImportsByTypeName(variableTypeName));
-        return Lx.a(variableTypeName, name, Lx.AccessModifier.PRIVATE);
+        return Lx.a(variableTypeName, name, Lx.AccessModifier.PUBLIC);
     }
 
     private String getViewDeclarationAndAddImports(ViewBean viewBean) {
@@ -549,8 +548,6 @@ public class Jx {
         addImports(mq.getImportsByTypeName(viewType));
         return Lx.a(viewType, viewBean.id, Lx.AccessModifier.PRIVATE);
     }
-
-
 
     private void addImport(String classToImport) {
         if (!imports.contains(classToImport)) {
@@ -574,46 +571,29 @@ public class Jx {
     }
 
     //Creates the Gameview class only Show method (create) is required
-    private void handleAppCompat() {
+    private void handleDefaultClass() {
         //ALL IMPORTS DNA MOBILE
         addImport("android.os.*");
         addImport("android.view.*");
         addImport("com.badlogic.gdx.graphics.*");
-        /*addImport("com.badlogic.gdx.*");
-        addImport("com.badlogic.gdx.math.*");
-        addImport("com.badlogic.gdx.audio.*");
-        addImport("com.badlogic.gdx.graphics.*");
-        addImport("com.badlogic.gdx.graphics.g2d.*");
-        addImport("com.badlogic.gdx.files.*");
-        addImport("com.badlogic.gdx.utils.*");
-        addImport("com.badlogic.gdx.assets.*");
-        addImport("com.badlogic.gdx.assets.loaders.*");
-        addImport("com.badlogic.gdx.graphics.g2d.freetype.FreeType.*");
-        addImport("com.badlogic.gdx.backends.android.*");*/
 
-        //Main initializer to help with rendering the main logic in the within the class//
+        //onCreateEventCode is the code that holds the info for each Fx event
         onCreateEventCode = new Fx(projectFileBean.getActivityName(), buildConfig,
                 "Show_show",
                 projectDataManager.a(
                         projectFileBean.getJavaName(),
                         "Show_show")).a();
+        onBackPressedEventCode = new Fx(projectFileBean.getActivityName(), buildConfig,
+                "onBackPressed_onBackPressed",
+                projectDataManager.a(
+                        projectFileBean.getJavaName(),
+                        "onBackPressed_onBackPressed")).a();
     }
 
     //Creates everything the game screen classes require including most imports//
     private void handleScreen() {
         addImport("android.os.Bundle");
         addImport("com.badlogic.gdx.graphics.*");
-        /*addImport("com.badlogic.gdx.*");
-        addImport("com.badlogic.gdx.math.*");
-        addImport("com.badlogic.gdx.audio.*");
-        addImport("com.badlogic.gdx.graphics.*");
-        addImport("com.badlogic.gdx.graphics.g2d.*");
-        addImport("com.badlogic.gdx.files.*");
-        addImport("com.badlogic.gdx.utils.*");
-        addImport("com.badlogic.gdx.assets.*");
-        addImport("com.badlogic.gdx.assets.loaders.*");
-        addImport("com.badlogic.gdx.graphics.g2d.freetype.FreeType.*");
-        addImport("com.badlogic.gdx.backends.android.*");*/
 
         onCreateEventCode = new Fx(projectFileBean.getActivityName(), buildConfig,
                 "Show_show",
@@ -651,7 +631,21 @@ public class Jx {
                         projectFileBean.getJavaName(),
                         "Dispose_dispose")).a();
 
+
     }
+    public void handleClass(){
+        addImport("android.os.*");
+        addImport("android.view.*");
+        addImport("com.badlogic.gdx.graphics.*");
+        //handles allowing the user to edit event when inside the logiceditor
+        onCreateEventCode = new Fx(projectFileBean.getActivityName(), buildConfig,
+                "Show_show",
+                projectDataManager.a(
+                        projectFileBean.getJavaName(),
+                        "Show_show")).a();
+
+    }
+
 
     private String getDrawerViewInitializer(ViewBean viewBean) {
         String replaceAll = WIDGET_NAME_PATTERN.matcher(viewBean.convert).replaceAll("");
@@ -659,25 +653,6 @@ public class Jx {
             replaceAll = viewBean.getClassInfo().a();
         }
         return Lx.getDrawerViewInitializer(replaceAll, viewBean.id, "_nav_view");
-    }
-
-    private void addAdapterCode() {
-        for (ViewBean viewBean : projectDataManager.f(projectFileBean.getXmlName())) {
-            /*String xmlName = ProjectFileBean.getXmlName(viewBean.customView);
-            projectFileBean.getJavaName();
-            String eventName = viewBean.id + "_onBindCustomView";
-            String adapterLogic = new Fx(projectFileBean.getActivityName(), buildConfig, eventName, projectDataManager
-                    .a(projectFileBean.getJavaName(), eventName)).a();
-            String adapterCode;
-            if (viewBean.type == ViewBeans.VIEW_TYPE_LAYOUT_VIEWPAGER) {
-                adapterCode = Lx.pagerAdapter(viewBean.id, viewBean.customView, projectDataManager.d(xmlName), adapterLogic);
-            } else if (viewBean.type == ViewBeans.VIEW_TYPE_WIDGET_RECYCLERVIEW) {
-                adapterCode = Lx.recyclerViewAdapter(viewBean.id, viewBean.customView, projectDataManager.d(xmlName), adapterLogic);
-            } else {
-                adapterCode = Lx.getListAdapterCode(viewBean.id, viewBean.customView, projectDataManager.d(xmlName), adapterLogic);
-            }
-            adapterClasses.add(adapterCode);*/
-        }
     }
 
     private String getViewInitializer(ViewBean viewBean) {
@@ -697,7 +672,8 @@ public class Jx {
         for (int index = 0, pairsSize = pairs.size(); index < pairsSize; index++) {
             Pair<String, String> next = pairs.get(index);
             String name = next.first + "_moreBlock";
-            String code = Lx.getMoreBlockCode(next.first, next.second, new Fx(projectFileBean.getActivityName(), buildConfig, name, projectDataManager.a(javaName, name)).a());
+            String code = Lx.getMoreBlockCode(next.first,
+                    next.second, new Fx(projectFileBean.getActivityName(), buildConfig, name, projectDataManager.a(javaName, name)).a());
             if (index < (pairsSize - 1)) {
                 moreBlocks.add(code);
             } else {
@@ -798,7 +774,8 @@ public class Jx {
                 case ComponentBean.COMPONENT_TYPE_FILE_PICKER:
                 case 31:
                     int incrementedValue = startValue + 1;
-                    filePickerRequestCodes.add(Lx.getRequestCodeConstant(next.componentId, incrementedValue));
+                    filePickerRequestCodes.add(Lx.getRequestCodeConstant(
+                            next.componentId, incrementedValue));
                     startValue = incrementedValue;
                     break;
             }
@@ -819,7 +796,8 @@ public class Jx {
             }
         }
         for (Pair<Integer, String> next2 : projectDataManager.j(javaName)) {
-            lists.add(getListDeclarationAndAddImports(next2.first, next2.second));
+            lists.add(getListDeclarationAndAddImports(next2.first,
+                    next2.second));
         }
         for (ViewBean viewBean : projectDataManager.d(projectFileBean.getXmlName())) {
             views.add(getViewDeclarationAndAddImports(viewBean));

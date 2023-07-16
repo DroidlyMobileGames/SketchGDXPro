@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
@@ -35,6 +36,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.sketchware.remodgdx.R;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import a.a.a.GB;
@@ -46,6 +48,7 @@ import a.a.a.jC;
 import a.a.a.mB;
 import a.a.a.uq;
 import a.a.a.wB;
+import mod.SketchwareUtil;
 import mod.hey.studios.util.Helper;
 import mod.hilal.saif.components.ComponentsHandler;
 
@@ -232,6 +235,7 @@ public class ComponentAddActivity extends BaseDialogActivity implements View.OnC
         componentsList.setAdapter(componentsAdapter);
         descriptionLayout.setVisibility(View.GONE);
         imgIcon = findViewById(R.id.img_icon);
+
         componentNameValidator = new ZB(
                 this,
                 tiInput,
@@ -314,7 +318,6 @@ public class ComponentAddActivity extends BaseDialogActivity implements View.OnC
         super.onPostCreate(savedInstanceState);
         //DNA MOBILE EDIT PLACES ALL COMPONENTS HERE
         componentList = new ArrayList<>();
-        //componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_INTENT));
         ComponentsHandler.add(componentList);
         componentsAdapter.notifyDataSetChanged();
     }
@@ -522,38 +525,4 @@ public class ComponentAddActivity extends BaseDialogActivity implements View.OnC
             }
         }
     }
-    /*componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_SHAREDPREF));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_CALENDAR));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_VIBRATOR));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_TIMERTASK));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_DIALOG));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_MEDIAPLAYER));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_SOUNDPOOL));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_OBJECTANIMATOR));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_CAMERA));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_FILE_PICKER));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_GYROSCOPE));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_FIREBASE));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_FIREBASE_AUTH));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_FIREBASE_STORAGE));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_INTERSTITIAL_AD));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_TEXT_TO_SPEECH));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_SPEECH_TO_TEXT));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_REQUEST_NETWORK));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_BLUETOOTH_CONNECT));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_LOCATION_MANAGER));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_REWARDED_VIDEO_AD));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_PROGRESS_DIALOG));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_DATE_PICKER_DIALOG));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_TIME_PICKER_DIALOG));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_NOTIFICATION));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_FRAGMENT_ADAPTER));
-        ComponentsHandler.add(componentList);
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_FIREBASE_AUTH_PHONE));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_FIREBASE_DYNAMIC_LINKS));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_FIREBASE_CLOUD_MESSAGE));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_FIREBASE_AUTH_GOOGLE_LOGIN));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_ONESIGNAL));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_FACEBOOK_ADS_BANNER));
-        componentList.add(new ComponentBean(ComponentBean.COMPONENT_TYPE_FACEBOOK_ADS_INTERSTITIAL));*/
 }

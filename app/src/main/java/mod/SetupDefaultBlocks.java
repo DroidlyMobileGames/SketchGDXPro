@@ -31,8 +31,10 @@ public class SetupDefaultBlocks {
     }
     public void checkPath(){
         if (!FileUtil.isExistFile(blockpath + "/block.json")){
+            copyBlocks();//This does one check if the premade blocks don't exist
         }
-        copyBlocks();
+        /**Placing copyBlocks outside if statement will disable making custom blocks**/
+
     }
 
     private void copyBlocks() {
