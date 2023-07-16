@@ -279,11 +279,6 @@ public class ExtraMenuBean {
                 menus = getListMenus(LIST_TYPE_MAP);
                 break;
 
-            /*case "list":
-                title = Helper.getResString(R.string.logic_editor_title_select_list);
-                menus = projectDataManager.c(javaName);
-                break;*/
-
             case "intent":
                 title = Helper.getResString(R.string.logic_editor_title_select_component_intent);
                 menus = getComponentMenus(ComponentBean.COMPONENT_TYPE_INTENT);

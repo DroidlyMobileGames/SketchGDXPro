@@ -12,9 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -51,12 +55,28 @@ public class LogicClickListener implements View.OnClickListener {
     private final String eventName;
     private final String javaName;
 
+    ArrayList<String> classes = new ArrayList<>();
+    ArrayList<String> classtypes = new ArrayList<>();
+    private String classtype = "";
+    private boolean isclassarray = false;
+    private String classtypesstr = "public";
+
     public LogicClickListener(LogicEditorActivity logicEditor) {
         this.logicEditor = logicEditor;
         projectDataManager = jC.a(logicEditor.B);
         projectFile = logicEditor.M;
         eventName = logicEditor.C + "_" + logicEditor.D;
         javaName = logicEditor.M.getJavaName();
+        classes.add("Select Class");
+        for (ProjectFileBean projectFileBean : jC.b(logicEditor.B).b()) {
+            //DNA MOBILE EDIT
+            if (projectFileBean.getActivityName().contains("Dialog")) {
+                classes.add(projectFileBean.getActivityName().replace("Fragment", "View").replace("Dialog", ""));
+            }
+        }
+        classtypes.add("public");
+        classtypes.add("private");
+        classtypes.add("public static");
     }
 
     private ArrayList<String> getUsedVariable(int type) {
@@ -78,6 +98,9 @@ public class LogicClickListener implements View.OnClickListener {
 
                 case "variableAddNew":
                     addCustomVariable();
+                    break;
+                case "classAddNew":
+                    addCustomClass();
                     break;
 
                 case "variableRemove":
@@ -223,6 +246,138 @@ public class LogicClickListener implements View.OnClickListener {
         });
         dialog.setNegativeButton(Helper.getResString(R.string.common_word_cancel), null);
         dialog.show();
+    }
+    private void addCustomClass() {//Feature to select custom class to import into Screens
+        aB dialog = new aB(logicEditor);
+        dialog.a(R.drawable.java_96);
+        dialog.b("Add a new custom class");
+
+        LinearLayout root = new LinearLayout(logicEditor);
+        root.setOrientation(LinearLayout.VERTICAL);
+        Spinner pubprist = new Spinner(logicEditor);
+        Spinner spinner = new Spinner(logicEditor);
+        CheckBox isArray = new CheckBox(logicEditor);
+        isArray.setChecked(false);
+        isArray.setText("Is Class Array");
+        isArray.setVisibility(View.GONE);
+
+
+        spinner.setAdapter(new ArrayAdapter<String>(getContext(),
+                R.layout.support_simple_spinner_dropdown_item,classes));
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> _param1, View _param2, int _param3, long _param4) {
+                final int _position = _param3;
+                if (!classes.get(_position).equals("Select Class")) {
+                    classtype = classes.get(_position).toString();
+                    isArray.setVisibility(View.VISIBLE);
+                }else {
+                    classtype = "";
+                    isArray.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> _param1) {
+
+            }
+        });
+
+        pubprist.setAdapter(new ArrayAdapter<String>(getContext(),
+                R.layout.support_simple_spinner_dropdown_item,classtypes));
+        pubprist.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> _param1, View _param2, int _param3, long _param4) {
+                final int _position = _param3;
+                classtypesstr = classtypes.get(_position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> _param1) {
+
+            }
+        });
+        isArray.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    isclassarray = true;
+                }else {
+                    isclassarray = false;
+                }
+            }
+        });
+
+
+        TextInputLayout modifierLayout = commonTextInputLayout();
+        //EditText modifier = commonEditText("private, public or public static (optional)");
+        modifierLayout.addView(pubprist);
+        modifierLayout.setHelperText("Select modifier e.g. private, public, public static, or empty (package private).");
+        modifierLayout.setPadding(0, 0, 0, (int) getDip(8));
+        root.addView(modifierLayout);
+        modifierLayout.addView(spinner);
+        modifierLayout.addView(isArray);
+        modifierLayout.setHelperText("Enter modifier e.g. private, public, public static, or empty (package private).");
+
+        TextInputLayout nameLayout = commonTextInputLayout();
+        EditText name = commonEditText("Name, e.g. file");
+        nameLayout.addView(name);
+        root.addView(nameLayout);
+
+        TextInputLayout initializerLayout = commonTextInputLayout();
+        EditText initializer = commonEditText("e.g. new File() (optional)");
+        initializerLayout.addView(initializer);
+        root.addView(initializerLayout);
+
+        ZB validator = new ZB(getContext(), nameLayout, uq.b, uq.a(), projectDataManager.a(projectFile));
+
+        dialog.a(root);
+        dialog.b(Helper.getResString(R.string.common_word_add), view -> {
+            String variableModifier = classtypesstr;
+            variableModifier = isEmpty(variableModifier) ? "" : variableModifier + " ";
+            String variableType = "";
+            if (isclassarray){
+                variableType = classtype + "[]";
+            }else {
+                variableType = classtype;
+            }
+            String variableName = name.getText().toString();
+            String variableInitializer = initializer.getText().toString();
+
+            boolean validType = !isEmpty(variableType);
+            boolean validName = !isEmpty(variableName);
+            boolean getsInitialized = !isEmpty(variableInitializer);
+
+            CharSequence nameError = nameLayout.getError();
+            if (nameError == null || "Name can't be empty".contentEquals(nameError)) {
+                if (validName) {
+                    nameLayout.setError(null);
+                } else {
+                    nameLayout.requestFocus();
+                    nameLayout.setError("Name can't be empty");
+                }
+            }
+
+            if (validName && validator.b()) {
+                if (validType) {
+                    String toAdd = variableModifier + variableType + " " + variableName;
+                    if (getsInitialized) {
+                        toAdd += " = " + variableInitializer;
+                    }
+                    logicEditor.b(6, toAdd);
+                    dialog.dismiss();
+                }else {
+                    SketchwareUtil.toast("Select Class");
+                }
+            }else {
+                SketchwareUtil.toast("Enter Class Name");
+            }
+        });
+        dialog.a(Helper.getResString(R.string.common_word_cancel), Helper.getDialogDismissListener(dialog));
+        dialog.show();
+
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        modifierLayout.requestFocus();
     }
 
     private void addCustomList() {

@@ -792,7 +792,9 @@ public class Lx {
                     break;
 
                 default:
-                    fieldDeclaration = ComponentsHandler.extraVar(typeName, fieldDeclaration, typeInstanceName);
+                    fieldDeclaration = ComponentsHandler.extraVar(typeName,
+                            fieldDeclaration,
+                            typeInstanceName);
                     break;
             }
         }
@@ -821,7 +823,7 @@ public class Lx {
                             str += ", ";
                         }
 
-                        code = str + "final boolean _" + parameterSpec.substring(3);
+                        code = str + "boolean _" + parameterSpec.substring(3);
                         break;
 
                     case 'd':
@@ -830,7 +832,7 @@ public class Lx {
                             str += ", ";
                         }
 
-                        code = str + "final double _" + parameterSpec.substring(3);
+                        code = str + "double _" + parameterSpec.substring(3);
                         break;
 
                     case 's':
@@ -839,7 +841,7 @@ public class Lx {
                             str += ", ";
                         }
 
-                        code = str + "final String _" + parameterSpec.substring(3);
+                        code = str + "String _" + parameterSpec.substring(3);
                         break;
 
                     default:
@@ -851,7 +853,7 @@ public class Lx {
 
                             int lastIndexOfPeriod = parameterSpec.lastIndexOf(".");
                             code = str +
-                                    "final " + mq.e(mq.b(parameterSpec.substring(3, lastIndexOfPeriod))) + " _" +
+                                    "" + mq.e(mq.b(parameterSpec.substring(3, lastIndexOfPeriod))) + " _" +
                                     parameterSpec.substring(lastIndexOfPeriod + 1);
                             break;
                         } else {
@@ -1211,6 +1213,7 @@ public class Lx {
      */
     public static String getComponentInitializerCode(String componentNameId, String componentName, String... parameters) {
         switch (componentNameId) {
+
             case "SharedPreferences":
                 String preferenceFilename = "";
                 if (parameters[0] != null && !parameters[0].isEmpty()) {

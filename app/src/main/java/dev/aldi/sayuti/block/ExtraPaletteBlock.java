@@ -416,6 +416,7 @@ public class ExtraPaletteBlock {
             case 0:
                 logicEditor.b("Add variable", "variableAdd");
                 logicEditor.b("Add custom variable", "variableAddNew", clickListener);
+                logicEditor.b("Add custom class", "classAddNew", clickListener);
                 logicEditor.b("Remove variable", "variableRemove", clickListener);
                 variables();
                 return;
