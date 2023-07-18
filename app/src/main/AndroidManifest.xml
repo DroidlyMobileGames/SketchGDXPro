@@ -52,10 +52,6 @@
             android:name="com.besome.sketch.common.ImportIconActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.besome.sketch.common.FullscreenImageActivity"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
 
         <activity
             android:name="com.besome.sketch.help.SystemSettingActivity"
@@ -113,6 +109,9 @@
                 <data android:pathPattern=".*\\..*\\..*\\..*\\.swb" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.besome.sketch.export.ExportProjectActivity"
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name="com.besome.sketch.editor.manage.view.ManageViewActivity"
             android:configChanges="orientation|screenSize" />
@@ -207,10 +206,10 @@
             android:name="dev.aldi.sayuti.editor.manage.ManageLocalLibraryActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".agus.jcoderz.editor.manage.permission.ManagePermissionActivity"
+            android:name="mod.agus.jcoderz.editor.manage.permission.ManagePermissionActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".agus.jcoderz.editor.manage.resource.ManageResourceActivity"
+            android:name="mod.agus.jcoderz.editor.manage.resource.ManageResourceActivity"
             android:configChanges="orientation|screenSize" />
         <activity
             android:name="mod.hey.studios.activity.managers.assets.ManageAssetsActivity"

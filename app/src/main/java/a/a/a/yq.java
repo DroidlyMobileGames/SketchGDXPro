@@ -354,8 +354,7 @@ public class yq {
 
         String customApplicationClassName = new ProjectSettings(sc_id).getValue(ProjectSettings.SETTING_APPLICATION_CLASS,
                 ".SketchApplication");
-        /*String customApplicationClassName = new ProjectSettings(sc_id).getValue(ProjectSettings.SETTING_APPLICATION_CLASS,
-                ".SketchGame");*/
+
         boolean notUsingCustomApplicationClass = customApplicationClassName.equals(".SketchApplication");
         if (!new File(javaDir, "SketchApplication.java").exists() && notUsingCustomApplicationClass) {
             boolean applyMultiDex = projectSettings.getMinSdkVersion() < 21;
