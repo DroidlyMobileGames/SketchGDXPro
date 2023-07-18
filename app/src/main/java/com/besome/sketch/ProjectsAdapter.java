@@ -20,7 +20,6 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.besome.sketch.export.ExportProjectActivity;
 import com.besome.sketch.lib.ui.CircleImageView;
 import com.besome.sketch.projects.MyProjectButton;
 import com.besome.sketch.projects.MyProjectButtonLayout;
@@ -430,9 +429,6 @@ public class ProjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     private void toExportProjectActivity(HashMap<String, Object> project) {
-        Intent intent = new Intent(activity, ExportProjectActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("sc_id", yB.c(project, "sc_id"));
-        activity.startActivity(intent);
+
     }
 }

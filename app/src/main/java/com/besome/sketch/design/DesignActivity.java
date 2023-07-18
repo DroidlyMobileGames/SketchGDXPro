@@ -970,14 +970,14 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         }
     }
 
-    private class BuildAsyncTask extends MA implements OnCancelListener, BuildProgressReceiver {
+    private class BuildAsyncTask extends MA implements OnCancelListener, BuildProgressReceiver, mod.jbk.build.BuildProgressReceiver {
 
         private final BuildingDialog dialog;
         private boolean canceled = false;
 
         public BuildAsyncTask(Context context) {
             super(context);
-            addTask(this);
+            DesignActivity.this.a((MA) this);
             dialog = new BuildingDialog(DesignActivity.this);
             maybeShow();
             dialog.setIsCancelableOnBackPressed(false);
@@ -1019,7 +1019,6 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         protected void onProgressUpdate(String... values) {
             setProgress(values[0]);
         }
-
         @Override
         public void b() {
             if (canceled) {
@@ -1071,11 +1070,11 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                         return;
                     }
 
-                    KotlinCompilerBridge.compileKotlinCodeIfPossible(this, mDp);
+                    /*KotlinCompilerBridge.compileKotlinCodeIfPossible(this, mDp);
                     if (canceled) {
                         cancel(true);
                         return;
-                    }
+                    }*/
 
                     publishProgress("Java is compiling...");
                     mDp.compileJavaCode();
@@ -1107,21 +1106,21 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                         return;
                     }
 
-                    publishProgress("Merging YOUR MOMS files...");
+                    publishProgress("Merging DEX files...");
                     mDp.getDexFilesReady();
                     if (canceled) {
                         cancel(true);
                         return;
                     }
 
-                    publishProgress("Building GAME...");
+                    publishProgress("Building APK...");
                     mDp.buildApk();
                     if (canceled) {
                         cancel(true);
                         return;
                     }
 
-                    publishProgress("Signing GAME...");
+                    publishProgress("Signing APK...");
                     mDp.signDebugApk();
                     if (canceled) {
                         cancel(true);
@@ -1129,6 +1128,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                     }
 
                     installBuiltApk();
+
                 } catch (MissingFileException e) {
                     runOnUiThread(() -> {
                         boolean isMissingDirectory = e.isMissingDirectory();

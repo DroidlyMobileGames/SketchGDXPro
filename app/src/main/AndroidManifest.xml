@@ -82,9 +82,6 @@
             android:name="com.besome.sketch.tools.NewKeyStoreActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="com.besome.sketch.export.ExportProjectActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
             android:name="com.besome.sketch.design.DesignActivity"
             android:configChanges="orientation|screenSize" />
         <activity
